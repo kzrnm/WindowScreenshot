@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using System.Windows.Media.Imaging;
 
@@ -7,12 +8,12 @@ namespace WindowScreenshot.Image.Capture;
 
 public partial class CaptureTarget : ObservableObject, ICloneable
 {
-#pragma warning disable IDE0060 // 未使用のパラメーターを削除します
+    [SuppressMessage("Style", "IDE0060: Remove unused parameter")]
     partial void OnWindowNameChanged(string value)
         => OnPropertyChanged(nameof(DisplayText));
+    [SuppressMessage("Style", "IDE0060: Remove unused parameter")]
     partial void OnProcessNameChanged(string value)
         => OnPropertyChanged(nameof(DisplayText));
-#pragma warning restore IDE0060 // 未使用のパラメーターを削除します
 
     [ObservableProperty]
     private string _ProcessName = "";
