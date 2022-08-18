@@ -4,6 +4,8 @@ using WindowScreenshot.Image.Capture;
 using WindowScreenshot.Windows;
 
 namespace WindowScreenshot;
+using ViewModels;
+
 public static class SharedInitializer
 {
     public static IServiceCollection InitializeDefault(IServiceCollection service)
@@ -11,7 +13,10 @@ public static class SharedInitializer
         .AddSingleton(ObserveWindowProcess.Instanse)
         .AddSingleton<ICaptureImageService, CaptureImageService>()
         .AddSingleton<IClipboardManager, ClipboardManager>()
-        .AddSingleton<ImageProvider>();
-
-
+        .AddSingleton<ImageProvider>()
+        
+        .AddTransient<WindowCapturerViewModel>()
+        .AddTransient<ImageListViewModel>()
+        .AddTransient<ImageSettingsViewModel>()
+        .AddTransient<ImagePreviewWindowViewModel>();
 }

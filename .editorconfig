@@ -1,6 +1,6 @@
 root = true
 
-[*.csproj]
+[{*.csproj,Directory.Build.props,Directory.Build.targets}]
 charset = utf-8
 indent_style = space
 indent_size = 2
