@@ -7,6 +7,8 @@ namespace WindowScreenshot.DependencyInjection;
 
 public static class IocBehavior
 {
+    public static Ioc Ioc { set; get; } = Ioc.Default;
+
     public static Type GetAutoViewModel(DependencyObject obj) => (Type)obj.GetValue(AutoViewModelProperty);
     public static void SetAutoViewModel(DependencyObject obj, Type value) => obj.SetValue(AutoViewModelProperty, value);
     public static readonly DependencyProperty AutoViewModelProperty =
@@ -23,6 +25,6 @@ public static class IocBehavior
         if (DesignerProperties.GetIsInDesignMode(d))
             return;
         if (d is FrameworkElement elm && e.NewValue is Type type)
-            elm.DataContext = Ioc.Default.GetService(type);
+            elm.DataContext = Ioc.GetService(type);
     }
 }
