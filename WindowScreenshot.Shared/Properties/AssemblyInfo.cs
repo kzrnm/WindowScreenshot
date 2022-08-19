@@ -1,5 +1,5 @@
 ﻿using System.Windows.Markup;
 
 [assembly: System.Windows.ThemeInfo(System.Windows.ResourceDictionaryLocation.None, System.Windows.ResourceDictionaryLocation.SourceAssembly)]
-[assembly: XmlnsDefinition("https://github.com/kzrnm/WindowScreenshot", "Kzrnm.WindowScreenshot")]
-[assembly: XmlnsDefinition("https://github.com/kzrnm/WindowScreenshot", "Kzrnm.WindowScreenshot.Views")]
+[assembly: XmlnsDefinition("urn:kzrnm-wpf-window-screenshot", "Kzrnm.WindowScreenshot")]
+[assembly: XmlnsDefinition("urn:kzrnm-wpf-window-screenshot", "Kzrnm.WindowScreenshot.Views")]

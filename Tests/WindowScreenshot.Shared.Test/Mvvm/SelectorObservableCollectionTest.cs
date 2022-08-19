@@ -1,4 +1,4 @@
-﻿using KzLibraries.EventHandlerHistory;
+﻿using Kzrnm.EventHandlerHistory;
 
 namespace Kzrnm.WindowScreenshot;
 

@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using Xunit;
-using System.Collections.Generic;
-using KzLibraries.EventHandlerHistory;
+﻿using Kzrnm.EventHandlerHistory;
 
 namespace Kzrnm.WindowScreenshot.Image;
 

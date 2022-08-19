@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using KzLibraries.EventHandlerHistory;
+using Kzrnm.EventHandlerHistory;
 using System.Collections.Specialized;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;

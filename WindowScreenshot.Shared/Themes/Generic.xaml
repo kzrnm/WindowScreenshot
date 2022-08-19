@@ -4,7 +4,7 @@
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dd="urn:gong-wpf-dragdrop"
-    xmlns:kz="https://github.com/naminodarie/KzLibraries/"
+    xmlns:kz="urn:kzrnm-wpf/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:Kzrnm.WindowScreenshot.Properties"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"

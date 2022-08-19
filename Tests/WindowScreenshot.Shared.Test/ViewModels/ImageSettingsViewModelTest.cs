@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using KzLibraries.EventHandlerHistory;
+using Kzrnm.EventHandlerHistory;
 using Kzrnm.WindowScreenshot.Image;
 
 namespace Kzrnm.WindowScreenshot.ViewModels;
