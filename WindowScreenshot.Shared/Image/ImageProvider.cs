@@ -1,10 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using System.ComponentModel;
 using System.Windows.Media.Imaging;
 
 namespace WindowScreenshot.Image;
 
-public partial class ImageProvider : ObservableRecipient, IRecipient<ImageWindowClosingMessage>
+public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearRequestMessage>
 {
     public ImageProvider(ICaptureImageService captureImageService) : this(WeakReferenceMessenger.Default, captureImageService, new SelectorObservableCollection<CaptureImage>()) { }
     public ImageProvider(IMessenger messenger, ICaptureImageService captureImageService) : this(messenger, captureImageService, new SelectorObservableCollection<CaptureImage>()) { }
@@ -18,10 +19,19 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageWindow
             SelectedImageIndex = e.NewIndex;
             SelectedImage = e.NewItem;
         };
+        ((INotifyPropertyChanged)images).PropertyChanged += (_, e) =>
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(images.Count):
+                    Messenger.Send(new ImageCountChangedMessage(images.Count));
+                    break;
+            }
+        };
         Messenger.Register(this);
     }
 
-    void IRecipient<ImageWindowClosingMessage>.Receive(ImageWindowClosingMessage message)
+    void IRecipient<ImageClearRequestMessage>.Receive(ImageClearRequestMessage message)
     {
         Images.Clear();
     }

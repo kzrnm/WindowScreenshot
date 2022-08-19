@@ -26,8 +26,8 @@ public partial class ImageListViewModel : ObservableRecipient, IRecipient<Select
     public ImageDropTarget DropHandler { get; }
     public ImageDragSource DragHandler { get; }
 
-    private bool ImageProviderHasImage() => ImageProvider.SelectedImageIndex >= 0;
-    [RelayCommand(CanExecute = nameof(ImageProviderHasImage))]
+    private bool IsSelectedImage() => ImageProvider.SelectedImageIndex >= 0;
+    [RelayCommand(CanExecute = nameof(IsSelectedImage))]
     private void RemoveSelectedImage()
     {
         ImageProvider.Images.RemoveSelectedItem();

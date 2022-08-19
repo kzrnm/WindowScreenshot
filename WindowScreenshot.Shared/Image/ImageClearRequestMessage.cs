@@ -1,4 +1,4 @@
 ﻿namespace WindowScreenshot.Image;
-public class ImageWindowClosingMessage
+public class ImageClearRequestMessage
 {
 }

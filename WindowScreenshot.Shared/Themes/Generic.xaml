@@ -10,8 +10,9 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodels="clr-namespace:WindowScreenshot.ViewModels"
     xmlns:views="clr-namespace:WindowScreenshot.Views"
+    xmlns:mvvm="clr-namespace:WindowScreenshot.Mvvm"
     mc:Ignorable="d">
-
+    
 
     <Style TargetType="{x:Type views:ImageListView}">
         <Setter Property="Template">
@@ -94,6 +95,9 @@
                         Margin="5"
                         d:DataContext="{d:DesignInstance viewmodels:ImageSettingsViewModel}"
                         IsEnabled="{Binding HasImage}">
+                        <Grid.Resources>
+                            
+                        </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -200,7 +204,13 @@
                                 x:Name="PART_ImageKind"
                                 Width="80"
                                 ItemsSource="{Binding Source={x:Static viewmodels:ImageSettingsViewModel.ImageKinds}, Mode=OneTime}"
-                                SelectedItem="{Binding ImageKind}" />
+                                SelectedItem="{Binding ImageKind}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={mvvm:EnumDescriptionConverter}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
                         </StackPanel>
                         <CheckBox
                             x:Name="PART_IsSideCutMode"

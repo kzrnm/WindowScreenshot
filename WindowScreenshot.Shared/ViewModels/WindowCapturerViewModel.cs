@@ -6,7 +6,7 @@ using WindowScreenshot.Image;
 
 namespace WindowScreenshot.ViewModels;
 
-public partial class WindowCapturerViewModel : ObservableRecipient, IRecipient<SelectedImageChangedMessage>
+public partial class WindowCapturerViewModel : ObservableRecipient, IRecipient<ImageCountChangedMessage>
 {
     public ImageProvider ImageProvider { get; }
     public WindowCapturerViewModel(ICaptureImageService captureImageService, ImageProvider imageProvider)
@@ -39,8 +39,8 @@ public partial class WindowCapturerViewModel : ObservableRecipient, IRecipient<S
     [ObservableProperty]
     private Visibility _ImageVisibility = Visibility.Collapsed;
 
-    public void OnWindowClosing() => Messenger.Send<ImageWindowClosingMessage>();
-    void IRecipient<SelectedImageChangedMessage>.Receive(SelectedImageChangedMessage message)
+    public void OnWindowClosing() => Messenger.Send<ImageClearRequestMessage>();
+    void IRecipient<ImageCountChangedMessage>.Receive(ImageCountChangedMessage message)
     {
         UpdateImageVisibility();
     }

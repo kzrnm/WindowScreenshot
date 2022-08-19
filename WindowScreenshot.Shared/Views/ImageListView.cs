@@ -13,7 +13,7 @@ public class ImageListView : Control
     }
     public ImageListView()
     {
-        DataContext = Ioc.Default.GetService<ImageListViewModel>();
+        DataContext = Ioc.Default.GetRequiredServiceIfIsNotInDesignMode<ImageListViewModel>(this);
     }
 
     public ImageListViewModel ViewModel => (ImageListViewModel)DataContext;

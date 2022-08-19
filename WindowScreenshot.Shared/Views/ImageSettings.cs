@@ -13,7 +13,7 @@ public class ImageSettings : Control
 
     public ImageSettings()
     {
-        DataContext = Ioc.Default.GetService<ImageSettingsViewModel>();
+        DataContext = Ioc.Default.GetRequiredServiceIfIsNotInDesignMode<ImageSettingsViewModel>(this);
     }
     public ImageSettingsViewModel ViewModel => (ImageSettingsViewModel)DataContext;
 }

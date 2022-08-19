@@ -8,15 +8,35 @@ using ViewModels;
 
 public static class SharedInitializer
 {
-    public static IServiceCollection InitializeDefault(IServiceCollection service)
-        => service
-        .AddSingleton(ObserveWindowProcess.Instanse)
-        .AddSingleton<ICaptureImageService, CaptureImageService>()
-        .AddSingleton<IClipboardManager, ClipboardManager>()
-        .AddSingleton<ImageProvider>()
-        
-        .AddTransient<WindowCapturerViewModel>()
-        .AddTransient<ImageListViewModel>()
-        .AddTransient<ImageSettingsViewModel>()
-        .AddTransient<ImagePreviewWindowViewModel>();
+    public static IServiceCollection InitializeDefault(
+        this IServiceCollection service,
+        ObserveWindowProcess? observeWindowProcess = null,
+        ICaptureImageService? captureImageService = null,
+        IClipboardManager? clipboardManager = null,
+        ImageProvider? imageProvider = null
+        )
+    {
+        service.AddSingleton(observeWindowProcess ?? ObserveWindowProcess.Instanse);
+
+        if (captureImageService is null)
+            service.AddSingleton<ICaptureImageService, CaptureImageService>();
+        else
+            service.AddSingleton(captureImageService);
+
+        if (clipboardManager is null)
+            service.AddSingleton<IClipboardManager, ClipboardManager>();
+        else
+            service.AddSingleton(clipboardManager);
+
+        if (imageProvider is null)
+            service.AddSingleton<ImageProvider>();
+        else
+            service.AddSingleton(imageProvider);
+
+        return service
+            .AddTransient<WindowCapturerViewModel>()
+            .AddTransient<ImageListViewModel>()
+            .AddTransient<ImageSettingsViewModel>()
+            .AddTransient<ImagePreviewWindowViewModel>();
+    }
 }

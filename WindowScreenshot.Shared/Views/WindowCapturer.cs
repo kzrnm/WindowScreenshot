@@ -22,7 +22,7 @@ public class WindowCapturer : DockPanel
         SetDock(ImageSettings, Dock.Right);
         SetDock(ImageListView, Dock.Bottom);
 
-        DataContext = Ioc.Default.GetService<WindowCapturerViewModel>();
+        ViewModel = Ioc.Default.GetRequiredServiceIfIsNotInDesignMode<WindowCapturerViewModel>(this);
 
         SetBinding(AlwaysImageAreaProperty,
             new Binding(nameof(WindowCapturerViewModel.AlwaysImageArea))
@@ -43,11 +43,19 @@ public class WindowCapturer : DockPanel
                 Mode = BindingMode.OneWay,
             });
 
+        var visibilityBinding = new Binding(nameof(ImageVisibility))
+        {
+            Source = this,
+            Mode = BindingMode.OneWay,
+        };
+        ImageSettings.SetBinding(VisibilityProperty, visibilityBinding);
+        ImageListView.SetBinding(VisibilityProperty, visibilityBinding);
+
         Loaded += OnLoaded;
         Unloaded += OnUnloaded;
     }
 
-    public WindowCapturerViewModel ViewModel => (WindowCapturerViewModel)DataContext;
+    public WindowCapturerViewModel ViewModel { get; }
     public ImageSettings ImageSettings { get; } = new();
     public ImageListView ImageListView { get; } = new();
 
@@ -97,6 +105,17 @@ public class WindowCapturer : DockPanel
         set => SetValue(AlwaysImageAreaProperty, value);
     }
 
+    private static readonly DependencyProperty ImageVisibilityProperty =
+        DependencyProperty.Register(
+            nameof(ImageVisibility),
+            typeof(Visibility),
+            typeof(WindowCapturer));
+    private Visibility ImageVisibility
+    {
+        get => (Visibility)GetValue(ImageVisibilityProperty);
+        set => SetValue(ImageVisibilityProperty, value);
+    }
+
     private ImagePreviewWindow? imagePreviewWindow;
     public static readonly DependencyProperty HasPreviewWindowProperty =
         DependencyProperty.Register(
@@ -137,26 +156,30 @@ public class WindowCapturer : DockPanel
         switch (e.PropertyName)
         {
             case nameof(ViewModel.ImageVisibility):
-                if (ViewModel.ImageVisibility == Visibility.Visible)
-                    OnImageVisibilityChanged(true);
+                OnImageVisibilityChanged(ViewModel.ImageVisibility);
                 break;
         }
     }
 
-    private void OnImageVisibilityChanged(bool newIsVisible)
+    private void OnImageVisibilityChanged(Visibility visibility)
     {
         if (AlwaysImageArea) return;
         if (Window.GetWindow(this) is not { } window) return;
 
-        var width = ImageSettings.ActualWidth;
-        var height = ImageListView.ActualHeight;
-        if (!newIsVisible)
+        if (visibility is Visibility.Collapsed)
         {
-            width = -width;
-            height = -height;
+            var width = ImageSettings.ActualWidth;
+            var height = ImageListView.ActualHeight;
+            ImageVisibility = visibility;
+            window.Width -= width;
+            window.Height -= height;
         }
-        window.Width += width;
-        window.Height += height;
+        else
+        {
+            ImageVisibility = visibility;
+            window.Width += ImageSettings.ActualWidth;
+            window.Height += ImageListView.ActualHeight;
+        }
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
@@ -165,15 +188,8 @@ public class WindowCapturer : DockPanel
         if (HasPreviewWindow) MakePreviewWindow(window);
         window.Closing += (_, _) => ViewModel.OnWindowClosing();
 
-        var visibilityBinding = new Binding(nameof(ViewModel.ImageVisibility))
-        {
-            Source = ViewModel,
-            Mode = BindingMode.OneWay,
-        };
-        ImageSettings.SetBinding(VisibilityProperty, visibilityBinding);
-        ImageListView.SetBinding(VisibilityProperty, visibilityBinding);
-
         ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+        ImageVisibility = ViewModel.ImageVisibility;
 
         DragDrop.SetIsDropTarget(this, true);
         DragDrop.SetDropEventType(this, GongSolutions.Wpf.DragDrop.EventType.Bubbled);

@@ -17,6 +17,8 @@
     dd:DragDrop.DropHandler="{Binding DropHandler}"
     dd:DragDrop.IsDropTarget="True"
     ioc:IocBehavior.AutoViewModel="{x:Type viewmodels:ImagePreviewWindowViewModel}"
+    MinHeight="200"
+    MinWidth="200"
     AllowDrop="True"
     ResizeMode="NoResize"
     ShowActivated="False"
