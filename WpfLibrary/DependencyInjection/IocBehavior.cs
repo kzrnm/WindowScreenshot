@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 
-namespace Kzrnm.WindowScreenshot.DependencyInjection;
+namespace Kzrnm.Wpf.DependencyInjection;
 
 public static class IocBehavior
 {

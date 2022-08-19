@@ -6,7 +6,7 @@ using System.Windows;
 using Xunit;
 
 #pragma warning disable CS0659
-namespace Kzrnm.WindowScreenshot.DependencyInjection;
+namespace Kzrnm.Wpf.DependencyInjection;
 
 public class IocBehaviorTests
 {

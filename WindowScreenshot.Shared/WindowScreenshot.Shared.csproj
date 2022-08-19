@@ -8,10 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    <ProjectReference Include="..\WpfLibrary\WpfLibrary.csproj" />
     <PackageReference Include="gong-wpf-dragdrop" Version="3.1.1" />
-    <PackageReference Include="KzWpfControl" Version="0.0.4" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.10-beta">
       <PrivateAssets>all</PrivateAssets>
       <!--
