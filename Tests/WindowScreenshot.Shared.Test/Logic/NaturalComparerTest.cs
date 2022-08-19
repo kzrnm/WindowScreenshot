@@ -1,6 +1,6 @@
 ﻿using KzLibraries.EventHandlerHistory;
 
-namespace WindowScreenshot;
+namespace Kzrnm.WindowScreenshot;
 
 public class NaturalComparerTest
 {

@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>app.ico</ApplicationIcon>
+    <RootNamespace>Kzrnm.WindowScreenshot</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

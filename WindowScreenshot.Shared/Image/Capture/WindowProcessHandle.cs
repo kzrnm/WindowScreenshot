@@ -3,13 +3,12 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
+using static Kzrnm.WindowScreenshot.Windows.NativeMethods;
 using static Windows.Win32.PInvoke;
-using static WindowScreenshot.Windows.NativeMethods;
 
-namespace WindowScreenshot.Image.Capture;
+namespace Kzrnm.WindowScreenshot.Image.Capture;
 public class WindowProcessHandle : IDisposable
 {
     public HWND Handle { get; private set; }

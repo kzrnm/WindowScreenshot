@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-namespace WindowScreenshot;
+namespace Kzrnm.WindowScreenshot;
 public class SelectorObservableCollection<T> : ObservableCollection<T>
 {
     private int _SelectedIndex = -1;

@@ -4,7 +4,7 @@ using Moq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image;
 
 public class ImageDropTargetTests
 {

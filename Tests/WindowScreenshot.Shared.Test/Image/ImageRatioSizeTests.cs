@@ -3,7 +3,7 @@ using Xunit;
 using System.Collections.Generic;
 using KzLibraries.EventHandlerHistory;
 
-namespace WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image;
 
 public class ImageRatioSizeTests
 {

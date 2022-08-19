@@ -2,7 +2,7 @@
 using System;
 using Windows.Win32.Foundation;
 
-namespace WindowScreenshot.Image.Capture;
+namespace Kzrnm.WindowScreenshot.Image.Capture;
 
 public partial class CaptureRegion : ObservableObject, ICloneable
 {

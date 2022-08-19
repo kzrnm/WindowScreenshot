@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image;
 
 public class ImageProviderTests : IDisposable, IRecipient<SelectedImageChangedMessage>
 {

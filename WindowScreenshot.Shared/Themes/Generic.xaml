@@ -6,11 +6,11 @@
     xmlns:dd="urn:gong-wpf-dragdrop"
     xmlns:kz="https://github.com/naminodarie/KzLibraries/"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:properties="clr-namespace:WindowScreenshot.Properties"
+    xmlns:properties="clr-namespace:Kzrnm.WindowScreenshot.Properties"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:viewmodels="clr-namespace:WindowScreenshot.ViewModels"
-    xmlns:views="clr-namespace:WindowScreenshot.Views"
-    xmlns:mvvm="clr-namespace:WindowScreenshot.Mvvm"
+    xmlns:viewmodels="clr-namespace:Kzrnm.WindowScreenshot.ViewModels"
+    xmlns:views="clr-namespace:Kzrnm.WindowScreenshot.Views"
+    xmlns:mvvm="clr-namespace:Kzrnm.WindowScreenshot.Mvvm"
     mc:Ignorable="d">
     
 

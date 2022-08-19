@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,11 +7,11 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.Accessibility;
+using static Kzrnm.WindowScreenshot.Windows.NativeMethods;
+using static Kzrnm.WindowScreenshot.Windows.NativeMethods.EventConstants;
 using static Windows.Win32.PInvoke;
-using static WindowScreenshot.Windows.NativeMethods;
-using static WindowScreenshot.Windows.NativeMethods.EventConstants;
 
-namespace WindowScreenshot.Image.Capture;
+namespace Kzrnm.WindowScreenshot.Image.Capture;
 
 public class ObserveWindowProcess : IDisposable
 {

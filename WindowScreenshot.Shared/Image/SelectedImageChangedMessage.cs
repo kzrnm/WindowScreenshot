@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
 
-namespace WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image;
 
 public class SelectedImageChangedMessage : ValueChangedMessage<CaptureImage?>
 {

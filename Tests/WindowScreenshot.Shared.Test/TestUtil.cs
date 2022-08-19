@@ -2,7 +2,7 @@ using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace WindowScreenshot;
+namespace Kzrnm.WindowScreenshot;
 
 public static class TestUtil
 {

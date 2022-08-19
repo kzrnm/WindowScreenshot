@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Media.Imaging;
 
-namespace WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image;
 public interface ICaptureImageService
 {
     CaptureImage? GetImageFromFile(string filePath);

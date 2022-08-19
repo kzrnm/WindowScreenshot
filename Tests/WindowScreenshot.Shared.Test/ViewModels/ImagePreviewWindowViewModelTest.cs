@@ -2,10 +2,10 @@
 using KzLibraries.EventHandlerHistory;
 using Moq;
 using System.Windows.Media.Imaging;
-using WindowScreenshot.Image;
-using WindowScreenshot.Windows;
+using Kzrnm.WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Windows;
 
-namespace WindowScreenshot.ViewModels;
+namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public class ImagePreviewWindowViewModelTest
 {

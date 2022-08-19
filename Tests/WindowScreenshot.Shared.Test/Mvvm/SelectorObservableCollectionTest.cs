@@ -1,6 +1,6 @@
 ﻿using KzLibraries.EventHandlerHistory;
 
-namespace WindowScreenshot;
+namespace Kzrnm.WindowScreenshot;
 
 using SelectedItemChangedEventArgs = SelectorObservableCollection<string>.SelectedItemChangedEventArgs;
 public class SelectorObservableCollectionTests

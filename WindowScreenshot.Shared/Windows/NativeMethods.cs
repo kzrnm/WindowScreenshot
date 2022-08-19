@@ -4,7 +4,7 @@ using System.Runtime.Versioning;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 
-namespace WindowScreenshot.Windows;
+namespace Kzrnm.WindowScreenshot.Windows;
 internal static class NativeMethods
 {
     public static unsafe string GetWindowText(HWND hWnd)

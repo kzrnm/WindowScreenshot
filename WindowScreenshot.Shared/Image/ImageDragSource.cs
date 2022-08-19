@@ -1,7 +1,7 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using System.Windows;
 
-namespace WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image;
 
 public class ImageDragSource : DefaultDragHandler
 {

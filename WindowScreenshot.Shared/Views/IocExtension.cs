@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 
-namespace WindowScreenshot.Views;
+namespace Kzrnm.WindowScreenshot.Views;
 internal static class IocExtension
 {
     public static T GetRequiredServiceIfIsNotInDesignMode<T>(this Ioc ioc, DependencyObject dependencyObject) where T : class

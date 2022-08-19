@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using KzLibraries.EventHandlerHistory;
 using System.Windows;
-using WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Image;
 
-namespace WindowScreenshot.ViewModels;
+namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public class WindowCapturerViewModelTest
 {

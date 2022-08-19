@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Windows.Win32;
 
-namespace WindowScreenshot;
+namespace Kzrnm.WindowScreenshot;
 
 public class NaturalComparer : IComparer<string>
 {

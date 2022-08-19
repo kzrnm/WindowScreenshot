@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using KzLibraries.EventHandlerHistory;
-using WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Image;
 
-namespace WindowScreenshot.ViewModels;
+namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public class ImageSettingsViewModelTest
 {

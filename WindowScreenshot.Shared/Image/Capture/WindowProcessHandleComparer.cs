@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WindowScreenshot.Image.Capture;
+namespace Kzrnm.WindowScreenshot.Image.Capture;
 
 public class WindowProcessHandleComparer : IEqualityComparer<WindowProcessHandle>
 {

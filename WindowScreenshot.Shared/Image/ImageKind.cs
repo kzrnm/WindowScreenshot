@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image;
 
 public enum ImageKind
 {

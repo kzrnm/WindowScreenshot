@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace WindowScreenshot.Views;
+namespace Kzrnm.WindowScreenshot.Views;
 /// <summary>
 /// ImagePreviewWindow.xaml の相互作用ロジック
 /// </summary>

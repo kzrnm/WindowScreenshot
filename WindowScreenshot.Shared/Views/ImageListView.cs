@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using System.Windows;
 using System.Windows.Controls;
-using WindowScreenshot.ViewModels;
+using Kzrnm.WindowScreenshot.ViewModels;
 
-namespace WindowScreenshot.Views;
+namespace Kzrnm.WindowScreenshot.Views;
 
 public class ImageListView : Control
 {

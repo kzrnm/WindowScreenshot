@@ -3,10 +3,10 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using WindowScreenshot.ViewModels;
+using Kzrnm.WindowScreenshot.ViewModels;
 using DragDrop = GongSolutions.Wpf.DragDrop.DragDrop;
 
-namespace WindowScreenshot.Views;
+namespace Kzrnm.WindowScreenshot.Views;
 
 public class WindowCapturer : DockPanel
 {

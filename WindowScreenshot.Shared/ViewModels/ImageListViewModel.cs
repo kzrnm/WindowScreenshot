@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using WindowScreenshot.Image;
-using WindowScreenshot.Windows;
+using Kzrnm.WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Windows;
 
-namespace WindowScreenshot.ViewModels;
+namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public partial class ImageListViewModel : ObservableRecipient, IRecipient<SelectedImageChangedMessage>
 {

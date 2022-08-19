@@ -1,4 +1,4 @@
-﻿namespace WindowScreenshot;
+﻿namespace Kzrnm.WindowScreenshot;
 
 public record LambdaEqualityComparer<T>(Func<T?, T?, bool> Func) : IEqualityComparer<T>
 {

@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Windows;
 
-namespace WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image;
 
 public class ImageDropTarget : DefaultDropHandler
 {

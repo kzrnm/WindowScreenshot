@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using WindowScreenshot.Image;
-using WindowScreenshot.Image.Capture;
-using WindowScreenshot.Windows;
+using Kzrnm.WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Image.Capture;
+using Kzrnm.WindowScreenshot.Windows;
 
-namespace WindowScreenshot;
+namespace Kzrnm.WindowScreenshot;
 using ViewModels;
 
 public static class SharedInitializer

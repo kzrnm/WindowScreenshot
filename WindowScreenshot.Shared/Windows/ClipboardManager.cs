@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace WindowScreenshot.Windows;
+namespace Kzrnm.WindowScreenshot.Windows;
 
 public interface IClipboardManager
 {

@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
-    <RootNamespace>WindowScreenshot</RootNamespace>
+    <RootNamespace>Kzrnm.WindowScreenshot</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

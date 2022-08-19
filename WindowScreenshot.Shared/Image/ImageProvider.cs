@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using System.ComponentModel;
 using System.Windows.Media.Imaging;
 
-namespace WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image;
 
 public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearRequestMessage>
 {

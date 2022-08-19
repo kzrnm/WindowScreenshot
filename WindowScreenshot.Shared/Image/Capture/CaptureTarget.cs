@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using System.Windows.Media.Imaging;
 
-namespace WindowScreenshot.Image.Capture;
+namespace Kzrnm.WindowScreenshot.Image.Capture;
 
 public partial class CaptureTarget : ObservableObject, ICloneable
 {

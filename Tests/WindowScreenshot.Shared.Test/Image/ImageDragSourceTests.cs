@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using Xunit;
 
-namespace WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image;
 
 public class ImageDragSourceTests
 {

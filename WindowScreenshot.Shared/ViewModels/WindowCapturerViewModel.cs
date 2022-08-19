@@ -2,9 +2,9 @@
 using CommunityToolkit.Mvvm.Messaging;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
-using WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Image;
 
-namespace WindowScreenshot.ViewModels;
+namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public partial class WindowCapturerViewModel : ObservableRecipient, IRecipient<ImageCountChangedMessage>
 {

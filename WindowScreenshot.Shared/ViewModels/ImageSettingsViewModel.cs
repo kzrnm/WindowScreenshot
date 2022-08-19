@@ -2,9 +2,9 @@
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.Generic;
 using System.ComponentModel;
-using WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Image;
 
-namespace WindowScreenshot.ViewModels;
+namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public partial class ImageSettingsViewModel : ObservableRecipient, IRecipient<SelectedImageChangedMessage>
 {

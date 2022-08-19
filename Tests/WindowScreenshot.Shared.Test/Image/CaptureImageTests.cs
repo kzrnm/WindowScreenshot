@@ -1,4 +1,4 @@
-﻿namespace WindowScreenshot.Image;
+﻿namespace Kzrnm.WindowScreenshot.Image;
 
 public class CaptureImageTests
 {
