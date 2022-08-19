@@ -14,6 +14,7 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearR
     {
         this.captureImageService = captureImageService;
         Images = images;
+        IsActive = true;
         images.SelectedChanged += (_, e) =>
         {
             SelectedImageIndex = e.NewIndex;
