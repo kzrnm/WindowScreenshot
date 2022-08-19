@@ -14,6 +14,7 @@ public class ImageListView : Control
     public ImageListView()
     {
         DataContext = Ioc.Default.GetRequiredServiceIfIsNotInDesignMode<ImageListViewModel>(this);
+        MinHeight = 40;
     }
 
     public ImageListViewModel ViewModel => (ImageListViewModel)DataContext;
