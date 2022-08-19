@@ -29,6 +29,6 @@ public partial class MainWindow : Window
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        WeakReferenceMessenger.Default.Send(new FontDialogMessage(new FontDialogParams()));
+        WeakReferenceMessenger.Default.Send(new FontDialogMessage(new Font()));
     }
 }

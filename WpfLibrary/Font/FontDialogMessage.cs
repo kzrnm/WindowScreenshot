@@ -2,11 +2,11 @@
 
 namespace Kzrnm.Wpf.Font;
 
-public class FontDialogMessage : RequestMessage<FontDialogParams?>
+public class FontDialogMessage : RequestMessage<Font?>
 {
-    public FontDialogMessage(FontDialogParams initialValue)
+    public FontDialogMessage(Font initialValue)
     {
         InitialValue = initialValue;
     }
-    public FontDialogParams InitialValue { get; }
+    public Font InitialValue { get; }
 }

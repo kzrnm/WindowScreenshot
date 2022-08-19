@@ -70,6 +70,15 @@ namespace Kzrnm.Wpf.Properties {
         }
         
         /// <summary>
+        ///   フォント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Font {
+            get {
+                return ResourceManager.GetString("Font", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   フォントが見つかりません に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string FontNotFoundErrorMessage {

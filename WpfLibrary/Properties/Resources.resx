@@ -120,6 +120,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
+  <data name="Font" xml:space="preserve">
+    <value>フォント</value>
+  </data>
   <data name="FontNotFoundErrorMessage" xml:space="preserve">
     <value>フォントが見つかりません</value>
   </data>

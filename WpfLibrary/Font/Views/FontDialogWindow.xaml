@@ -9,66 +9,65 @@
         xmlns:kz="urn:kzrnm-wpf/controls"
         mc:Ignorable="d"
         ShowInTaskbar="False"
-        Title="FontDialogWindow"
-        SizeToContent="WidthAndHeight"
+        Title="{x:Static properties:Resources.Font}"
+        SizeToContent="Width"
+        Height="400"
         d:DataContext="{d:DesignInstance Type=local:FontDialogViewModel}"
         kw:IocBehavior.AutoViewModel="{x:Type local:FontDialogViewModel}" >
-    <StackPanel Margin="10">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBox Text="{Binding FontName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-            <ListBox Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBox Text="{Binding FontName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <ListBox Grid.Row="1" Grid.Column="0"
                 x:Name="fontNameList" x:FieldModifier="private"
-                Width="400" Height="400"
+                MinWidth="100"
                 IsSynchronizedWithCurrentItem="True"
-                HorizontalAlignment="Left"
+                HorizontalContentAlignment="Stretch"
                 SelectedItem="{Binding FontName, Mode=TwoWay}"
                 ItemsSource="{Binding FontList}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" FontFamily="{Binding}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+        </ListBox>
 
-            <kz:DoubleTextBox Grid.Column="2" DoubleText="{Binding FontSize, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-            <ListBox Grid.Row="1" Grid.Column="2"
+        <kz:DoubleTextBox Grid.Column="2" DoubleText="{Binding FontSize, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+        <ListBox Grid.Row="1" Grid.Column="2"
                 x:Name="fontSizeList" x:FieldModifier="private"
-                Width="200" Height="400"
+                Width="120"
                 IsSynchronizedWithCurrentItem="True"
                 HorizontalAlignment="Left"
                 SelectedItem="{Binding FontSize, Mode=TwoWay}"
                 ItemsSource="{Binding FontSizeList}">
-            </ListBox>
-        </Grid>
-        <TextBlock Margin="0,10,0,0" Text="{x:Static properties:Resources.Sample}"/>
-        <TextBox
+        </ListBox>
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="100000">
+            <TextBlock Margin="0,10,0,0" Text="{x:Static properties:Resources.Sample}"/>
+            <TextBox
             Margin="0,0,0,10"
             Text="{x:Static properties:Resources.FontSampleText}"
             FontSize="{Binding FontSize}"
             FontFamily="{Binding FontName}"/>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="OkButton" 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="OkButton" 
                     Content="{x:Static properties:Resources.OK}"
                     Width="75" Height="25" 
                     Margin="0,10,0,0" 
                     Click="OkButton_Click" />
-            <Button x:Name="CancelButton" 
+                <Button x:Name="CancelButton" 
                     Content="{x:Static properties:Resources.Cancel}"
                     Width="75" Height="25" 
                     HorizontalAlignment="Right" 
                     Margin="20,10,0,0" 
                     IsCancel="True" />
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </Window>

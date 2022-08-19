@@ -7,7 +7,7 @@ namespace Kzrnm.Wpf.Font.Views;
 /// </summary>
 public partial class FontDialogWindow : Window
 {
-    public FontDialogWindow(FontDialogParams fontParams)
+    public FontDialogWindow(Font fontParams)
     {
         InitializeComponent();
         SelectedFont = fontParams;
@@ -20,12 +20,19 @@ public partial class FontDialogWindow : Window
     }
 
     private FontDialogViewModel ViewModel => (FontDialogViewModel)DataContext;
-    public FontDialogParams SelectedFont { get; private set; }
+    public Font SelectedFont { get; private set; }
 
     private void OkButton_Click(object sender, RoutedEventArgs e)
     {
-        var vm = ViewModel;
-        SelectedFont = new(vm.FontSize, vm.FontName);
         DialogResult = true;
+    }
+
+    public Font? ShowDialogWithResponse()
+    {
+        if (ShowDialog() != true)
+            return null;
+
+        var vm = ViewModel;
+        return new(vm.FontName, vm.FontSize);
     }
 }

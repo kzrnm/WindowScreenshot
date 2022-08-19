@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Xaml.Behaviors;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Kzrnm.Wpf.Font.Views;
-public class FontDialogBehavior : Behavior<Window>
+public class FontDialogBehavior : Behavior<Control>
 {
     protected override void OnAttached()
     {
@@ -23,7 +23,6 @@ public class FontDialogBehavior : Behavior<Window>
             Owner = Window.GetWindow(AssociatedObject),
         };
 
-        var response = dialog.ShowDialog() is true ? dialog.SelectedFont : null;
-        message.Reply(response);
+        message.Reply(dialog.ShowDialogWithResponse());
     }
 }

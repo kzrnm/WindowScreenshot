@@ -27,8 +27,7 @@
         AlwaysImageArea="False"
         ImageWidth="65"
         ListHeight="70">
-        <StackPanel 
-            Background="IndianRed">
+        <StackPanel Background="WhiteSmoke">
             <Button Command="{Binding AddCommand}" Content="ダミー画像" />
             <Button Command="{Binding ClearCommand}" Content="クリア" />
             <TextBlock Text="hoge" />
