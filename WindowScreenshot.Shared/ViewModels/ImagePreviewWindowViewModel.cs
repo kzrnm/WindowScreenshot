@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System.Windows;
 using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Windows;
+using System.Windows;
 
 namespace Kzrnm.WindowScreenshot.ViewModels;
 
@@ -26,14 +26,10 @@ public partial class ImagePreviewWindowViewModel : ObservableRecipient, IRecipie
     public ImageDropTarget DropHandler { get; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Visibility))]
     private CaptureImage? _SelectedImage;
-    partial void OnSelectedImageChanged(CaptureImage? value)
-    {
-        Visibility = value is null ? Visibility.Collapsed : Visibility.Visible;
-    }
 
-    [ObservableProperty]
-    private Visibility _Visibility = Visibility.Collapsed;
+    public Visibility Visibility => SelectedImage is null ? Visibility.Collapsed : Visibility.Visible;
 
     [RelayCommand]
     private void CopyToClipboard(CaptureImage? img)

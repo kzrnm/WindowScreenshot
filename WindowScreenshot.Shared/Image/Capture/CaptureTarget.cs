@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using System.Windows.Media.Imaging;
 
@@ -8,17 +7,12 @@ namespace Kzrnm.WindowScreenshot.Image.Capture;
 
 public partial class CaptureTarget : ObservableObject, ICloneable
 {
-    [SuppressMessage("Style", "IDE0060: Remove unused parameter")]
-    partial void OnWindowNameChanged(string value)
-        => OnPropertyChanged(nameof(DisplayText));
-    [SuppressMessage("Style", "IDE0060: Remove unused parameter")]
-    partial void OnProcessNameChanged(string value)
-        => OnPropertyChanged(nameof(DisplayText));
-
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(DisplayText))]
     private string _ProcessName = "";
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(DisplayText))]
     private string _WindowName = "";
 
     [ObservableProperty]
@@ -32,10 +26,10 @@ public partial class CaptureTarget : ObservableObject, ICloneable
     {
         get
         {
-            if (string.IsNullOrEmpty(this.WindowName))
-                if (string.IsNullOrEmpty(this.ProcessName)) return "{none}";
-                else return this.ProcessName;
-            else return $"{ProcessName}[{WindowName}]";
+            if (string.IsNullOrEmpty(WindowName))
+                if (string.IsNullOrEmpty(ProcessName)) return "{none}";
+                else return ProcessName;
+            return $"{ProcessName}[{WindowName}]";
         }
     }
 

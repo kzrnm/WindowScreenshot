@@ -28,7 +28,6 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearR
                     break;
             }
         };
-        Messenger.Register(this);
     }
 
     void IRecipient<ImageClearRequestMessage>.Receive(ImageClearRequestMessage message)

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -25,6 +26,17 @@ public partial class CaptureImage : ObservableObject
     [SuppressMessage("Style", "IDE0060: Remove unused parameter")]
     partial void OnIsSideCutModeChanged(bool value) => UpdateTransformedImage();
 
+
+    private void OnImageRatioSizePropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(ImageRatioSize.HeightPercentage):
+            case nameof(ImageRatioSize.WidthPercentage):
+                UpdateTransformedImage();
+                break;
+        }
+    }
     private void UpdateTransformedImage()
     {
         var bitmap = ImageSource;
@@ -40,8 +52,7 @@ public partial class CaptureImage : ObservableObject
         {
             bitmap =
                 new TransformedBitmap(bitmap,
-                new ScaleTransform(ImageRatioSize.WidthPercentage / 100,
-                ImageRatioSize.HeightPercentage / 100));
+                new ScaleTransform(ImageRatioSize.WidthPercentage / 100, ImageRatioSize.HeightPercentage / 100));
             bitmap.Freeze();
         }
         TransformedImage = bitmap;
@@ -84,22 +95,13 @@ public partial class CaptureImage : ObservableObject
                 : ImageKind.Png;
         }
 
-        ImageRatioSize.PropertyChanged += (_, e) =>
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(ImageRatioSize.HeightPercentage):
-                case nameof(ImageRatioSize.WidthPercentage):
-                    UpdateTransformedImage();
-                    break;
-            }
-        };
+        ImageRatioSize.PropertyChanged += OnImageRatioSizePropertyChanged;
     }
 
     private BitmapEncoder GetEncoder()
-        => this.ImageKind switch
+        => ImageKind switch
         {
-            ImageKind.Jpg => new JpegBitmapEncoder { QualityLevel = this.JpegQualityLevel },
+            ImageKind.Jpg => new JpegBitmapEncoder { QualityLevel = JpegQualityLevel },
             ImageKind.Png => new PngBitmapEncoder { Interlace = PngInterlaceOption.Off },
             _ => throw new InvalidOperationException($"invalid {nameof(ImageKind)}"),
         };
