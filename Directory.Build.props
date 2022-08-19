@@ -6,6 +6,8 @@
     <PackageProjectUrl>https://github.com/kzrnm/WindowScreenshot</PackageProjectUrl>
     <RepositoryUrl>https://github.com/kzrnm/WindowScreenshot</RepositoryUrl>
 
+    <TargetFramework>net6.0-windows</TargetFramework>
+
     <Version>0.0.1</Version>
     <AssemblyVersion>0.0.1.100</AssemblyVersion>
     <RepositoryCommit Condition="'$(GIT_COMMIT)' != ''">$(GIT_COMMIT)</RepositoryCommit>
