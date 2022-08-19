@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Kzrnm.WindowScreenshot.Image;
 using System;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Kzrnm.WindowScreenshot.Image;
 
 namespace Kzrnm.WindowScreenshot.ViewModels;
 

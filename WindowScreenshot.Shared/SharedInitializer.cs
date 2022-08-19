@@ -1,20 +1,19 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Kzrnm.WindowScreenshot.Image;
+﻿using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Image.Capture;
 using Kzrnm.WindowScreenshot.Windows;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Kzrnm.WindowScreenshot;
 using ViewModels;
 
 public static class SharedInitializer
 {
-    public static IServiceCollection InitializeDefault(
+    public static IServiceCollection InitializeWindowScreenshot(
         this IServiceCollection service,
         ObserveWindowProcess? observeWindowProcess = null,
         ICaptureImageService? captureImageService = null,
         IClipboardManager? clipboardManager = null,
-        ImageProvider? imageProvider = null
-        )
+        ImageProvider? imageProvider = null)
     {
         service.AddSingleton(observeWindowProcess ?? ObserveWindowProcess.Instanse);
 

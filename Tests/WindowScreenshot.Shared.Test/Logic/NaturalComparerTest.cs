@@ -1,10 +1,8 @@
-﻿using KzLibraries.EventHandlerHistory;
-
-namespace Kzrnm.WindowScreenshot;
+﻿namespace Kzrnm.WindowScreenshot;
 
 public class NaturalComparerTest
 {
-    private readonly NaturalComparer comparer= NaturalComparer.Default;
+    private readonly NaturalComparer comparer = NaturalComparer.Default;
     [Theory]
     [InlineData(null, null)]
     [InlineData(null, "foo")]
