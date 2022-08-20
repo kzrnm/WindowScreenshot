@@ -27,11 +27,14 @@
         AlwaysImageArea="False"
         ImageWidth="65"
         ListHeight="70">
-        <StackPanel Background="WhiteSmoke">
-            <Button Command="{Binding AddCommand}" Content="ダミー画像" />
-            <Button Command="{Binding ClearCommand}" Content="クリア" />
-            <TextBlock Text="hoge" />
-            <Button Content="フォント" Click="Button_Click" />
-        </StackPanel>
+        <DockPanel Background="WhiteSmoke">
+
+            <StackPanel Background="WhiteSmoke" Name="DebugArea">
+                <Button Command="{Binding AddRandomImageCommand}" Content="Dummy &#10;for debug" />
+                <Button Command="{Binding ClearCommand}" Content="クリア" />
+                <TextBlock Text="hoge" />
+                <Button Content="フォント" Click="Button_Click" />
+            </StackPanel>
+        </DockPanel>
     </ws:WindowCapturer>
 </Window>
