@@ -61,6 +61,15 @@ namespace Kzrnm.WindowScreenshot.Properties.App {
         }
         
         /// <summary>
+        ///   設定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Config {
+            get {
+                return ResourceManager.GetString("Config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Post に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string PostContent {

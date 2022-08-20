@@ -27,13 +27,32 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="2" MinHeight="24">
+        <Grid Grid.Row="2" MinHeight="26">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Name="FooterLeft" />
             <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <Button
+                    MinWidth="32"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Focusable="False"
+                    Command="{Binding OpenSelectCaptureWindowDialogCommand}"
+                    Content="🖼" />
+                <Button
+                    MinWidth="32"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Focusable="False"
+                    Command="{Binding OpenConfigDialogCommand}"
+                    Content="⚙" />
+                <Button
+                    MinWidth="40"
+                    Background="Transparent"
+                    Command="{Binding CaptureScreenshotCommand}"
+                    Content="Cap" />
                 <Button
                     MinWidth="40"
                     Background="Transparent"
