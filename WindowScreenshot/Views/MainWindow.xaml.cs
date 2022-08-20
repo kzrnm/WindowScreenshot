@@ -13,13 +13,5 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-#if !DEBUG
-        if(DebugArea.Parent is Panel panel) panel.Children.Remove(DebugArea);
-#endif
-    }
-
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-        WeakReferenceMessenger.Default.Send(new FontDialogMessage(new Font()));
     }
 }

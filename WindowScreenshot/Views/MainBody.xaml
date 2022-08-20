@@ -1,0 +1,45 @@
+﻿<UserControl
+    x:Class="Kzrnm.WindowScreenshot.Views.MainBody"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:dd="urn:gong-wpf-dragdrop"
+    xmlns:ktk="urn:kzrnm-wpf/toolkit"
+    xmlns:kw="urn:kzrnm-wpf-window-screenshot/core"
+    xmlns:ws="urn:kzrnm-wpf-window-screenshot"
+    xmlns:properties="clr-namespace:Kzrnm.WindowScreenshot.Properties.App"
+    xmlns:local="clr-namespace:Kzrnm.WindowScreenshot.Views"
+    xmlns:vm="clr-namespace:Kzrnm.WindowScreenshot.ViewModels"
+    d:DataContext="{d:DesignInstance Type=vm:MainBodyViewModel}"
+    ktk:IocBehavior.AutoViewModel="{x:Type vm:MainBodyViewModel}"
+    mc:Ignorable="d" 
+    d:Background="LightYellow"
+    d:DesignHeight="200"
+    d:DesignWidth="400">
+    <b:Interaction.Behaviors>
+        <kw:FontDialogBehavior />
+    </b:Interaction.Behaviors>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="2" MinHeight="24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Name="FooterLeft" />
+            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <Button
+                    MinWidth="40"
+                    Background="Transparent"
+                    Command="{Binding PostContentCommand}"
+                    Content="{x:Static properties:Resources.PostContent}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

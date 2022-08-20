@@ -1,0 +1,24 @@
+﻿<UserControl
+    x:Class="Kzrnm.WindowScreenshot.Views.DebugArea"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:dd="urn:gong-wpf-dragdrop"
+    xmlns:ktk="urn:kzrnm-wpf/toolkit"
+    xmlns:kw="urn:kzrnm-wpf-window-screenshot/core"
+    xmlns:ws="urn:kzrnm-wpf-window-screenshot"
+    xmlns:properties="clr-namespace:Kzrnm.WindowScreenshot.Properties.App"
+    xmlns:local="clr-namespace:Kzrnm.WindowScreenshot.Views"
+    xmlns:vm="clr-namespace:Kzrnm.WindowScreenshot.ViewModels"
+    d:DataContext="{d:DesignInstance Type=vm:DebugAreaViewModel}"
+    ktk:IocBehavior.AutoViewModel="{x:Type vm:DebugAreaViewModel}"
+    mc:Ignorable="d" 
+    d:Background="LightYellow"
+    d:DesignHeight="200"
+    d:DesignWidth="200">
+    <StackPanel Orientation="Horizontal">
+        <Button Command="{Binding AddRandomImageCommand}" Content="Add dummy image for debug" />
+    </StackPanel>
+</UserControl>

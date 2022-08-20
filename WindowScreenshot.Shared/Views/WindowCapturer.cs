@@ -105,12 +105,12 @@ public class WindowCapturer : DockPanel
         set => SetValue(AlwaysImageAreaProperty, value);
     }
 
-    private static readonly DependencyProperty ImageVisibilityProperty =
+    public static readonly DependencyProperty ImageVisibilityProperty =
         DependencyProperty.Register(
             nameof(ImageVisibility),
             typeof(Visibility),
             typeof(WindowCapturer));
-    private Visibility ImageVisibility
+    public Visibility ImageVisibility
     {
         get => (Visibility)GetValue(ImageVisibilityProperty);
         set => SetValue(ImageVisibilityProperty, value);

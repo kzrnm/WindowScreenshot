@@ -21,7 +21,10 @@ public partial class App : Application
         Ioc.Default.ConfigureServices(
             new ServiceCollection()
             .InitializeWindowScreenshot()
-            .AddTransient<MainWindowViewModel>()
+            .AddTransient<MainBodyViewModel>()
+#if DEBUG
+            .AddTransient<DebugAreaViewModel>()
+#endif
             .BuildServiceProvider()
             );
 #if !DEBUG
