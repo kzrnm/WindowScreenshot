@@ -16,7 +16,6 @@ public partial class DebugAreaViewModel : ObservableObject
     [RelayCommand]
     private void AddRandomImage()
     {
-#if DEBUG
         var pf = System.Windows.Media.PixelFormats.Rgb48;
         var width = Random.Shared.Next(1, 800);
         var height = Random.Shared.Next(1, 800);
@@ -25,8 +24,5 @@ public partial class DebugAreaViewModel : ObservableObject
         Random.Shared.NextBytes(bytes);
         var img = System.Windows.Media.Imaging.BitmapSource.Create(width, height, 96, 96, pf, null, bytes, stride);
         ImageProvider.AddImage(img);
-#else
-        throw new InvalidOperationException(nameof(AddRandomImage) + "is only for debugging");
-#endif
     }
 }
