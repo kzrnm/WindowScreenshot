@@ -21,6 +21,8 @@ public partial class App : Application
         Ioc.Default.ConfigureServices(
             new ServiceCollection()
             .InitializeWindowScreenshot()
+            .AddSingleton(ConfigMaster.LoadConfigsAsync().Result)
+            .AddTransient<MainWindowViewModel>()
             .AddTransient<MainBodyViewModel>()
 #if DEBUG
             .AddTransient<DebugAreaViewModel>()

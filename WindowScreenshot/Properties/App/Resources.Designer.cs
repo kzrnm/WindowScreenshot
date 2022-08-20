@@ -70,6 +70,15 @@ namespace Kzrnm.WindowScreenshot.Properties.App {
         }
         
         /// <summary>
+        ///   WindowScreenshot に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainWindowTitle {
+            get {
+                return ResourceManager.GetString("MainWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Post に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string PostContent {

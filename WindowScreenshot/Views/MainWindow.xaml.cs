@@ -1,7 +1,7 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using Kzrnm.Wpf.Font;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Kzrnm.WindowScreenshot.Configs;
+using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Kzrnm.WindowScreenshot.Views;
 
@@ -13,5 +13,29 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        ConfigMaster = Ioc.Default.GetService<ConfigMaster>();
+        if (ConfigMaster?.Config is { } confWrapper)
+        {
+            confWrapper.Value.WindowPosition.ApplyTo(this);
+            Topmost = confWrapper.Value.Topmost;
+            confWrapper.ConfigUpdated += (sender, e) =>
+            {
+                var config = e.Config;
+                Topmost = config.Topmost;
+            };
+        }
+    }
+
+
+    private readonly ConfigMaster? ConfigMaster;
+
+    protected override async void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+        if (ConfigMaster is { } configMaster)
+        {
+            configMaster.Config.Value = configMaster.Config.Value with { WindowPosition = WindowPosition.Load(this) };
+            await configMaster.SaveAsync().ConfigureAwait(false);
+        }
     }
 }

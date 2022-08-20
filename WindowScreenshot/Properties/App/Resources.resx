@@ -120,6 +120,9 @@
   <data name="Config" xml:space="preserve">
     <value>設定</value>
   </data>
+  <data name="MainWindowTitle" xml:space="preserve">
+    <value>WindowScreenshot</value>
+  </data>
   <data name="PostContent" xml:space="preserve">
     <value>Post</value>
   </data>
