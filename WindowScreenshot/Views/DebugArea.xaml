@@ -19,6 +19,6 @@
     d:DesignHeight="200"
     d:DesignWidth="200">
     <StackPanel Orientation="Horizontal">
-        <Button Command="{Binding AddRandomImageCommand}" Content="Add dummy image for debug" />
+        <Button Command="{Binding AddRandomImageCommand, Mode=OneTime}" Content="Add dummy image for debug" />
     </StackPanel>
 </UserControl>

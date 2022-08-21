@@ -30,32 +30,31 @@
     mc:Ignorable="d">
     <b:Interaction.Triggers>
         <b:KeyTrigger Key="Esc">
-            <b:InvokeCommandAction Command="{Binding ClearImageCommand}" />
+            <b:InvokeCommandAction Command="{Binding ClearImageCommand, Mode=OneTime}" />
         </b:KeyTrigger>
         <b:EventTrigger EventName="Closing">
-            <b:InvokeCommandAction Command="{Binding ClearImageCommand}" />
+            <b:InvokeCommandAction Command="{Binding ClearImageCommand, Mode=OneTime}" />
         </b:EventTrigger>
     </b:Interaction.Triggers>
+    <Window.ContextMenu>
+        <ContextMenu>
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="Opened">
+                    <b:CallMethodAction MethodName="UpdateCanClipboardCommand" TargetObject="{Binding}" />
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
+            <MenuItem
+                        Command="{Binding CopyToClipboardCommand, Mode=OneTime}"
+                        CommandParameter="{Binding SelectedImage}"
+                        Header="{x:Static properties:Resources.CopyToClipboard}" />
+            <MenuItem Command="{Binding PasteImageFromClipboardCommand, Mode=OneTime}" Header="{x:Static properties:Resources.Paste}" />
+        </ContextMenu>
+    </Window.ContextMenu>
     <Grid>
         <Image
             Width="{Binding SelectedImage.TransformedImage.Width, Mode=OneWay}"
             Height="{Binding SelectedImage.TransformedImage.Height, Mode=OneWay}"
             Source="{Binding SelectedImage.TransformedImage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-            Stretch="Fill">
-            <Image.ContextMenu>
-                <ContextMenu>
-                    <b:Interaction.Triggers>
-                        <b:EventTrigger EventName="Opened">
-                            <b:CallMethodAction MethodName="UpdateCanClipboardCommand" TargetObject="{Binding}" />
-                        </b:EventTrigger>
-                    </b:Interaction.Triggers>
-                    <MenuItem
-                        Command="{Binding CopyToClipboardCommand}"
-                        CommandParameter="{Binding SelectedImage}"
-                        Header="{x:Static properties:Resources.CopyToClipboard}" />
-                    <MenuItem Command="{Binding PasteImageFromClipboardCommand}" Header="{x:Static properties:Resources.Paste}" />
-                </ContextMenu>
-            </Image.ContextMenu>
-        </Image>
+            Stretch="Fill" />
     </Grid>
 </Window>

@@ -39,24 +39,24 @@
                     Background="Transparent"
                     BorderBrush="Transparent"
                     Focusable="False"
-                    Command="{Binding OpenSelectCaptureWindowDialogCommand}"
+                    Command="{Binding OpenSelectCaptureWindowDialogCommand, Mode=OneTime}"
                     Content="🖼" />
                 <Button
                     MinWidth="32"
                     Background="Transparent"
                     BorderBrush="Transparent"
                     Focusable="False"
-                    Command="{Binding OpenConfigDialogCommand}"
+                    Command="{Binding OpenConfigDialogCommand, Mode=OneTime}"
                     Content="⚙" />
                 <Button
                     MinWidth="40"
                     Background="Transparent"
-                    Command="{Binding CaptureScreenshotCommand}"
+                    Command="{Binding CaptureScreenshotCommand, Mode=OneTime}"
                     Content="Cap" />
                 <Button
                     MinWidth="40"
                     Background="Transparent"
-                    Command="{Binding PostContentCommand}"
+                    Command="{Binding PostContentCommand, Mode=OneTime}"
                     Content="{x:Static properties:Resources.PostContent}" />
             </StackPanel>
         </Grid>
