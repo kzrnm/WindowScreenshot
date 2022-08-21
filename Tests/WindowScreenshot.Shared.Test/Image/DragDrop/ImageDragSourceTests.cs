@@ -22,25 +22,14 @@ public class ImageDragSourceTests
     [Fact]
     public void CaptureImage()
     {
-        var img = new CaptureImage(TestUtil.DummyBitmapSource(2, 2)) { JpegQualityLevel = 100 };
+        var img = new CaptureImage(TestUtil.DummyBitmapSource(100, 100)) { JpegQualityLevel = 100 };
         img.ImageRatioSize.Width = 10;
-
-        var ms = new MemoryStream();
-        JsonSerializer.Serialize(ms, img);
 
         var mock = new Mock<IDragInfo>();
         mock.SetupGet(d => d.Data).Returns(img);
         new ImageDragSource().StartDrag(mock.Object);
 
-        mock.VerifySet(d => d.DataFormat = DataFormats.GetDataFormat(DragDropInfo.CaptureImageFormat), Times.Once());
-        mock.VerifySet(d => d.Data = It.Is<MemoryStream>(o => Equals(ms, o)), Times.Once());
-    }
-    static bool Equals(MemoryStream stream, object obj)
-    {
-        if (obj is MemoryStream other)
-        {
-            return stream.ToArray().SequenceEqual(other.ToArray());
-        }
-        return false;
+        mock.VerifySet(d => d.Effects = DragDropEffects.Copy, Times.Once());
+        mock.VerifySet(d => d.DataObject = It.Is<DataObject>(o => BitmapSourceEqualityComparer.Default.Equals(o.GetImage2(), img.ImageSource)), Times.Once());
     }
 }

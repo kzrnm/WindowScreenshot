@@ -1,7 +1,5 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using System;
-using System.IO;
-using System.Text.Json;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -43,8 +41,7 @@ public class ImageDropTarget : IDropTarget
 
         static bool IsAcceptable(DataObject data)
         {
-            return data.GetDataPresent(DragDropInfo.CaptureImageFormat)
-                || data.GetDataPresent(DataFormats.FileDrop)
+            return data.GetDataPresent(DataFormats.FileDrop)
                 || data.ContainsImage();
         }
     }
@@ -57,12 +54,9 @@ public class ImageDropTarget : IDropTarget
             return;
         }
 
-        if (data.GetDataPresent(DragDropInfo.CaptureImageFormat) && data.GetData(DragDropInfo.CaptureImageFormat) is MemoryStream ms)
+        if (data.ContainsCaptureImage() && data.GetCaptureImage() is { } captureImage)
         {
-            ms.Position = 0;
-            var img = JsonSerializer.Deserialize<CaptureImage>(ms);
-            if (img != null)
-                AddImage(dropInfo, img);
+            AddImage(dropInfo, captureImage);
         }
         else if (data.GetDataPresent(DataFormats.FileDrop) && data.GetData(DataFormats.FileDrop, true) is string[] files)
         {
@@ -74,9 +68,9 @@ public class ImageDropTarget : IDropTarget
                 foreach (var file in files)
                     ImageProvider.TryInsertImageFromFile(dropInfo.UnfilteredInsertIndex, file);
         }
-        else if (data.ContainsImage() && data.GetImage() is { } img)
+        else if (data.ContainsImage() && data.GetImage() is { } bitmap)
         {
-            AddImage(dropInfo, img);
+            AddImage(dropInfo, bitmap);
         }
         else
             dropInfo.NotHandled = AllowOtherDrop;
