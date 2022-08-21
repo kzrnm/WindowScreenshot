@@ -106,7 +106,7 @@ public class SelectorObservableCollection<T> : ObservableCollection<T>
     {
         var ix = SelectedIndex;
         if ((uint)ix < (uint)Count)
-            this.RemoveAt(ix);
+            RemoveAt(ix);
     }
 
 

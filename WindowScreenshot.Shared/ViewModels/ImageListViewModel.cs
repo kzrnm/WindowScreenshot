@@ -1,8 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using GongSolutions.Wpf.DragDrop;
 using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Windows;
+using System.Windows;
+using DragDrop = GongSolutions.Wpf.DragDrop.DragDrop;
 
 namespace Kzrnm.WindowScreenshot.ViewModels;
 
@@ -18,7 +21,7 @@ public partial class ImageListViewModel : ObservableRecipient, IRecipient<Select
     {
         ImageProvider = imageProvider;
         ClipboardManager = clipboardManager;
-        DropHandler = imageDropTargetFactory.Build(false);
+        DropHandler = new DropTarget(imageProvider, imageDropTargetFactory);
         DragHandler = new();
         IsActive = true;
     }
@@ -53,5 +56,41 @@ public partial class ImageListViewModel : ObservableRecipient, IRecipient<Select
     void IRecipient<SelectedImageChangedMessage>.Receive(SelectedImageChangedMessage message)
     {
         removeSelectedImageCommand?.NotifyCanExecuteChanged();
+    }
+
+    private class DropTarget : ImageDropTarget
+    {
+        public DropTarget(ImageProvider imageProvider, Factory factory) : base(factory.ImageProvider, false)
+        {
+            ImageProvider = imageProvider;
+        }
+        public ImageProvider ImageProvider { get; }
+
+        public override void DragOver(IDropInfo dropInfo)
+        {
+            if (dropInfo.VisualTarget == dropInfo.DragInfo?.VisualSource)
+            {
+                DragDrop.DefaultDropHandler.DragOver(dropInfo);
+                return;
+            }
+
+            base.DragOver(dropInfo);
+        }
+        public override void Drop(IDropInfo dropInfo)
+        {
+            if (dropInfo.VisualTarget == dropInfo.DragInfo?.VisualSource)
+            {
+                var sourceIndex = dropInfo.DragInfo.SourceIndex;
+                var insertIndex = dropInfo.UnfilteredInsertIndex;
+                if (sourceIndex < insertIndex)
+                    --insertIndex;
+
+                if (sourceIndex != insertIndex)
+                    ImageProvider.Images.Move(sourceIndex, insertIndex);
+                return;
+            }
+
+            base.Drop(dropInfo);
+        }
     }
 }

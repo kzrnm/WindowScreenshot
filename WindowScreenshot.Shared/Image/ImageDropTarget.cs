@@ -1,85 +1,83 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using System;
-using System.Linq;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace Kzrnm.WindowScreenshot.Image;
 
-public class ImageDropTarget : DefaultDropHandler
+public class ImageDropTarget : IDropTarget
 {
     public class Factory
     {
-        private ImageProvider ImageProvider { get; }
-        private ICaptureImageService CaptureImageService { get; }
-        public Factory(ICaptureImageService captureImageService, ImageProvider imageProvider)
+        public ImageProvider ImageProvider { get; }
+        public Factory(ImageProvider imageProvider)
         {
-            CaptureImageService = captureImageService;
             ImageProvider = imageProvider;
         }
 
-        public ImageDropTarget Build(bool allowOtherDrop) => new(CaptureImageService, ImageProvider, allowOtherDrop);
+        public ImageDropTarget Build(bool allowOtherDrop) => new(ImageProvider, allowOtherDrop);
     }
+
     private ImageProvider ImageProvider { get; }
-    private ICaptureImageService CaptureImageService { get; }
     public bool AllowOtherDrop { get; }
-    public ImageDropTarget(ICaptureImageService captureImageService, ImageProvider imageProvider, bool allowOtherDrop)
+    public ImageDropTarget(ImageProvider imageProvider, bool allowOtherDrop)
     {
-        CaptureImageService = captureImageService;
         ImageProvider = imageProvider;
         AllowOtherDrop = allowOtherDrop;
     }
-    public override void DragOver(IDropInfo dropInfo)
+    public virtual void DragOver(IDropInfo dropInfo)
     {
-        if (dropInfo.VisualTarget == dropInfo.DragInfo?.VisualSource)
+        if (dropInfo.Data is not DataObject data)
         {
-            base.DragOver(dropInfo);
+            dropInfo.NotHandled = AllowOtherDrop;
             return;
         }
-        else if (dropInfo.Data is DataObject data)
+        if (IsAcceptable(data))
         {
-            if (data.GetData(DataFormats.FileDrop, false) is string[] files
-                && files.All(f => CaptureImageService.IsImageFile(f))
-                || data.ContainsImage())
-            {
-                dropInfo.Effects = DragDropEffects.Copy;
-                if (dropInfo.TargetCollection == this.ImageProvider.Images)
-                    dropInfo.DropTargetAdorner = DropTargetAdorners.Insert;
-                return;
-            }
+            dropInfo.Effects = DragDropEffects.Copy;
+            if (dropInfo.TargetCollection == ImageProvider.Images)
+                dropInfo.DropTargetAdorner = DropTargetAdorners.Insert;
         }
-        dropInfo.NotHandled = AllowOtherDrop;
+
+        static bool IsAcceptable(DataObject data)
+        {
+            return data.GetDataPresent(DataFormats.FileDrop) || data.ContainsImage();
+        }
     }
 
-    public override void Drop(IDropInfo dropInfo)
+    public virtual void Drop(IDropInfo dropInfo)
     {
-        if (dropInfo.VisualTarget == dropInfo.DragInfo?.VisualSource)
+        if (dropInfo.Data is not DataObject data)
         {
-            base.Drop(dropInfo);
+            dropInfo.NotHandled = AllowOtherDrop;
             return;
         }
-        else if (dropInfo.Data is DataObject data)
+
+        if (data.GetData(DataFormats.FileDrop, true) is string[] files)
         {
-            if (data.GetData(DataFormats.FileDrop, false) is string[] files)
-            {
-                Array.Sort(files, NaturalComparer.Default);
-                if (dropInfo.InsertPosition == RelativeInsertPosition.None)
-                    foreach (var file in files)
-                        ImageProvider.TryAddImageFromFile(file);
-                else
-                    foreach (var file in files)
-                        ImageProvider.TryInsertImageFromFile(dropInfo.UnfilteredInsertIndex, file);
-                return;
-            }
-            if (data.ContainsImage())
-            {
-                var img = data.GetImage();
-                if (dropInfo.InsertPosition == RelativeInsertPosition.None)
-                    ImageProvider.AddImage(img);
-                else
-                    ImageProvider.InsertImage(dropInfo.UnfilteredInsertIndex, img);
-                return;
-            }
+            Array.Sort(files, NaturalComparer.Default);
+            if (dropInfo.InsertPosition == RelativeInsertPosition.None)
+                foreach (var file in files)
+                    ImageProvider.TryAddImageFromFile(file);
+            else
+                foreach (var file in files)
+                    ImageProvider.TryInsertImageFromFile(dropInfo.UnfilteredInsertIndex, file);
         }
-        dropInfo.NotHandled = AllowOtherDrop;
+        else if (data.ContainsImage())
+        {
+            var img = data.GetImage();
+            AddImage(dropInfo, img);
+        }
+        else
+            dropInfo.NotHandled = AllowOtherDrop;
+    }
+
+
+    private void AddImage(IDropInfo dropInfo, BitmapSource image)
+    {
+        if (dropInfo.InsertPosition == RelativeInsertPosition.None)
+            ImageProvider.AddImage(image);
+        else
+            ImageProvider.InsertImage(dropInfo.UnfilteredInsertIndex, image);
     }
 }
