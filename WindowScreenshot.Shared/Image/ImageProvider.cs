@@ -31,13 +31,10 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearR
         };
     }
 
-    void IRecipient<ImageClearRequestMessage>.Receive(ImageClearRequestMessage message)
-    {
-        Images.Clear();
-    }
+    public virtual bool CanAddImage => true;
+    public SelectorObservableCollection<CaptureImage> Images { get; }
 
     private readonly ICaptureImageService captureImageService;
-    public SelectorObservableCollection<CaptureImage> Images { get; }
 
     [ObservableProperty]
     private int _SelectedImageIndex = -1;
@@ -73,8 +70,6 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearR
             image.IsSideCutMode = lastSelectedOption.IsSideCutMode;
         }
     }
-
-    public virtual bool CanAddImage => true;
 
     public void AddImage(BitmapSource bmp)
     {
@@ -123,5 +118,9 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearR
             image.ImageKind,
             image.IsSideCutMode)
         { }
+    }
+    void IRecipient<ImageClearRequestMessage>.Receive(ImageClearRequestMessage message)
+    {
+        Images.Clear();
     }
 }

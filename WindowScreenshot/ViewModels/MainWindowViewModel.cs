@@ -1,27 +1,28 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Kzrnm.WindowScreenshot.Configs;
+using CommunityToolkit.Mvvm.Input;
+using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Properties.App;
-using Kzrnm.Wpf.Configs;
+using System.Windows.Input;
 
 namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
-    public MainWindowViewModel(ConfigMaster configMaster)
+    public MainWindowViewModel(ImageProvider imageProvider)
     {
-        ConfigMaster = configMaster;
-        configMaster.Config.ConfigUpdated += OnConfigUpdated;
+        ImageProvider = imageProvider;
     }
-    public ConfigMaster ConfigMaster { get; }
+    public ImageProvider ImageProvider { get; }
     public string Title { get; } = Resources.MainWindowTitle;
 
-    private void OnConfigUpdated(object? sender, ConfigUpdatedEventArgs<Config> e)
+    [RelayCommand]
+    private void OnKeyDown(KeyEventArgs e)
     {
-        var config = e.Config;
-        Topmost = config.Topmost;
+        switch (e.Key)
+        {
+            case Key.Escape:
+                ImageProvider.Images.Clear();
+                break;
+        }
     }
-
-
-    [ObservableProperty]
-    private bool _Topmost;
 }

@@ -26,7 +26,6 @@ public partial class MainWindow : Window
         }
     }
 
-
     private readonly ConfigMaster? ConfigMaster;
 
     protected override async void OnClosed(EventArgs e)
