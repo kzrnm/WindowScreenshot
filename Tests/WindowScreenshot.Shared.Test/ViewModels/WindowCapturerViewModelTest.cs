@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Kzrnm.EventHandlerHistory;
 using Kzrnm.WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Image.DragDrop;
 using System.Windows;
 
 namespace Kzrnm.WindowScreenshot.ViewModels;
@@ -19,7 +20,7 @@ public class WindowCapturerViewModelTest
     [Fact]
     public void ImageVisibility()
     {
-        var viewModel = new WindowCapturerViewModel(Messenger, new CaptureImageService(), ImageProvider);
+        var viewModel = new WindowCapturerViewModel(Messenger, new ImageDropTarget.Factory(ImageProvider), ImageProvider);
         using (var ph = new PropertyChangedHistory(viewModel))
         {
             ph.Should().Equal(new Dictionary<string, int> { });

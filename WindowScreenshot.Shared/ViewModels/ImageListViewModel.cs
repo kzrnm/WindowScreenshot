@@ -3,8 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using GongSolutions.Wpf.DragDrop;
 using Kzrnm.WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Image.DragDrop;
 using Kzrnm.WindowScreenshot.Windows;
-using System.Windows;
 using DragDrop = GongSolutions.Wpf.DragDrop.DragDrop;
 
 namespace Kzrnm.WindowScreenshot.ViewModels;

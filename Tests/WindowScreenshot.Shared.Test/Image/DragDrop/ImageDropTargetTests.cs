@@ -4,7 +4,7 @@ using Moq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kzrnm.WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image.DragDrop;
 
 public class ImageDropTargetTests
 {
@@ -14,7 +14,7 @@ public class ImageDropTargetTests
         var captureImageMock = new Mock<ICaptureImageService>();
         var captureImageService = captureImageMock.Object;
         var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageDropTarget(captureImageService, imageProvider);
+        var dropTarget = new ImageDropTarget(imageProvider, false);
         var mock = new Mock<IDropInfo>();
 
         var elm = new ListView();
@@ -34,7 +34,7 @@ public class ImageDropTargetTests
         var captureImageMock = new Mock<ICaptureImageService>();
         var captureImageService = captureImageMock.Object;
         var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageDropTarget(captureImageService, imageProvider);
+        var dropTarget = new ImageDropTarget(imageProvider, false);
         var mock = new Mock<IDropInfo>();
         var elm = new ListView();
         mock.SetupGet(d => d.VisualTarget).Returns(elm);
@@ -50,7 +50,7 @@ public class ImageDropTargetTests
         var captureImageMock = new Mock<ICaptureImageService>();
         var captureImageService = captureImageMock.Object;
         var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageDropTarget(captureImageService, imageProvider, true);
+        var dropTarget = new ImageDropTarget(imageProvider, true);
         var mock = new Mock<IDropInfo>();
         var elm = new ListView();
         mock.SetupGet(d => d.VisualTarget).Returns(elm);
@@ -67,7 +67,7 @@ public class ImageDropTargetTests
         var captureImageMock = new Mock<ICaptureImageService>();
         var captureImageService = captureImageMock.Object;
         var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageDropTarget(captureImageService, imageProvider, true);
+        var dropTarget = new ImageDropTarget(imageProvider, true);
         var mock = new Mock<IDropInfo>();
         var elm = new ListView();
         mock.SetupGet(d => d.VisualTarget).Returns(elm);
@@ -107,7 +107,7 @@ public class ImageDropTargetTests
         var captureImageMock = new Mock<ICaptureImageService>();
         var captureImageService = captureImageMock.Object;
         var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageDropTarget(captureImageService, imageProvider, true);
+        var dropTarget = new ImageDropTarget(imageProvider, true);
         var mock = new Mock<IDropInfo>();
         var elm = new ListView();
         mock.SetupGet(d => d.VisualTarget).Returns(elm);
@@ -149,7 +149,7 @@ public class ImageDropTargetTests
         var captureImageMock = new Mock<ICaptureImageService>();
         var captureImageService = captureImageMock.Object;
         var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageDropTarget(captureImageService, imageProvider, true);
+        var dropTarget = new ImageDropTarget(imageProvider, true);
         var mock = new Mock<IDropInfo>();
         var elm = new ListView();
         var img = TestUtil.DummyBitmapSource(5, 3);

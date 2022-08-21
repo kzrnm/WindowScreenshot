@@ -1,5 +1,6 @@
 ﻿using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Image.Capture;
+using Kzrnm.WindowScreenshot.Image.DragDrop;
 using Kzrnm.WindowScreenshot.Windows;
 using Microsoft.Extensions.DependencyInjection;
 

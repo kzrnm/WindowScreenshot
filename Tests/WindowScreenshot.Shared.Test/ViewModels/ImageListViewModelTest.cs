@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Windows.Media.Imaging;
 using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Windows;
+using Kzrnm.WindowScreenshot.Image.DragDrop;
 
 namespace Kzrnm.WindowScreenshot.ViewModels;
 
@@ -22,7 +23,8 @@ public class ImageListViewModelTest
     public void RemoveSelectedImageCommand()
     {
         var clipboardMock = new Mock<IClipboardManager>();
-        var viewModel = new ImageListViewModel(Messenger, new CaptureImageService(), clipboardMock.Object, ImageProvider);
+        var viewModel = new
+        ImageListViewModel(Messenger, new ImageDropTarget.Factory(ImageProvider), clipboardMock.Object, ImageProvider);
 
         viewModel.RemoveSelectedImageCommand.CanExecute(null).Should().BeFalse();
 
@@ -38,7 +40,8 @@ public class ImageListViewModelTest
     public void InsertImageFromClipboardCommand()
     {
         var clipboardMock = new Mock<IClipboardManager>();
-        var viewModel = new ImageListViewModel(Messenger, new CaptureImageService(), clipboardMock.Object, ImageProvider);
+        var viewModel = new 
+        ImageListViewModel(Messenger, new ImageDropTarget.Factory(ImageProvider), clipboardMock.Object, ImageProvider);
         viewModel.InsertImageFromClipboardCommand.CanExecute(null).Should().BeFalse();
 
         viewModel.InsertImageFromClipboardCommand.CanExecute(null).Should().BeFalse();
@@ -72,7 +75,8 @@ public class ImageListViewModelTest
         var img = ImageProvider.Images[0];
         img.ImageRatioSize.WidthPercentage = 200;
         var clipboardMock = new Mock<IClipboardManager>();
-        var viewModel = new ImageListViewModel(Messenger, new CaptureImageService(), clipboardMock.Object, ImageProvider);
+        var viewModel = new 
+        ImageListViewModel(Messenger, new ImageDropTarget.Factory(ImageProvider), clipboardMock.Object, ImageProvider);
 
         BitmapSource? called = null;
         clipboardMock.Setup(c => c.SetImage(It.IsAny<BitmapSource>())).Callback<BitmapSource>(img => called = img);

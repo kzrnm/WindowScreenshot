@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using Kzrnm.WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Image.DragDrop;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 

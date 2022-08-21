@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Kzrnm.EventHandlerHistory;
 using Kzrnm.WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Image.DragDrop;
 using Kzrnm.WindowScreenshot.Windows;
 using Moq;
 using System.Windows.Media.Imaging;
@@ -25,7 +26,7 @@ public class ImagePreviewWindowViewModelTest
         var img = ImageProvider.Images[0];
         img.ImageRatioSize.WidthPercentage = 200;
         var clipboardMock = new Mock<IClipboardManager>();
-        var viewModel = new ImagePreviewWindowViewModel(Messenger, new CaptureImageService(), clipboardMock.Object, ImageProvider);
+        var viewModel = new    ImagePreviewWindowViewModel(Messenger, new ImageDropTarget.Factory(ImageProvider), clipboardMock.Object, ImageProvider);
 
         BitmapSource? called = null;
         clipboardMock.Setup(c => c.SetImage(It.IsAny<BitmapSource>())).Callback<BitmapSource>(img => called = img);
@@ -40,7 +41,7 @@ public class ImagePreviewWindowViewModelTest
     {
         var img = TestUtil.DummyBitmapSource(10, 10);
         var clipboardMock = new Mock<IClipboardManager>();
-        var viewModel = new ImagePreviewWindowViewModel(Messenger, new CaptureImageService(), clipboardMock.Object, ImageProvider);
+        var viewModel = new    ImagePreviewWindowViewModel(Messenger, new ImageDropTarget.Factory(ImageProvider), clipboardMock.Object, ImageProvider);
 
         viewModel.PasteImageFromClipboardCommand.CanExecute(null).Should().BeFalse();
         viewModel.PasteImageFromClipboardCommand.Execute(null);
@@ -59,7 +60,7 @@ public class ImagePreviewWindowViewModelTest
     public void SelectedImage()
     {
         var clipboardMock = new Mock<IClipboardManager>();
-        var viewModel = new ImagePreviewWindowViewModel(Messenger, new CaptureImageService(), clipboardMock.Object, ImageProvider);
+        var viewModel = new    ImagePreviewWindowViewModel(Messenger, new ImageDropTarget.Factory(ImageProvider), clipboardMock.Object, ImageProvider);
         using var ph = new PropertyChangedHistory(viewModel);
 
         viewModel.SelectedImage.Should().BeNull();
@@ -84,7 +85,7 @@ public class ImagePreviewWindowViewModelTest
     public void Visibility()
     {
         var clipboardMock = new Mock<IClipboardManager>();
-        var viewModel = new ImagePreviewWindowViewModel(Messenger, new CaptureImageService(), clipboardMock.Object, ImageProvider);
+        var viewModel = new ImagePreviewWindowViewModel(Messenger, new ImageDropTarget.Factory(ImageProvider), clipboardMock.Object, ImageProvider);
         using var ph = new PropertyChangedHistory(viewModel);
 
         viewModel.Visibility.Should().Be(System.Windows.Visibility.Collapsed);
@@ -109,7 +110,7 @@ public class ImagePreviewWindowViewModelTest
     public void ClearImageCommand()
     {
         var clipboardMock = new Mock<IClipboardManager>();
-        var viewModel = new ImagePreviewWindowViewModel(Messenger, new CaptureImageService(), clipboardMock.Object, ImageProvider);
+        var viewModel = new    ImagePreviewWindowViewModel(Messenger, new ImageDropTarget.Factory(ImageProvider), clipboardMock.Object, ImageProvider);
         ImageProvider.AddImage(TestUtil.DummyBitmapSource(4, 4));
         viewModel.ClearImageCommand.Execute(null);
         ImageProvider.Images.Should().BeEmpty();

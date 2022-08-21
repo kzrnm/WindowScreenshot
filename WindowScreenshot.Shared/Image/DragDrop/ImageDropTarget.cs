@@ -3,7 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace Kzrnm.WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image.DragDrop;
 
 public class ImageDropTarget : IDropTarget
 {

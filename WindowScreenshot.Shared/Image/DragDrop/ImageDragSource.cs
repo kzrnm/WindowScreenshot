@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 
-namespace Kzrnm.WindowScreenshot.Image;
+namespace Kzrnm.WindowScreenshot.Image.DragDrop;
 
 public class ImageDragSource : DefaultDragHandler
 {
