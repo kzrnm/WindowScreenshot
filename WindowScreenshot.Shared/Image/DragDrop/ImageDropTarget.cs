@@ -1,5 +1,7 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using System;
+using System.IO;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -41,7 +43,9 @@ public class ImageDropTarget : IDropTarget
 
         static bool IsAcceptable(DataObject data)
         {
-            return data.GetDataPresent(DataFormats.FileDrop) || data.ContainsImage();
+            return data.GetDataPresent(DragDropInfo.CaptureImageFormat)
+                || data.GetDataPresent(DataFormats.FileDrop)
+                || data.ContainsImage();
         }
     }
 
@@ -53,7 +57,14 @@ public class ImageDropTarget : IDropTarget
             return;
         }
 
-        if (data.GetData(DataFormats.FileDrop, true) is string[] files)
+        if (data.GetDataPresent(DragDropInfo.CaptureImageFormat) && data.GetData(DragDropInfo.CaptureImageFormat) is MemoryStream ms)
+        {
+            ms.Position = 0;
+            var img = JsonSerializer.Deserialize<CaptureImage>(ms);
+            if (img != null)
+                AddImage(dropInfo, img);
+        }
+        else if (data.GetDataPresent(DataFormats.FileDrop) && data.GetData(DataFormats.FileDrop, true) is string[] files)
         {
             Array.Sort(files, NaturalComparer.Default);
             if (dropInfo.InsertPosition == RelativeInsertPosition.None)
@@ -63,15 +74,21 @@ public class ImageDropTarget : IDropTarget
                 foreach (var file in files)
                     ImageProvider.TryInsertImageFromFile(dropInfo.UnfilteredInsertIndex, file);
         }
-        else if (data.ContainsImage())
+        else if (data.ContainsImage() && data.GetImage() is { } img)
         {
-            var img = data.GetImage();
             AddImage(dropInfo, img);
         }
         else
             dropInfo.NotHandled = AllowOtherDrop;
     }
 
+    private void AddImage(IDropInfo dropInfo, CaptureImage image)
+    {
+        if (dropInfo.InsertPosition == RelativeInsertPosition.None)
+            ImageProvider.Images.Add(image);
+        else
+            ImageProvider.Images.Insert(dropInfo.UnfilteredInsertIndex, image);
+    }
 
     private void AddImage(IDropInfo dropInfo, BitmapSource image)
     {

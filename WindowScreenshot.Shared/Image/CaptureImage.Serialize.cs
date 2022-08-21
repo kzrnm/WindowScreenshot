@@ -1,15 +1,27 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
+﻿using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Windows.Media.Imaging;
 
 namespace Kzrnm.WindowScreenshot.Image;
 
- partial class CaptureImage
+[JsonConverter(typeof(CaptureImageJsonConverter))]
+partial class CaptureImage
 {
+    public class CaptureImageJsonConverter : JsonConverter<CaptureImage>
+    {
+        public override CaptureImage? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return JsonSerializer.Deserialize<SerializableCaptureImage>(ref reader, options)?.ToCaptureImage();
+        }
+
+        public override void Write(Utf8JsonWriter writer, CaptureImage value, JsonSerializerOptions options)
+        {
+            var s = SerializableCaptureImage.FromCaptureImage(value);
+            JsonSerializer.Serialize(writer, s, options);
+        }
+    }
+
     internal class SerializableCaptureImage
     {
         public byte[] Image { get; set; } = null!;
@@ -31,10 +43,10 @@ namespace Kzrnm.WindowScreenshot.Image;
                 IsSideCutMode = captureImage.IsSideCutMode,
                 JpegQualityLevel = captureImage.JpegQualityLevel,
                 ImageRatioSize =
-            {
-                Width = captureImage.ImageRatioSize.Width,
-                Height = captureImage.ImageRatioSize.Height,
-            },
+                {
+                    Width = captureImage.ImageRatioSize.Width,
+                    Height = captureImage.ImageRatioSize.Height,
+                },
             };
         }
 

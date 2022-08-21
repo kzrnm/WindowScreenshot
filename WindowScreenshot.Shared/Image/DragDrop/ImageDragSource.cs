@@ -1,29 +1,22 @@
 ﻿using GongSolutions.Wpf.DragDrop;
+using System.IO;
+using System.Text.Json;
 using System.Windows;
-using System.Windows.Markup;
-using System.Windows.Media.Imaging;
 
 namespace Kzrnm.WindowScreenshot.Image.DragDrop;
 
 public class ImageDragSource : DefaultDragHandler
 {
-    //public override void StartDrag(IDragInfo dragInfo)
-    //{
-    //    base.StartDrag(dragInfo);
-    //    if (dragInfo.Data is CaptureImage image)
-    //    {
-
-    //        var dataObj = new DataObject();
-    //        dataObj.SetData(typeof(BitmapSource), image.TransformedImage);
-
-    //        var pngEnc = new PngBitmapEncoder();
-    //        pngEnc.Frames.Add(BitmapFrame.Create(image.TransformedImage));
-    //        using var ms = new System.IO.MemoryStream();
-    //        pngEnc.Save(ms);
-    //        dataObj.SetData("PNG", ms);
-
-    //        //dataObj.SetImage(image.TransformedImage);
-    //        dragInfo.DragDropHandler(dragInfo.VisualSource, dataObj, DragDropEffects.Copy);
-    //    }
-    //}
+    public override void StartDrag(IDragInfo dragInfo)
+    {
+        base.StartDrag(dragInfo);
+        if (dragInfo.Data is CaptureImage image)
+        {
+            var ms = new MemoryStream();
+            JsonSerializer.Serialize(ms, image);
+            dragInfo.Data = ms;
+            dragInfo.DataFormat = DataFormats.GetDataFormat(DragDropInfo.CaptureImageFormat);
+            dragInfo.Effects = dragInfo.Data != null ? DragDropEffects.Copy | DragDropEffects.Move : DragDropEffects.None;
+        }
+    }
 }

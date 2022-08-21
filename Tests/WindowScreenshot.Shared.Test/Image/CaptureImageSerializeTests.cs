@@ -55,8 +55,8 @@ public class CaptureImageSerializeTests
     public void SerializeAndDeserialize(CaptureImage captureImage)
     {
         static BitmapEncoder GetEncoder() => new PngBitmapEncoder { Interlace = PngInterlaceOption.Off };
-        var json = JsonSerializer.Serialize(SerializableCaptureImage.FromCaptureImage(captureImage));
-        var cloned = JsonSerializer.Deserialize<SerializableCaptureImage>(json)!.ToCaptureImage();
+        var json = JsonSerializer.Serialize(captureImage);
+        var cloned = JsonSerializer.Deserialize<CaptureImage>(json)!;
 
         ImageUtility.ImageToByteArray(cloned.ImageSource, GetEncoder())
             .Should()

@@ -1,10 +1,7 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using Moq;
-using System;
-using System.Linq;
+using System.Text.Json;
 using System.Windows;
-using System.Windows.Media.Imaging;
-using Xunit;
 
 namespace Kzrnm.WindowScreenshot.Image.DragDrop;
 
@@ -28,24 +25,22 @@ public class ImageDragSourceTests
         var img = new CaptureImage(TestUtil.DummyBitmapSource(2, 2)) { JpegQualityLevel = 100 };
         img.ImageRatioSize.Width = 10;
 
+        var ms = new MemoryStream();
+        JsonSerializer.Serialize(ms, img);
+
         var mock = new Mock<IDragInfo>();
         mock.SetupGet(d => d.Data).Returns(img);
         new ImageDragSource().StartDrag(mock.Object);
 
-        mock.VerifySet(d => d.DataFormat = DataFormats.GetDataFormat(DataFormats.Bitmap), Times.Once());
-        mock.VerifySet(d => d.DataObject = It.Is(img.TransformedImage,
-            new LambdaEqualityComparer<object>(VerifyDataObject)), Times.Once());
-        static bool VerifyDataObject(object? obj1, object? obj2)
+        mock.VerifySet(d => d.DataFormat = DataFormats.GetDataFormat(DragDropInfo.CaptureImageFormat), Times.Once());
+        mock.VerifySet(d => d.Data = It.Is<MemoryStream>(o => Equals(ms, o)), Times.Once());
+    }
+    static bool Equals(MemoryStream stream, object obj)
+    {
+        if (obj is MemoryStream other)
         {
-            var (dataObject, img) = (obj1, obj2) switch
-            {
-                (DataObject o, BitmapSource b) => (o, b),
-                (BitmapSource b, DataObject o) => (o, b),
-                _ => default,
-            };
-
-            if (dataObject == null || img == null) return false;
-            return TestUtil.ImageToByteArray(dataObject.GetImage()).SequenceEqual(TestUtil.ImageToByteArray(img));
+            return stream.ToArray().SequenceEqual(other.ToArray());
         }
+        return false;
     }
 }
