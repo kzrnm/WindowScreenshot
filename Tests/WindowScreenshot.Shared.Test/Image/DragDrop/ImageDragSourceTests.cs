@@ -45,7 +45,7 @@ public class ImageDragSourceTests
             };
 
             if (dataObject == null || img == null) return false;
-            return TestUtil.ImageToByte(dataObject.GetImage()).SequenceEqual(TestUtil.ImageToByte(img));
+            return TestUtil.ImageToByteArray(dataObject.GetImage()).SequenceEqual(TestUtil.ImageToByteArray(img));
         }
     }
 }

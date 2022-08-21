@@ -3,7 +3,6 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -58,12 +57,16 @@ public partial class CaptureImage : ObservableObject
         TransformedImage = bitmap;
     }
 
-    [ObservableProperty]
     private BitmapSource _TransformedImage;
+    public BitmapSource TransformedImage
+    {
+        private set => SetProperty(ref _TransformedImage, value);
+        get => _TransformedImage;
+    }
 
     public BitmapSource ImageSource { get; }
     public string? SourcePath { get; }
-    private ImageKind OrigKind { get; }
+    public ImageKind OrigKind { get; }
 
     public static int DefaultJpegQualityLevel { set; get; } = 100;
     public int JpegQualityLevel { get; set; } = DefaultJpegQualityLevel;
@@ -76,26 +79,28 @@ public partial class CaptureImage : ObservableObject
             && ImageKind == OrigKind;
 
     public CaptureImage(BitmapSource source) : this(source, null) { }
-    public CaptureImage(BitmapSource source, string? sourcePath)
+    public CaptureImage(BitmapSource source, string? sourcePath) : this(source, sourcePath, GetKind(sourcePath)) { }
+    public CaptureImage(BitmapSource source, string? sourcePath, ImageKind origKind)
     {
         ImageSource = source;
+        ImageRatioSize = new ImageRatioSize(source);
+        SourcePath = sourcePath;
         _TransformedImage = source;
 
-        SourcePath = sourcePath;
-        ImageRatioSize = new ImageRatioSize(source);
-        IsSideCutMode = false;
-        if (sourcePath is null)
-        {
-            ImageKind = ImageKind.Jpg;
-        }
-        else
-        {
-            ImageKind = OrigKind = Regex.IsMatch(Path.GetExtension(sourcePath), @"\.jpe?g", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
-                ? ImageKind.Jpg
-                : ImageKind.Png;
-        }
+        _ImageKind = OrigKind = origKind;
+        _IsSideCutMode = false;
 
         ImageRatioSize.PropertyChanged += OnImageRatioSizePropertyChanged;
+    }
+
+    private static ImageKind GetKind(string? sourcePath)
+    {
+        if (sourcePath is null)
+            return ImageKind.Jpg;
+
+        var ext = Path.GetExtension(sourcePath).ToLowerInvariant();
+        if (ext is ".jpeg" or ".jpg") return ImageKind.Jpg;
+        return ImageKind.Png;
     }
 
     private BitmapEncoder GetEncoder()
@@ -107,14 +112,7 @@ public partial class CaptureImage : ObservableObject
         };
 
     private byte[] ToStreamImpl()
-    {
-        BitmapEncoder encoder = GetEncoder();
-        encoder.Frames.Add(BitmapFrame.Create(TransformedImage));
-
-        using var ms = new MemoryStream();
-        encoder.Save(ms);
-        return ms.ToArray();
-    }
+        => ImageUtility.ImageToByteArray(TransformedImage, GetEncoder());
 
     public byte[] ToByteArray() => CanUseFileStream ? File.ReadAllBytes(SourcePath) : ToStreamImpl();
 }

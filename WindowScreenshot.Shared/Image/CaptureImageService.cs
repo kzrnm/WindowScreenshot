@@ -20,19 +20,7 @@ public class CaptureImageService : ICaptureImageService
     /// <param name="filePath">読み込むファイル</param>
     /// <returns></returns>
     public CaptureImage? GetImageFromFile(string filePath)
-    {
-        using var ms = new MemoryStream(File.ReadAllBytes(filePath));
-        try
-        {
-            var image = new WriteableBitmap(BitmapFrame.Create(ms));
-            image.Freeze();
-            return new CaptureImage(image, filePath);
-        }
-        catch (NotSupportedException e) when (e.InnerException is COMException)
-        {
-            return null;
-        }
-    }
+        => ImageUtility.GetImageFromFile(filePath);
     
     public bool IsImageFile(string fileName)
     {

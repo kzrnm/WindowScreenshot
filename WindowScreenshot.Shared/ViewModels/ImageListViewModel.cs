@@ -13,15 +13,15 @@ public partial class ImageListViewModel : ObservableRecipient, IRecipient<Select
 {
     private readonly IClipboardManager ClipboardManager;
     public ImageProvider ImageProvider { get; }
-    public ImageListViewModel(ImageDropTarget.Factory imageDropTargetFactory, IClipboardManager clipboardManager, ImageProvider imageProvider)
-        : this(WeakReferenceMessenger.Default, imageDropTargetFactory, clipboardManager, imageProvider)
+    public ImageListViewModel(IClipboardManager clipboardManager, ImageProvider imageProvider)
+        : this(WeakReferenceMessenger.Default, clipboardManager, imageProvider)
     { }
-    public ImageListViewModel(IMessenger messenger, ImageDropTarget.Factory imageDropTargetFactory, IClipboardManager clipboardManager, ImageProvider imageProvider)
+    public ImageListViewModel(IMessenger messenger, IClipboardManager clipboardManager, ImageProvider imageProvider)
         : base(messenger)
     {
         ImageProvider = imageProvider;
         ClipboardManager = clipboardManager;
-        DropHandler = new DropTarget(imageProvider, imageDropTargetFactory);
+        DropHandler = new DropTarget(imageProvider);
         DragHandler = new();
         IsActive = true;
     }
@@ -58,9 +58,9 @@ public partial class ImageListViewModel : ObservableRecipient, IRecipient<Select
         removeSelectedImageCommand?.NotifyCanExecuteChanged();
     }
 
-    private class DropTarget : ImageDropTarget
+    internal class DropTarget : ImageDropTarget
     {
-        public DropTarget(ImageProvider imageProvider, Factory factory) : base(factory.ImageProvider, false)
+        public DropTarget(ImageProvider imageProvider) : base(imageProvider, false)
         {
             ImageProvider = imageProvider;
         }

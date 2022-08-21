@@ -9,26 +9,6 @@ namespace Kzrnm.WindowScreenshot.Image.DragDrop;
 public class ImageDropTargetTests
 {
     [UIFact]
-    public void SameVisualSource()
-    {
-        var captureImageMock = new Mock<ICaptureImageService>();
-        var captureImageService = captureImageMock.Object;
-        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageDropTarget(imageProvider, false);
-        var mock = new Mock<IDropInfo>();
-
-        var elm = new ListView();
-        mock.SetupGet(d => d.VisualTarget).Returns(elm);
-
-        var dragInfoMock = new Mock<IDragInfo>();
-        dragInfoMock.SetupGet(d => d.VisualSource).Returns(elm);
-        mock.SetupGet(d => d.DragInfo).Returns(dragInfoMock.Object);
-
-        dropTarget.DragOver(mock.Object);
-        dropTarget.Drop(mock.Object);
-        mock.VerifySet(d => d.NotHandled = It.IsAny<bool>(), Times.Never());
-    }
-    [UIFact]
     public void NotMatch()
     {
         var captureImageMock = new Mock<ICaptureImageService>();
@@ -167,7 +147,7 @@ public class ImageDropTargetTests
         mock.VerifySet(d => d.DropTargetAdorner = It.IsAny<Type>(), Times.Never());
 
         var added = imageProvider.Images.Should().ContainSingle().Which;
-        TestUtil.ImageToByte(added.ImageSource).Should().Equal(TestUtil.ImageToByte(img));
+        TestUtil.ImageToByteArray(added.ImageSource).Should().Equal(TestUtil.ImageToByteArray(img));
 
         DataObject CreateData()
         {

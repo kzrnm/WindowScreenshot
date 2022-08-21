@@ -1,4 +1,4 @@
-using System.IO;
+using Kzrnm.WindowScreenshot.Image;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -9,21 +9,17 @@ public static class TestUtil
     public static BitmapSource DummyBitmapSource(int width, int height)
     {
         var stride = (width * PixelFormats.Indexed1.BitsPerPixel + 7) / 8;
+        var bytes = new byte[stride * width];
+        Random.Shared.NextBytes(bytes);
         return BitmapSource.Create(
         width, height, 96, 96,
         PixelFormats.Indexed1,
         new BitmapPalette(new[] { Colors.Transparent }),
-        new byte[stride * width], stride);
+        bytes, stride);
     }
 
-    public static byte[] ImageToByte(BitmapSource bmp)
+    public static byte[] ImageToByteArray(BitmapSource bmp)
     {
-        byte[] data;
-        var encoder = new PngBitmapEncoder();
-        encoder.Frames.Add(BitmapFrame.Create(bmp));
-        using var ms = new MemoryStream();
-        encoder.Save(ms);
-        data = ms.ToArray();
-        return data;
+        return ImageUtility.ImageToByteArray(bmp, new PngBitmapEncoder { Interlace = PngInterlaceOption.Off });
     }
 }
