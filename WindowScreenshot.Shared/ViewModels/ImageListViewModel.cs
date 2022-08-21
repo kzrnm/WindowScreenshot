@@ -8,17 +8,17 @@ namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public partial class ImageListViewModel : ObservableRecipient, IRecipient<SelectedImageChangedMessage>
 {
-    private readonly IClipboardManager clipboard;
+    private readonly IClipboardManager ClipboardManager;
     public ImageProvider ImageProvider { get; }
-    public ImageListViewModel(ICaptureImageService captureImageService, IClipboardManager clipboardManager, ImageProvider imageProvider)
-        : this(WeakReferenceMessenger.Default, captureImageService, clipboardManager, imageProvider)
+    public ImageListViewModel(ImageDropTarget.Factory imageDropTargetFactory, IClipboardManager clipboardManager, ImageProvider imageProvider)
+        : this(WeakReferenceMessenger.Default, imageDropTargetFactory, clipboardManager, imageProvider)
     { }
-    public ImageListViewModel(IMessenger messenger, ICaptureImageService captureImageService, IClipboardManager clipboardManager, ImageProvider imageProvider)
+    public ImageListViewModel(IMessenger messenger, ImageDropTarget.Factory imageDropTargetFactory, IClipboardManager clipboardManager, ImageProvider imageProvider)
         : base(messenger)
     {
         ImageProvider = imageProvider;
-        clipboard = clipboardManager;
-        DropHandler = new(captureImageService, imageProvider);
+        ClipboardManager = clipboardManager;
+        DropHandler = imageDropTargetFactory.Build(false);
         DragHandler = new();
         IsActive = true;
     }
@@ -34,12 +34,12 @@ public partial class ImageListViewModel : ObservableRecipient, IRecipient<Select
     }
 
     public void UpdateCanClipboardCommand() => insertImageFromClipboardCommand?.NotifyCanExecuteChanged();
-    private bool IsClipboardContainsImage() => clipboard.ContainsImage();
+    private bool IsClipboardContainsImage() => ClipboardManager.ContainsImage();
 
     [RelayCommand(CanExecute = nameof(IsClipboardContainsImage))]
     private void InsertImageFromClipboard()
     {
-        if (clipboard.GetImage() is { } image)
+        if (ClipboardManager.GetImage() is { } image)
             ImageProvider.InsertImage(ImageProvider.SelectedImageIndex + 1, image);
     }
 
@@ -47,7 +47,7 @@ public partial class ImageListViewModel : ObservableRecipient, IRecipient<Select
     private void CopyToClipboard(CaptureImage? img)
     {
         if (img is not null)
-            clipboard.SetImage(img.TransformedImage);
+            ClipboardManager.SetImage(img.TransformedImage);
     }
 
     void IRecipient<SelectedImageChangedMessage>.Receive(SelectedImageChangedMessage message)

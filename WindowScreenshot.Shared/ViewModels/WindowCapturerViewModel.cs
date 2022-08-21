@@ -1,21 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using Kzrnm.WindowScreenshot.Image;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
-using Kzrnm.WindowScreenshot.Image;
 
 namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public partial class WindowCapturerViewModel : ObservableRecipient, IRecipient<ImageCountChangedMessage>
 {
     public ImageProvider ImageProvider { get; }
-    public WindowCapturerViewModel(ICaptureImageService captureImageService, ImageProvider imageProvider)
-        : this(WeakReferenceMessenger.Default, captureImageService, imageProvider)
+    public WindowCapturerViewModel(ImageDropTarget.Factory imageDropTargetFactory, ImageProvider imageProvider)
+        : this(WeakReferenceMessenger.Default, imageDropTargetFactory, imageProvider)
     { }
-    public WindowCapturerViewModel(IMessenger messenger, ICaptureImageService captureImageService, ImageProvider imageProvider)
+    public WindowCapturerViewModel(IMessenger messenger, ImageDropTarget.Factory imageDropTargetFactory, ImageProvider imageProvider)
         : base(messenger)
     {
-        DropHandler = new ImageDropTarget(captureImageService, imageProvider, true);
+        DropHandler = imageDropTargetFactory.Build(true);
         ImageProvider = imageProvider;
         IsActive = true;
     }

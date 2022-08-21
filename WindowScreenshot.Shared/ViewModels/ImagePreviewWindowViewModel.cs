@@ -9,17 +9,17 @@ namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public partial class ImagePreviewWindowViewModel : ObservableRecipient, IRecipient<SelectedImageChangedMessage>
 {
-    private readonly IClipboardManager clipboard;
+    private readonly IClipboardManager ClipboardManager;
     public ImageProvider ImageProvider { get; }
-    public ImagePreviewWindowViewModel(ICaptureImageService captureImageService, IClipboardManager clipboard, ImageProvider imageProvider)
-        : this(WeakReferenceMessenger.Default, captureImageService, clipboard, imageProvider)
+    public ImagePreviewWindowViewModel(ImageDropTarget.Factory imageDropTargetFactory, IClipboardManager clipboard, ImageProvider imageProvider)
+        : this(WeakReferenceMessenger.Default, imageDropTargetFactory, clipboard, imageProvider)
     { }
-    public ImagePreviewWindowViewModel(IMessenger messenger, ICaptureImageService captureImageService, IClipboardManager clipboard, ImageProvider imageProvider)
+    public ImagePreviewWindowViewModel(IMessenger messenger, ImageDropTarget.Factory imageDropTargetFactory, IClipboardManager clipboardManager, ImageProvider imageProvider)
         : base(messenger)
     {
-        DropHandler = new ImageDropTarget(captureImageService, imageProvider, false);
+        DropHandler = imageDropTargetFactory.Build(false);
         ImageProvider = imageProvider;
-        this.clipboard = clipboard;
+        ClipboardManager = clipboardManager;
         IsActive = true;
     }
 
@@ -35,7 +35,7 @@ public partial class ImagePreviewWindowViewModel : ObservableRecipient, IRecipie
     private void CopyToClipboard(CaptureImage? img)
     {
         if (img is not null)
-            clipboard.SetImage(img.TransformedImage);
+            ClipboardManager.SetImage(img.TransformedImage);
     }
 
     [RelayCommand]
@@ -45,11 +45,11 @@ public partial class ImagePreviewWindowViewModel : ObservableRecipient, IRecipie
     }
 
     public void UpdateCanClipboardCommand() => pasteImageFromClipboardCommand?.NotifyCanExecuteChanged();
-    private bool IsClipboardContainsImage() => clipboard.ContainsImage();
+    private bool IsClipboardContainsImage() => ClipboardManager.ContainsImage();
     [RelayCommand(CanExecute = nameof(IsClipboardContainsImage))]
     private void PasteImageFromClipboard()
     {
-        if (clipboard.GetImage() is { } image)
+        if (ClipboardManager.GetImage() is { } image)
             ImageProvider.AddImage(image);
     }
 

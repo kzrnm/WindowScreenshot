@@ -7,15 +7,26 @@ namespace Kzrnm.WindowScreenshot.Image;
 
 public class ImageDropTarget : DefaultDropHandler
 {
-    private readonly ImageProvider imageProvider;
-    private readonly ICaptureImageService captureImageService;
+    public class Factory
+    {
+        private ImageProvider ImageProvider { get; }
+        private ICaptureImageService CaptureImageService { get; }
+        public Factory(ICaptureImageService captureImageService, ImageProvider imageProvider)
+        {
+            CaptureImageService = captureImageService;
+            ImageProvider = imageProvider;
+        }
+
+        public ImageDropTarget Build(bool allowOtherDrop) => new(CaptureImageService, ImageProvider, allowOtherDrop);
+    }
+    private ImageProvider ImageProvider { get; }
+    private ICaptureImageService CaptureImageService { get; }
     public bool AllowOtherDrop { get; }
-    public ImageDropTarget(ICaptureImageService captureImageService, ImageProvider imageProvider) : this(captureImageService, imageProvider, false) { }
     public ImageDropTarget(ICaptureImageService captureImageService, ImageProvider imageProvider, bool allowOtherDrop)
     {
-        this.captureImageService = captureImageService;
-        this.imageProvider = imageProvider;
-        this.AllowOtherDrop = allowOtherDrop;
+        CaptureImageService = captureImageService;
+        ImageProvider = imageProvider;
+        AllowOtherDrop = allowOtherDrop;
     }
     public override void DragOver(IDropInfo dropInfo)
     {
@@ -27,11 +38,11 @@ public class ImageDropTarget : DefaultDropHandler
         else if (dropInfo.Data is DataObject data)
         {
             if (data.GetData(DataFormats.FileDrop, false) is string[] files
-                && files.All(f => captureImageService.IsImageFile(f))
+                && files.All(f => CaptureImageService.IsImageFile(f))
                 || data.ContainsImage())
             {
                 dropInfo.Effects = DragDropEffects.Copy;
-                if (dropInfo.TargetCollection == this.imageProvider.Images)
+                if (dropInfo.TargetCollection == this.ImageProvider.Images)
                     dropInfo.DropTargetAdorner = DropTargetAdorners.Insert;
                 return;
             }
@@ -53,19 +64,19 @@ public class ImageDropTarget : DefaultDropHandler
                 Array.Sort(files, NaturalComparer.Default);
                 if (dropInfo.InsertPosition == RelativeInsertPosition.None)
                     foreach (var file in files)
-                        imageProvider.TryAddImageFromFile(file);
+                        ImageProvider.TryAddImageFromFile(file);
                 else
                     foreach (var file in files)
-                        imageProvider.TryInsertImageFromFile(dropInfo.UnfilteredInsertIndex, file);
+                        ImageProvider.TryInsertImageFromFile(dropInfo.UnfilteredInsertIndex, file);
                 return;
             }
             if (data.ContainsImage())
             {
                 var img = data.GetImage();
                 if (dropInfo.InsertPosition == RelativeInsertPosition.None)
-                    imageProvider.AddImage(img);
+                    ImageProvider.AddImage(img);
                 else
-                    imageProvider.InsertImage(dropInfo.UnfilteredInsertIndex, img);
+                    ImageProvider.InsertImage(dropInfo.UnfilteredInsertIndex, img);
                 return;
             }
         }

@@ -8,11 +8,13 @@ namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
-    public MainWindowViewModel(ImageProvider imageProvider)
+    public MainWindowViewModel(ImageProvider imageProvider, ImageDropTarget.Factory imageDropTargetFactory)
     {
         ImageProvider = imageProvider;
+        DropHandler = imageDropTargetFactory.Build(true);
     }
     public ImageProvider ImageProvider { get; }
+    public ImageDropTarget DropHandler { get; }
     public string Title { get; } = Resources.MainWindowTitle;
 
     [RelayCommand]
