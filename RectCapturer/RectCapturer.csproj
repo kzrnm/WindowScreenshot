@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-    <ProjectReference Include="..\WindowScreenshot.Shared\WindowScreenshot.Shared.csproj" />
+    <ProjectReference Include="..\WindowScreenshot\WindowScreenshot.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="WindowScreenshot.Shared.Test" />
+    <InternalsVisibleTo Include="WindowScreenshot.Test" />
   </ItemGroup>
 
   <ItemGroup>
