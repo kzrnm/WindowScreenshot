@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Kzrnm.WindowScreenshot.ViewModels;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using Kzrnm.WindowScreenshot.ViewModels;
 using DragDrop = GongSolutions.Wpf.DragDrop.DragDrop;
 
 namespace Kzrnm.WindowScreenshot.Views;
@@ -17,12 +17,13 @@ public class WindowCapturer : DockPanel
 
     public WindowCapturer()
     {
+        ViewModel = Ioc.Default.GetRequiredServiceIfIsNotInDesignMode<WindowCapturerViewModel>(this);
+
+        ContextMenu = BuildContextMenu();
         Children.Add(ImageSettings);
         Children.Add(ImageListView);
         SetDock(ImageSettings, Dock.Right);
         SetDock(ImageListView, Dock.Bottom);
-
-        ViewModel = Ioc.Default.GetRequiredServiceIfIsNotInDesignMode<WindowCapturerViewModel>(this);
 
         SetBinding(AlwaysImageAreaProperty,
             new Binding(nameof(WindowCapturerViewModel.AlwaysImageArea))
@@ -53,6 +54,23 @@ public class WindowCapturer : DockPanel
 
         Loaded += OnLoaded;
         Unloaded += OnUnloaded;
+    }
+
+    ContextMenu BuildContextMenu()
+    {
+        var contextMenu = new ContextMenu
+        {
+            Items =
+            {
+                new MenuItem
+                {
+                    Command = ViewModel.PasteImageFromClipboardCommand,
+                    Header = Properties.Resources.Paste,
+                },
+            },
+        };
+        contextMenu.Opened += (_, e) => ViewModel.UpdateCanPaste();
+        return contextMenu;
     }
 
     public WindowCapturerViewModel ViewModel { get; }

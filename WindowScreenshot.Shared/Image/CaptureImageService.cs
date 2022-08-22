@@ -20,7 +20,7 @@ public class CaptureImageService : ICaptureImageService
     /// <param name="filePath">読み込むファイル</param>
     /// <returns></returns>
     public CaptureImage? GetImageFromFile(string filePath)
-        => ImageUtility.GetImageFromFile(filePath);
+        => ImageUtility.GetCaptureImageFromFile(filePath);
     
     public bool IsImageFile(string fileName)
     {

@@ -1,17 +1,20 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Kzrnm.WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Windows;
 using System;
 
 namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public partial class DebugAreaViewModel : ObservableObject
 {
-    public DebugAreaViewModel(ImageProvider imageProvider)
+    public DebugAreaViewModel(ImageProvider imageProvider, IClipboardManager clipboardManager)
     {
         ImageProvider = imageProvider;
+        ClipboardManager = clipboardManager;
     }
     public ImageProvider ImageProvider { get; }
+    public IClipboardManager ClipboardManager { get; }
 
     [RelayCommand]
     private void AddRandomImage()
@@ -24,5 +27,12 @@ public partial class DebugAreaViewModel : ObservableObject
         Random.Shared.NextBytes(bytes);
         var img = System.Windows.Media.Imaging.BitmapSource.Create(width, height, 96, 96, pf, null, bytes, stride);
         ImageProvider.AddImage(img);
+    }
+
+    [RelayCommand]
+    private void PasteImage()
+    {
+        if (ClipboardManager.GetImage() is { } img)
+            ImageProvider.AddImage(img);
     }
 }

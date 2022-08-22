@@ -20,5 +20,6 @@
     d:DesignWidth="200">
     <StackPanel Orientation="Horizontal">
         <Button Command="{Binding AddRandomImageCommand, Mode=OneTime}" Content="Add dummy image for debug" />
+        <Button Command="{Binding PasteImageCommand, Mode=OneTime}" Content="📝" MinWidth="30" ToolTip="Paste image" />
     </StackPanel>
 </UserControl>

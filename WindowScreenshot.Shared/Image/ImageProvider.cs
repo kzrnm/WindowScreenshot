@@ -74,7 +74,6 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearR
     public void AddImage(BitmapSource bmp)
     {
         if (!CanAddImage) return;
-        bmp.Freeze();
         var image = new CaptureImage(bmp);
         ApplyLastOption(image);
         Images.Add(image);
@@ -91,7 +90,6 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearR
     public void InsertImage(int index, BitmapSource bmp)
     {
         if (!CanAddImage) return;
-        bmp.Freeze();
         var image = new CaptureImage(bmp);
         ApplyLastOption(image);
         Images.Insert(index, image);

@@ -30,6 +30,6 @@ public class ImageDragSourceTests
         new ImageDragSource().StartDrag(mock.Object);
 
         mock.VerifySet(d => d.Effects = DragDropEffects.Copy, Times.Once());
-        mock.VerifySet(d => d.DataObject = It.Is<DataObject>(o => BitmapSourceEqualityComparer.Default.Equals(o.GetImage2(), img.ImageSource)), Times.Once());
+        mock.VerifySet(d => d.DataObject = It.Is<DataObject>(o => BitmapSourceEqualityComparer.Default.Equals(o.GetImageSafe(), img.ImageSource)), Times.Once());
     }
 }

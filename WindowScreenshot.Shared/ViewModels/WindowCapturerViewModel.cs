@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Image.DragDrop;
+using Kzrnm.WindowScreenshot.Windows;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 
@@ -9,19 +11,21 @@ namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public partial class WindowCapturerViewModel : ObservableRecipient, IRecipient<ImageCountChangedMessage>
 {
-    public ImageProvider ImageProvider { get; }
-    public WindowCapturerViewModel(ImageDropTarget.Factory imageDropTargetFactory, ImageProvider imageProvider)
-        : this(WeakReferenceMessenger.Default, imageDropTargetFactory, imageProvider)
+    public WindowCapturerViewModel(ImageDropTarget.Factory imageDropTargetFactory, ImageProvider imageProvider, IClipboardManager clipboardManager)
+        : this(WeakReferenceMessenger.Default, imageDropTargetFactory, imageProvider, clipboardManager)
     { }
-    public WindowCapturerViewModel(IMessenger messenger, ImageDropTarget.Factory imageDropTargetFactory, ImageProvider imageProvider)
+    public WindowCapturerViewModel(IMessenger messenger, ImageDropTarget.Factory imageDropTargetFactory, ImageProvider imageProvider, IClipboardManager clipboardManager)
         : base(messenger)
     {
         DropHandler = imageDropTargetFactory.Build(true);
         ImageProvider = imageProvider;
+        ClipboardManager = clipboardManager;
         IsActive = true;
     }
 
     public ImageDropTarget DropHandler { get; }
+    public ImageProvider ImageProvider { get; }
+    public IClipboardManager ClipboardManager { get; }
 
     [ObservableProperty]
     private bool _AlwaysImageArea;
@@ -39,6 +43,15 @@ public partial class WindowCapturerViewModel : ObservableRecipient, IRecipient<I
 
     [ObservableProperty]
     private Visibility _ImageVisibility = Visibility.Collapsed;
+
+    public void UpdateCanPaste() => pasteImageFromClipboardCommand?.NotifyCanExecuteChanged();
+    private bool ContainsImageInClipboard() => ClipboardManager.ContainsImage();
+    [RelayCommand(CanExecute = nameof(ContainsImageInClipboard))]
+    private void PasteImageFromClipboard()
+    {
+        if (ClipboardManager.GetImage() is { } image)
+            ImageProvider.AddImage(image);
+    }
 
     public void OnWindowClosing() => Messenger.Send<ImageClearRequestMessage>();
     void IRecipient<ImageCountChangedMessage>.Receive(ImageCountChangedMessage message)
