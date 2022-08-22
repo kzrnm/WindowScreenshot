@@ -30,7 +30,7 @@ public partial class ImagePreviewWindowViewModel : ObservableRecipient, IRecipie
     [NotifyPropertyChangedFor(nameof(Visibility))]
     private CaptureImage? _SelectedImage;
 
-    public Visibility Visibility => SelectedImage is null ? Visibility.Collapsed : Visibility.Visible;
+    public Visibility Visibility => SelectedImage is null ? Visibility.Hidden : Visibility.Visible;
 
     [RelayCommand]
     private void CopyToClipboard(CaptureImage? img)
@@ -46,8 +46,8 @@ public partial class ImagePreviewWindowViewModel : ObservableRecipient, IRecipie
     }
 
     public void UpdateCanPaste() => pasteImageFromClipboardCommand?.NotifyCanExecuteChanged();
-    private bool ContainsImageInClipboard() => ClipboardManager.ContainsImage();
-    [RelayCommand(CanExecute = nameof(ContainsImageInClipboard))]
+    private bool CanAddImmageFromClipboard() => ImageProvider.CanAddImage && ClipboardManager.ContainsImage();
+    [RelayCommand(CanExecute = nameof(CanAddImmageFromClipboard))]
     private void PasteImageFromClipboard()
     {
         if (ClipboardManager.GetImage() is { } image)

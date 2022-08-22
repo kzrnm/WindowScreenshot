@@ -138,6 +138,9 @@
   <data name="px" xml:space="preserve">
     <value>px</value>
   </data>
+  <data name="Quit" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
   <data name="SettingByPercentage" xml:space="preserve">
     <value>比率で指定</value>
   </data>

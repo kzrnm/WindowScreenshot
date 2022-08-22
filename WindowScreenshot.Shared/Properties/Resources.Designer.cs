@@ -124,6 +124,15 @@ namespace Kzrnm.WindowScreenshot.Properties {
         }
         
         /// <summary>
+        ///   閉じる に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Quit {
+            get {
+                return ResourceManager.GetString("Quit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   比率で指定 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string SettingByPercentage {

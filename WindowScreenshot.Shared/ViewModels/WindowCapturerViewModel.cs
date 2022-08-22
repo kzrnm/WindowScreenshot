@@ -45,8 +45,8 @@ public partial class WindowCapturerViewModel : ObservableRecipient, IRecipient<I
     private Visibility _ImageVisibility = Visibility.Collapsed;
 
     public void UpdateCanPaste() => pasteImageFromClipboardCommand?.NotifyCanExecuteChanged();
-    private bool ContainsImageInClipboard() => ClipboardManager.ContainsImage();
-    [RelayCommand(CanExecute = nameof(ContainsImageInClipboard))]
+    private bool CanAddImmageFromClipboard() => ImageProvider.CanAddImage && ClipboardManager.ContainsImage();
+    [RelayCommand(CanExecute = nameof(CanAddImmageFromClipboard))]
     private void PasteImageFromClipboard()
     {
         if (ClipboardManager.GetImage() is { } image)

@@ -17,15 +17,14 @@
     dd:DragDrop.DropHandler="{Binding DropHandler}"
     dd:DragDrop.IsDropTarget="True"
     ktk:IocBehavior.AutoViewModel="{x:Type viewmodels:ImagePreviewWindowViewModel}"
-    MinHeight="200"
-    MinWidth="200"
     AllowDrop="True"
     ResizeMode="NoResize"
     ShowActivated="False"
     ShowInTaskbar="False"
     SizeToContent="WidthAndHeight"
     Topmost="True"
-    Visibility="{Binding Visibility}"
+    Visibility="{Binding Visibility, Mode=OneWay, FallbackValue=Hidden}"
+    d:Visibility="Visible"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <b:Interaction.Triggers>
@@ -44,17 +43,17 @@
                 </b:EventTrigger>
             </b:Interaction.Triggers>
             <MenuItem
-                        Command="{Binding CopyToClipboardCommand, Mode=OneTime}"
-                        CommandParameter="{Binding SelectedImage}"
-                        Header="{x:Static properties:Resources.CopyToClipboard}" />
+                Command="{Binding CopyToClipboardCommand, Mode=OneTime}"
+                CommandParameter="{Binding SelectedImage}"
+                Header="{x:Static properties:Resources.CopyToClipboard}" />
             <MenuItem Command="{Binding PasteImageFromClipboardCommand, Mode=OneTime}" Header="{x:Static properties:Resources.Paste}" />
+            <Separator />
+            <MenuItem Command="{Binding ClearImageCommand, Mode=OneTime}" Header="{x:Static properties:Resources.Quit}" />
         </ContextMenu>
     </Window.ContextMenu>
-    <Grid>
-        <Image
-            Width="{Binding SelectedImage.TransformedImage.Width, Mode=OneWay}"
-            Height="{Binding SelectedImage.TransformedImage.Height, Mode=OneWay}"
-            Source="{Binding SelectedImage.TransformedImage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-            Stretch="Fill" />
-    </Grid>
+    <Image 
+        Width="{Binding Source.PixelWidth, RelativeSource={RelativeSource Self}}"
+        Height="{Binding Source.PixelHeight, RelativeSource={RelativeSource Self}}"
+        Stretch="Fill"
+        Source="{Binding SelectedImage.TransformedImage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
 </Window>
