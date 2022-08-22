@@ -18,13 +18,12 @@ public class ClipboardManager : IClipboardManager
     {
         try
         {
-            Clipboard.SetDataObject(new DataObject().SetImage2(image));
+            Clipboard.SetDataObject(new DataObject().SetImageSafe(image));
         }
         catch (COMException e) when (e.ErrorCode is unchecked((int)0x800401D0))
         {
-
         }
     }
-    public BitmapSource? GetImage() => Clipboard.GetDataObject().GetImage2();
+    public BitmapSource? GetImage() => Clipboard.GetDataObject().GetImageSafe();
     public bool ContainsImage() => Clipboard.ContainsImage();
 }

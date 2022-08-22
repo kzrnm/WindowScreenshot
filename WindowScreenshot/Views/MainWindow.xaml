@@ -14,7 +14,6 @@
     Title="{Binding Title, Mode=OneWay}"
     Width="600"
     Height="200"
-    Topmost="{Binding Topmost, Mode=TwoWay}"
     MinWidth="360"
     MinHeight="120"
     dd:DragDrop.DropEventType="Bubbled"

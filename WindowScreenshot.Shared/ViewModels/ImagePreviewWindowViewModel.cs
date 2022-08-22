@@ -45,15 +45,14 @@ public partial class ImagePreviewWindowViewModel : ObservableRecipient, IRecipie
         ImageProvider.Images.Clear();
     }
 
-    public void UpdateCanClipboardCommand() => pasteImageFromClipboardCommand?.NotifyCanExecuteChanged();
-    private bool IsClipboardContainsImage() => ClipboardManager.ContainsImage();
-    [RelayCommand(CanExecute = nameof(IsClipboardContainsImage))]
+    public void UpdateCanPaste() => pasteImageFromClipboardCommand?.NotifyCanExecuteChanged();
+    private bool ContainsImageInClipboard() => ClipboardManager.ContainsImage();
+    [RelayCommand(CanExecute = nameof(ContainsImageInClipboard))]
     private void PasteImageFromClipboard()
     {
         if (ClipboardManager.GetImage() is { } image)
             ImageProvider.AddImage(image);
     }
-
 
     void IRecipient<SelectedImageChangedMessage>.Receive(SelectedImageChangedMessage message)
     {

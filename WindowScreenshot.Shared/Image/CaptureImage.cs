@@ -13,7 +13,6 @@ public partial class CaptureImage : ObservableObject
 {
     public ImageRatioSize ImageRatioSize { get; }
 
-
     [ObservableProperty]
     private ImageKind _ImageKind;
 
@@ -67,16 +66,8 @@ public partial class CaptureImage : ObservableObject
     public BitmapSource ImageSource { get; }
     public string? SourcePath { get; }
     public ImageKind OrigKind { get; }
-
     public static int DefaultJpegQualityLevel { set; get; } = 100;
     public int JpegQualityLevel { get; set; } = DefaultJpegQualityLevel;
-
-    [MemberNotNullWhen(returnValue: true, member: nameof(SourcePath))]
-    public bool CanUseFileStream
-        => SourcePath != null
-            && ImageRatioSize.IsNotChanged
-            && !IsSideCutMode
-            && ImageKind == OrigKind;
 
     public CaptureImage(BitmapSource source) : this(source, null) { }
     public CaptureImage(BitmapSource source, string? sourcePath) : this(source, sourcePath, GetKind(sourcePath)) { }
@@ -114,5 +105,12 @@ public partial class CaptureImage : ObservableObject
     private byte[] ToStreamImpl()
         => ImageUtility.ImageToByteArray(TransformedImage, GetEncoder());
 
-    public byte[] ToByteArray() => CanUseFileStream ? File.ReadAllBytes(SourcePath) : ToStreamImpl();
+    [MemberNotNullWhen(returnValue: true, member: nameof(SourcePath))]
+    private bool CanUseFileStream()
+        => SourcePath != null
+            && ImageRatioSize.IsNotChanged
+            && !IsSideCutMode
+            && ImageKind == OrigKind
+            && File.Exists(SourcePath);
+    public byte[] ToByteArray() => CanUseFileStream() ? File.ReadAllBytes(SourcePath) : ToStreamImpl();
 }
