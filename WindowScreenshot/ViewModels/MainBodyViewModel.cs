@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Kzrnm.WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Models;
 using System.Diagnostics;
 
 namespace Kzrnm.WindowScreenshot.ViewModels;
@@ -17,6 +19,7 @@ public partial class MainBodyViewModel : ObservableObject
     private void OpenSelectCaptureWindowDialog()
     {
         // TODO: OpenSelectCaptureWindowDialog
+        WeakReferenceMessenger.Default.Send(new CaptureTargetSelectionDialogMessage());
         Debug.WriteLine("OpenSelectCaptureWindowDialogCommand");
     }
     [RelayCommand]

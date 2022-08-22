@@ -141,6 +141,9 @@
   <data name="Quit" xml:space="preserve">
     <value>閉じる</value>
   </data>
+  <data name="SelectCaptureProcess" xml:space="preserve">
+    <value>対象のプロセスを選択してください</value>
+  </data>
   <data name="SettingByPercentage" xml:space="preserve">
     <value>比率で指定</value>
   </data>

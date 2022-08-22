@@ -133,6 +133,15 @@ namespace Kzrnm.WindowScreenshot.Properties {
         }
         
         /// <summary>
+        ///   対象のプロセスを選択してください に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SelectCaptureProcess {
+            get {
+                return ResourceManager.GetString("SelectCaptureProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   比率で指定 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string SettingByPercentage {

@@ -19,7 +19,7 @@
     d:DesignHeight="200"
     d:DesignWidth="400">
     <b:Interaction.Behaviors>
-        <kw:FontDialogBehavior />
+        <ws:CaptureTargetSelectionDialogBehavior />
     </b:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>

@@ -1,0 +1,36 @@
+﻿<Window x:Class="Kzrnm.WindowScreenshot.Views.CaptureTargetSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:dd="urn:gong-wpf-dragdrop"
+        xmlns:properties="clr-namespace:Kzrnm.WindowScreenshot.Properties"
+        xmlns:local="clr-namespace:Kzrnm.WindowScreenshot.Views"
+        xmlns:viewmodels="clr-namespace:Kzrnm.WindowScreenshot.ViewModels"
+        xmlns:ktk="urn:kzrnm-wpf/toolkit"
+        mc:Ignorable="d"
+        Background="WhiteSmoke"
+        Title="{x:Static properties:Resources.SelectCaptureProcess}"
+        ktk:IocBehavior.AutoViewModel="{x:Type viewmodels:CaptureTargetSelectionWindowViewModel}"
+        d:DataContext="{d:DesignInstance Type=viewmodels:CaptureTargetSelectionWindowViewModel}"
+        SizeToContent="WidthAndHeight"
+        d:DesignHeight="500" d:DesignWidth="400">
+    <StackPanel Margin="5">
+        <ListView Grid.Row="0"
+                  dd:DragDrop.IsDragSource="True"
+                  dd:DragDrop.IsDropTarget="True"
+                  Name="CaptureWindows"
+                  ItemsSource="{Binding CaptureTargetWindows, Mode=OneTime}"
+                  SelectedValue="{Binding SelectedTarget, Mode=OneWayToSource}"
+                  SelectedIndex="{Binding CaptureTargetWindows.SelectedIndex, Mode=TwoWay}"
+                  DisplayMemberPath="DisplayText"
+                  Height="150">
+            <b:Interaction.Triggers>
+                <b:KeyTrigger Key="Delete">
+                    <b:InvokeCommandAction Command="{Binding RemoveSelectedCaptureWindowCommand, Mode=OneTime}" />
+                </b:KeyTrigger>
+            </b:Interaction.Triggers>
+        </ListView>
+    </StackPanel>
+</Window>
