@@ -20,13 +20,12 @@ public partial class MainWindow : Window
             Topmost = confWrapper.Value.Topmost;
             confWrapper.ConfigUpdated += (sender, e) =>
             {
-                var config = e.Config;
-                Topmost = config.Topmost;
+                Topmost = e.Config.Topmost;
             };
         }
     }
 
-    private readonly ConfigMaster? ConfigMaster;
+    private ConfigMaster? ConfigMaster { get; }
 
     protected override async void OnClosed(EventArgs e)
     {
