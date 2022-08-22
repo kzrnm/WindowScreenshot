@@ -19,6 +19,7 @@ public partial class MainWindowViewModel : ObservableObject
     public string Title { get; } = Resources.MainWindowTitle;
 
     [RelayCommand]
+    private void ClearImage() => ImageProvider.Images.Clear();
     private void OnKeyDown(KeyEventArgs e)
     {
         switch (e.Key)

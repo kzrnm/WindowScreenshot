@@ -24,9 +24,9 @@
     Background="AliceBlue"
     mc:Ignorable="d">
     <b:Interaction.Triggers>
-        <b:EventTrigger EventName="KeyDown">
-            <b:InvokeCommandAction Command="{Binding KeyDownCommand, Mode=OneTime}" PassEventArgsToCommand="True" />
-        </b:EventTrigger>
+        <b:KeyTrigger Key="Esc">
+            <b:InvokeCommandAction Command="{Binding ClearImageCommand, Mode=OneTime}" />
+        </b:KeyTrigger>
     </b:Interaction.Triggers>
     <ws:WindowCapturer
         d:ImageVisibility="Collapsed"
