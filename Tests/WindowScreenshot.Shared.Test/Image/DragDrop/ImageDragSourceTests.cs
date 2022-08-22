@@ -1,6 +1,5 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using Moq;
-using System.Text.Json;
 using System.Windows;
 
 namespace Kzrnm.WindowScreenshot.Image.DragDrop;
@@ -29,7 +28,7 @@ public class ImageDragSourceTests
         mock.SetupGet(d => d.Data).Returns(img);
         new ImageDragSource().StartDrag(mock.Object);
 
-        mock.VerifySet(d => d.Effects = DragDropEffects.Copy, Times.Once());
+        mock.VerifySet(d => d.Effects = DragDropEffects.Copy | DragDropEffects.Move, Times.Once());
         mock.VerifySet(d => d.DataObject = It.Is<DataObject>(o => BitmapSourceEqualityComparer.Default.Equals(o.GetImageSafe(), img.ImageSource)), Times.Once());
     }
 }

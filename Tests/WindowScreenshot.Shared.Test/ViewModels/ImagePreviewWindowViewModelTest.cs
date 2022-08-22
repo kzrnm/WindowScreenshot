@@ -50,7 +50,7 @@ public class ImagePreviewWindowViewModelTest
         clipboardMock.Setup(m => m.ContainsImage()).Returns(true);
         clipboardMock.Setup(m => m.GetImage()).Returns(img);
 
-        viewModel.UpdateCanClipboardCommand();
+        viewModel.UpdateCanPaste();
         viewModel.PasteImageFromClipboardCommand.CanExecute(null).Should().BeTrue();
         viewModel.PasteImageFromClipboardCommand.Execute(null);
         ImageProvider.Images.Should().ContainSingle();
@@ -88,7 +88,7 @@ public class ImagePreviewWindowViewModelTest
         var viewModel = new ImagePreviewWindowViewModel(Messenger, new ImageDropTarget.Factory(ImageProvider), clipboardMock.Object, ImageProvider);
         using var ph = new PropertyChangedHistory(viewModel);
 
-        viewModel.Visibility.Should().Be(System.Windows.Visibility.Collapsed);
+        viewModel.Visibility.Should().Be(System.Windows.Visibility.Hidden);
         ph.Should().Equal(new Dictionary<string, int> { });
         ImageProvider.AddImage(TestUtil.DummyBitmapSource(4, 4));
         viewModel.Visibility.Should().Be(System.Windows.Visibility.Visible);
@@ -98,7 +98,7 @@ public class ImagePreviewWindowViewModelTest
                 { "SelectedImage",1 },
             });
         ImageProvider.Images.Clear();
-        viewModel.Visibility.Should().Be(System.Windows.Visibility.Collapsed);
+        viewModel.Visibility.Should().Be(System.Windows.Visibility.Hidden);
         ph.Should().Equal(new Dictionary<string, int>
             {
                 { "Visibility",2 },

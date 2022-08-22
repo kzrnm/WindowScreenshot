@@ -11,7 +11,6 @@ public class ImageDragSource : DefaultDragHandler
         if (dragInfo.Data is CaptureImage image)
         {
             dragInfo.DataObject = new DataObject().SetCaptureImage(image);
-            dragInfo.Effects = DragDropEffects.Copy | DragDropEffects.Move;
         }
     }
 }
