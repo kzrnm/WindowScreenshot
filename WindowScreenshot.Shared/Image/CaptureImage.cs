@@ -98,7 +98,7 @@ public partial class CaptureImage : ObservableObject
         => ImageKind switch
         {
             ImageKind.Jpg => new JpegBitmapEncoder { QualityLevel = JpegQualityLevel },
-            ImageKind.Png => new PngBitmapEncoder { Interlace = PngInterlaceOption.Off },
+            ImageKind.Png => new PngBitmapEncoder { Interlace = PngInterlaceOption.Default },
             _ => throw new InvalidOperationException($"invalid {nameof(ImageKind)}"),
         };
 

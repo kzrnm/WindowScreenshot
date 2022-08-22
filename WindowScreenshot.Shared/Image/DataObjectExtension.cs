@@ -52,7 +52,6 @@ public static class DataObjectExtension
                 return result;
         }
 
-
         if (data.GetDataPresent(typeof(BitmapSource)) && data.GetData(typeof(BitmapSource)) is BitmapSource source)
         {
             if (data.GetDataPresent(DataFormats.Dib) && data.GetData(DataFormats.Dib) is MemoryStream dib)
