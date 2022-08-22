@@ -58,15 +58,21 @@ public class WindowCapturer : DockPanel
 
     ContextMenu BuildContextMenu()
     {
+        var pasteMenuItem = new MenuItem
+        {
+            Header = Properties.Resources.Paste,
+        };
+        pasteMenuItem.SetBinding(MenuItem.CommandProperty, new Binding(nameof(ViewModel.PasteImageFromClipboardCommand))
+        {
+            Source = ViewModel,
+            Mode = BindingMode.OneTime,
+        });
+
         var contextMenu = new ContextMenu
         {
             Items =
             {
-                new MenuItem
-                {
-                    Command = ViewModel.PasteImageFromClipboardCommand,
-                    Header = Properties.Resources.Paste,
-                },
+                pasteMenuItem,
             },
         };
         contextMenu.Opened += (_, e) => ViewModel.UpdateCanPaste();
