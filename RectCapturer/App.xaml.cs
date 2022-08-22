@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Kzrnm.RectCapturer.ViewModels;
+using Kzrnm.WindowScreenshot;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
@@ -6,9 +8,8 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows;
-using Kzrnm.WindowScreenshot.ViewModels;
 
-namespace Kzrnm.WindowScreenshot;
+namespace Kzrnm.RectCapturer;
 
 /// <summary>
 /// Interaction logic for App.xaml

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Kzrnm.WindowScreenshot.Views;
+namespace Kzrnm.RectCapturer.Views;
 
 /// <summary>
 /// DummyArea.xaml の相互作用ロジック

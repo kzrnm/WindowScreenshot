@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Kzrnm.WindowScreenshot.Configs;
+namespace Kzrnm.RectCapturer.Configs;
 
 public partial class CaptureWindowCollection : ObservableObject
 {

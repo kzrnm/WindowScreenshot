@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Kzrnm.WindowScreenshot.Properties.App {
+namespace Kzrnm.RectCapturer.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Kzrnm.WindowScreenshot.Properties.App {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kzrnm.WindowScreenshot.Properties.App.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kzrnm.RectCapturer.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,7 +70,7 @@ namespace Kzrnm.WindowScreenshot.Properties.App {
         }
         
         /// <summary>
-        ///   WindowScreenshot に類似しているローカライズされた文字列を検索します。
+        ///   RectCapturer に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainWindowTitle {
             get {

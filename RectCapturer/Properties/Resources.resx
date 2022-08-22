@@ -121,7 +121,7 @@
     <value>設定</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
-    <value>WindowScreenshot</value>
+    <value>RectCapturer</value>
   </data>
   <data name="PostContent" xml:space="preserve">
     <value>Post</value>

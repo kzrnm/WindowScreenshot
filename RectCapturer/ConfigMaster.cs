@@ -1,10 +1,10 @@
-﻿using Kzrnm.WindowScreenshot.Configs;
+﻿using Kzrnm.RectCapturer.Configs;
 using Kzrnm.Wpf.Configs;
 using System;
 using System.Configuration;
 using System.Threading.Tasks;
 
-namespace Kzrnm.WindowScreenshot;
+namespace Kzrnm.RectCapturer;
 
 public partial class ConfigMaster
 {

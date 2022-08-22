@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using System.Windows;
 
-namespace Kzrnm.WindowScreenshot.Configs;
+namespace Kzrnm.RectCapturer.Configs;
 
 
 /// <summary>

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows.Controls;
 
-namespace Kzrnm.WindowScreenshot.Views;
+namespace Kzrnm.RectCapturer.Views;
 
 /// <summary>
 /// MainBody.xaml の相互作用ロジック

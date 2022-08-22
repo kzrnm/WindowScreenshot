@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using Kzrnm.WindowScreenshot.Configs;
+using Kzrnm.RectCapturer.Configs;
 using System;
 using System.Windows;
 
-namespace Kzrnm.WindowScreenshot.Views;
+namespace Kzrnm.RectCapturer.Views;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml

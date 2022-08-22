@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Kzrnm.RectCapturer.Properties;
 using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Image.DragDrop;
-using Kzrnm.WindowScreenshot.Properties.App;
 using System.Windows.Input;
 
-namespace Kzrnm.WindowScreenshot.ViewModels;
+namespace Kzrnm.RectCapturer.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {

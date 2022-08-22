@@ -4,7 +4,7 @@ using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Windows;
 using System;
 
-namespace Kzrnm.WindowScreenshot.ViewModels;
+namespace Kzrnm.RectCapturer.ViewModels;
 
 public partial class DebugAreaViewModel : ObservableObject
 {

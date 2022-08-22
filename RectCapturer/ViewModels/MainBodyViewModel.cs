@@ -5,7 +5,7 @@ using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Models;
 using System.Diagnostics;
 
-namespace Kzrnm.WindowScreenshot.ViewModels;
+namespace Kzrnm.RectCapturer.ViewModels;
 
 public partial class MainBodyViewModel : ObservableObject
 {
