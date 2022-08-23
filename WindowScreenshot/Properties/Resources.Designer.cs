@@ -61,6 +61,24 @@ namespace Kzrnm.WindowScreenshot.Properties {
         }
         
         /// <summary>
+        ///   設定を追加する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string AddSetting {
+            get {
+                return ResourceManager.GetString("AddSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   キャプチャ領域をサイズで指定する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string CaptureTargetUseRect {
+            get {
+                return ResourceManager.GetString("CaptureTargetUseRect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Clipboard に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Clipboard {
@@ -106,6 +124,15 @@ namespace Kzrnm.WindowScreenshot.Properties {
         }
         
         /// <summary>
+        ///   他のウインドウが重なってもキャプチャ対象にしない に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string OnlyTargetWindowContent {
+            get {
+                return ResourceManager.GetString("OnlyTargetWindowContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   貼り付け に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Paste {
@@ -133,11 +160,29 @@ namespace Kzrnm.WindowScreenshot.Properties {
         }
         
         /// <summary>
+        ///   変更を保存しますか？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SaveChangesMessage {
+            get {
+                return ResourceManager.GetString("SaveChangesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   対象のプロセスを選択してください に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string SelectCaptureProcess {
             get {
                 return ResourceManager.GetString("SelectCaptureProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   キャプチャ領域の指定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SetCaptureTargetRegion {
+            get {
+                return ResourceManager.GetString("SetCaptureTargetRegion", resourceCulture);
             }
         }
         

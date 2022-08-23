@@ -1,7 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Kzrnm.WindowScreenshot.Image.Capture;
+using System.Collections.Generic;
 
 namespace Kzrnm.RectCapturer.Configs;
 
-public partial class CaptureWindowCollection : ObservableObject
+public class CaptureWindowCollection : List<CaptureTarget>
 {
+    public CaptureWindowCollection() : base() { }
+    public CaptureWindowCollection(IEnumerable<CaptureTarget> collection) : base(collection) { }
 }

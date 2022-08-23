@@ -6,31 +6,186 @@
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:dd="urn:gong-wpf-dragdrop"
         xmlns:properties="clr-namespace:Kzrnm.WindowScreenshot.Properties"
+        xmlns:wlproperties="urn:kzrnm-wpf-window-screenshot/core/properties"
         xmlns:local="clr-namespace:Kzrnm.WindowScreenshot.Views"
         xmlns:viewmodels="clr-namespace:Kzrnm.WindowScreenshot.ViewModels"
-        xmlns:ktk="urn:kzrnm-wpf/toolkit"
+        xmlns:mvvm="clr-namespace:Kzrnm.WindowScreenshot.Mvvm"
+        xmlns:kw="urn:kzrnm-wpf/controls"
         mc:Ignorable="d"
         Background="WhiteSmoke"
         Title="{x:Static properties:Resources.SelectCaptureProcess}"
-        ktk:IocBehavior.AutoViewModel="{x:Type viewmodels:CaptureTargetSelectionWindowViewModel}"
         d:DataContext="{d:DesignInstance Type=viewmodels:CaptureTargetSelectionWindowViewModel}"
-        SizeToContent="WidthAndHeight"
+        x:FieldModifier="private" Name="WindowRoot"
+        SizeToContent="Manual"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        MinWidth="300" MinHeight="300"
+        Width="550" Height="700"
         d:DesignHeight="500" d:DesignWidth="400">
-    <StackPanel Margin="5">
-        <ListView Grid.Row="0"
-                  dd:DragDrop.IsDragSource="True"
-                  dd:DragDrop.IsDropTarget="True"
-                  Name="CaptureWindows"
-                  ItemsSource="{Binding CaptureTargetWindows, Mode=OneTime}"
-                  SelectedValue="{Binding SelectedTarget, Mode=OneWayToSource}"
-                  SelectedIndex="{Binding CaptureTargetWindows.SelectedIndex, Mode=TwoWay}"
-                  DisplayMemberPath="DisplayText"
-                  Height="150">
-            <b:Interaction.Triggers>
-                <b:KeyTrigger Key="Delete">
-                    <b:InvokeCommandAction Command="{Binding RemoveSelectedCaptureWindowCommand, Mode=OneTime}" />
-                </b:KeyTrigger>
-            </b:Interaction.Triggers>
-        </ListView>
-    </StackPanel>
+    <b:Interaction.Triggers>
+        <b:KeyTrigger Key="Esc">
+            <b:CallMethodAction MethodName="Close" TargetObject="{Binding ElementName=WindowRoot}" />
+        </b:KeyTrigger>
+    </b:Interaction.Triggers>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListView
+                dd:DragDrop.IsDragSource="True"
+                dd:DragDrop.IsDropTarget="True"
+                dd:DragDrop.SelectDroppedItems="True"
+                Name="CaptureWindows"
+                ItemsSource="{Binding CaptureTargetWindows, Mode=OneTime}"
+                SelectedValue="{Binding SelectedTarget, Mode=OneWayToSource}"
+                SelectedIndex="{Binding CaptureTargetWindows.SelectedIndex, Mode=TwoWay}"
+                DisplayMemberPath="DisplayText">
+                <b:Interaction.Triggers>
+                    <b:KeyTrigger Key="Delete">
+                        <b:InvokeCommandAction Command="{Binding RemoveSelectedCaptureTargetCommand, Mode=OneTime}" />
+                    </b:KeyTrigger>
+                </b:Interaction.Triggers>
+            </ListView>
+            <StackPanel
+                Grid.Row="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="MinWidth" Value="75" />
+                        <Setter Property="Height" Value="25" />
+                    </Style>
+                </StackPanel.Resources>
+                <Button
+                    Content="{x:Static properties:Resources.AddSetting}"
+                    Command="{Binding AddCaptureWindowCommand, Mode=OneTime}" />
+                <Separator Width="15" Background="Transparent"/>
+                <Button
+                    Content="{x:Static properties:Resources.Delete}"
+                    Command="{Binding RemoveSelectedCaptureTargetCommand, Mode=OneTime}" />
+            </StackPanel>
+        </Grid>
+        <Border Grid.Row="1" Margin="5" Padding="5" BorderThickness="1" BorderBrush="Silver">
+            <StackPanel Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Grid.Column" Value="1"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Label Content="Process"/>
+                    <TextBox Text="{Binding ProcessName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Grid.Row="1" Content="Window"/>
+                    <TextBox Grid.Row="1" Text="{Binding WindowName, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <Separator Margin="4"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="45" />
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="45" />
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="45" />
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="45" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="TextBox">
+                            <Setter Property="kw:TextBoxBehavior.SelectAllOnFocus" Value="True" />
+                        </Style>
+                        <mvvm:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+                    </Grid.Resources>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="100000" Text="{x:Static properties:Resources.SetCaptureTargetRegion}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedTarget.RegionLeft, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding SelectedTarget.RegionTop, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding SelectedTarget.RegionRight, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding SelectedTarget.RegionUseRect, Converter={StaticResource InverseBooleanConverter}}" />
+                    <TextBox Grid.Row="1" Grid.Column="7" Text="{Binding SelectedTarget.RegionBottom, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding SelectedTarget.RegionUseRect, Converter={StaticResource InverseBooleanConverter}}" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="5 0" Text="←" />
+                    <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Margin="5 0" Text="↑" />
+                    <TextBlock Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right" Margin="5 0" Text="→" />
+                    <TextBlock Grid.Row="1" Grid.Column="6" HorizontalAlignment="Right" Margin="5 0" Text="↓" />
+
+                    <CheckBox Grid.Row="3" Grid.ColumnSpan="100000"
+                              IsChecked="{Binding SelectedTarget.RegionUseRect}"
+                              Content="{x:Static properties:Resources.CaptureTargetUseRect}"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedTarget.RegionWidth, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding SelectedTarget.RegionUseRect}" />
+                    <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding SelectedTarget.RegionHeight, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding SelectedTarget.RegionUseRect}" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Margin="5 0" Text="{x:Static properties:Resources.Width}" />
+                    <TextBlock Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" Margin="5 0" Text="{x:Static properties:Resources.Height}" />
+
+                    <CheckBox Grid.Row="6" Grid.ColumnSpan="100000"
+                              IsChecked="{Binding SelectedTarget.OnlyTargetWindow}"
+                              Content="{x:Static properties:Resources.OnlyTargetWindowContent}" />
+                </Grid>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListView ItemsSource="{Binding FilteredWindowProcesses}">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                        <Setter Property="HorizontalContentAlignment" Value="Left" />
+                    </Style>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn  Header="Process" DisplayMemberBinding="{Binding ProcessName}" Width="120"/>
+                        <GridViewColumn Header="Window" DisplayMemberBinding="{Binding DefaultWindowName}" Width="400"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <StackPanel
+                Grid.Row="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Width" Value="75" />
+                        <Setter Property="Height" Value="25" />
+                    </Style>
+                </StackPanel.Resources>
+                <Button
+                    x:Name="OkButton" 
+                    Content="{x:Static wlproperties:Resources.OK}"
+                    Click="OkButton_Click"/>
+                <Separator Width="15" Background="Transparent"/>
+                <Button
+                    x:Name="CancelButton" 
+                    Content="{x:Static wlproperties:Resources.Cancel}"
+                    IsCancel="True"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
 </Window>

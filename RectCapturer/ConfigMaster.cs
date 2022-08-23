@@ -11,12 +11,12 @@ public partial class ConfigMaster
     public ConfigMaster(ConfigWrapper<Config> config, ConfigWrapper<CaptureWindowCollection> captureWindows, ConfigWrapper<Shortcuts> shortcuts)
     {
         Config = config;
-        CaptureWindows = captureWindows;
+        CaptureTargetWindows = captureWindows;
         Shortcuts = shortcuts;
     }
 
     public ConfigWrapper<Config> Config { get; }
-    public ConfigWrapper<CaptureWindowCollection> CaptureWindows { get; }
+    public ConfigWrapper<CaptureWindowCollection> CaptureTargetWindows { get; }
     public ConfigWrapper<Shortcuts> Shortcuts { get; }
 
     public static async Task<ConfigMaster> LoadConfigsAsync()
@@ -31,7 +31,7 @@ public partial class ConfigMaster
     public Task SaveAsync() => Task.WhenAll(new[]
     {
         Config.SaveAsync(),
-        CaptureWindows.SaveAsync(),
+        CaptureTargetWindows.SaveAsync(),
         Shortcuts.SaveAsync(),
     });
 }

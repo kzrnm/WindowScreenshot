@@ -45,29 +45,32 @@ public class ObserveWindowProcess : IDisposable
             using var process = Process.GetProcessById((int)processId);
             if (process.MainWindowTitle.Length > 0)
             {
-                await UpdateWindowsAsync();
+                await UpdateWindowsAsync().ConfigureAwait(false);
             }
         }
     }
 
-    private async Task UpdateWindowsAsync()
+    private Task UpdateWindowsAsync()
     {
-        await Task.CompletedTask.ConfigureAwait(false);
-
-        var list = new List<WindowProcessHandle>();
-        var paramHandle = GCHandle.Alloc(list);
-        EnumWindows(EnumuWindowsProc, (LPARAM)(nint)paramHandle);
-        paramHandle.Free();
-
-        var newWindows = list.ToArray();
-        Array.Sort(newWindows.Select(p => p.ProcessName).ToArray(), newWindows);
-        if (!Enumerable.SequenceEqual(windows, list, WindowProcessHandleComparer.Default))
+        return Task.Factory.StartNew(() =>
         {
-            windows = newWindows;
-            WeakReferenceMessenger.Default.Send(new CurrentWindowProcessHandlesMessage(newWindows));
-        }
+            var list = new WindowProcessHandleProc();
+            var paramHandle = GCHandle.Alloc(list);
+            EnumWindows(list.EnumWindowsProc, (LPARAM)(nint)paramHandle);
+            paramHandle.Free();
 
-        static BOOL EnumuWindowsProc(HWND hWnd, LPARAM lParam)
+            var newWindows = list.ToArray();
+            Array.Sort(newWindows.Select(p => p.ProcessName).ToArray(), newWindows);
+            if (!Enumerable.SequenceEqual(windows, list, WindowProcessHandleComparer.Default))
+            {
+                windows = newWindows;
+                WeakReferenceMessenger.Default.Send(new CurrentWindowProcessHandlesMessage(newWindows));
+            }
+        });
+    }
+    private class WindowProcessHandleProc : List<WindowProcessHandle>
+    {
+        public BOOL EnumWindowsProc(HWND hWnd, LPARAM _)
         {
             if (!IsWindowVisible(hWnd)) return true;
 
@@ -81,7 +84,7 @@ public class ObserveWindowProcess : IDisposable
                     return true;
                 }
 
-                ((List<WindowProcessHandle>)((GCHandle)(nint)lParam).Target!).Add(window);
+                Add(window);
             }
             catch { }
             return true;

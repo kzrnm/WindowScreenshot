@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 
@@ -17,10 +16,10 @@ internal static class NativeMethods
     public static unsafe string GetWindowText(HWND hWnd, int cTxtLen)
     {
         // https://github.com/microsoft/CsWin32/issues/614
-        Span<char> text = stackalloc char[cTxtLen];
+        Span<char> text = stackalloc char[cTxtLen + 1];
         fixed (char* pText = text)
         {
-            int length = PInvoke.GetWindowText(hWnd, pText, cTxtLen);
+            int length = PInvoke.GetWindowText(hWnd, pText, text.Length);
             return new string(text[..length]);
         }
     }

@@ -32,7 +32,7 @@ public static class SharedInitializer
             service.AddSingleton<ImageProvider>();
         else
             service.AddSingleton(imageProvider);
-
+        
         return service
             .AddSingleton<ImageDropTarget.Factory>()
             .AddTransient<CaptureTargetSelectionWindowViewModel>()

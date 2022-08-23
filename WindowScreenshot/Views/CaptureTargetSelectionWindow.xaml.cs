@@ -1,17 +1,11 @@
-﻿using Kzrnm.Wpf.Font;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Kzrnm.WindowScreenshot.Image.Capture;
+using Kzrnm.WindowScreenshot.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Kzrnm.WindowScreenshot.Views;
 /// <summary>
@@ -19,15 +13,44 @@ namespace Kzrnm.WindowScreenshot.Views;
 /// </summary>
 public partial class CaptureTargetSelectionWindow : Window
 {
-    public CaptureTargetSelectionWindow()
+    public CaptureTargetSelectionWindow(IList<CaptureTarget> collection)
     {
         InitializeComponent();
+
+        CaptureTargetSelectionWindowViewModel viewModel;
+        DataContext = viewModel = Ioc.Default.GetRequiredServiceIfIsNotInDesignMode<CaptureTargetSelectionWindowViewModel>(this);
+        viewModel.InitializeCaptureTargetWindows(collection);
     }
-    public object? ShowDialogWithResponse()
+    public IList<CaptureTarget>? ShowDialogWithResponse()
     {
         if (ShowDialog() != true)
             return null;
 
-        return null;
+        return (DataContext as CaptureTargetSelectionWindowViewModel)?.GetCaptureTargets().ToArray();
+    }
+
+    private void OkButton_Click(object sender, RoutedEventArgs e)
+    {
+        DialogResult = true;
+    }
+
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        if (DialogResult == null && (DataContext as CaptureTargetSelectionWindowViewModel)?.IsUpdated is true)
+        {
+            var result = MessageBox.Show(this, Properties.Resources.SaveChangesMessage, AppDomain.CurrentDomain.FriendlyName, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    DialogResult = true;
+                    break;
+                case MessageBoxResult.No:
+                    DialogResult = false;
+                    break;
+                case MessageBoxResult.Cancel:
+                    e.Cancel = true;
+                    break;
+            }
+        }
     }
 }

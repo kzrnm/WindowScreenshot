@@ -1,50 +1,35 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
 using System.Windows.Media.Imaging;
 
 namespace Kzrnm.WindowScreenshot.Image.Capture;
 
-public partial class CaptureTarget : ObservableObject, ICloneable
+/// <summary>
+/// キャプチャ対象
+/// </summary>
+/// <param name="ProcessName">対象のプロセス名</param>
+/// <param name="WindowName">対象のウインドウ名</param>
+/// <param name="Region">キャプチャ領域</param>
+/// <param name="OnlyTargetWindow">true なら対象のウインドウのみを対象にする。false なら <see cref="Windows.Win32.PInvoke.ClientToScreen"/>でスクリーンに表示されているものを対象にする</param>
+public record CaptureTarget(
+    string ProcessName,
+    string WindowName,
+    CaptureRegion Region,
+    bool OnlyTargetWindow)
 {
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(DisplayText))]
-    private string _ProcessName = "";
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(DisplayText))]
-    private string _WindowName = "";
-
-    [ObservableProperty]
-    private bool _UseOnlyTargetWindow = true;
-
-    [ObservableProperty]
-    private CaptureRegion _Region = new();
-
-    [JsonIgnore]
-    public string DisplayText
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(WindowName))
-                if (string.IsNullOrEmpty(ProcessName)) return "{none}";
-                else return ProcessName;
-            return $"{ProcessName}[{WindowName}]";
-        }
-    }
-
-    public bool IsFitFor(WindowProcessHandle window)
+    public bool IsFitFor(WindowProcessHandle window) => IsFitFor(window, ProcessName, WindowName);
+    public static bool IsFitFor(WindowProcessHandle window, string? targetProcessName, string? targetWindowName)
     {
         if (!window.IsActive)
             return false;
 
-        if (ProcessName != null
-            && (window.ProcessName.IndexOf(this.ProcessName, StringComparison.OrdinalIgnoreCase) < 0))
+        if (targetProcessName != null
+            && (window.ProcessName.IndexOf(targetProcessName, StringComparison.OrdinalIgnoreCase) < 0))
         {
             return false;
         }
-        if (WindowName != null
-            && (window.GetCurrentWindowName().IndexOf(WindowName, StringComparison.OrdinalIgnoreCase) < 0))
+        if (targetWindowName != null
+            && (window.GetCurrentWindowName().IndexOf(targetWindowName, StringComparison.OrdinalIgnoreCase) < 0))
         {
             return false;
         }
@@ -57,17 +42,9 @@ public partial class CaptureTarget : ObservableObject, ICloneable
         {
             if (IsFitFor(window))
             {
-                return window.GetClientBitmap(this.Region, this.UseOnlyTargetWindow);
+                return window.GetClientBitmap(Region, OnlyTargetWindow);
             }
         }
         return default;
-    }
-
-    object ICloneable.Clone() => Clone();
-    public CaptureTarget Clone()
-    {
-        var obj = (CaptureTarget)MemberwiseClone();
-        obj.Region = Region.Clone();
-        return obj;
     }
 }
