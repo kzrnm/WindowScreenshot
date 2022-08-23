@@ -21,11 +21,6 @@
         MinWidth="300" MinHeight="300"
         Width="550" Height="700"
         d:DesignHeight="500" d:DesignWidth="400">
-    <b:Interaction.Triggers>
-        <b:KeyTrigger Key="Esc">
-            <b:CallMethodAction MethodName="Close" />
-        </b:KeyTrigger>
-    </b:Interaction.Triggers>
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
