@@ -36,7 +36,7 @@ public record CaptureTarget(
         return true;
     }
 
-    public BitmapSource? CaptureFrom(WindowProcessHandle[] windowProcessHandles)
+    public BitmapSource? CaptureFrom(ReadOnlySpan<WindowProcessHandle> windowProcessHandles)
     {
         foreach (var window in windowProcessHandles)
         {
