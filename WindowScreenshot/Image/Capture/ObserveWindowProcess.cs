@@ -13,7 +13,11 @@ using static Windows.Win32.PInvoke;
 
 namespace Kzrnm.WindowScreenshot.Image.Capture;
 
-public class ObserveWindowProcess : IDisposable
+public interface IObserveWindowProcess
+{
+    ReadOnlySpan<WindowProcessHandle> CurrentWindows { get; }
+}
+public class ObserveWindowProcess : IObserveWindowProcess, IDisposable
 {
     private static ObserveWindowProcess? _Instanse;
     public static ObserveWindowProcess Instanse => _Instanse ??= new();

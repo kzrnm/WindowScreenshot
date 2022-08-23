@@ -11,7 +11,7 @@ public static class SharedInitializer
 {
     public static IServiceCollection InitializeWindowScreenshot(
         this IServiceCollection service,
-        ObserveWindowProcess? observeWindowProcess = null,
+        IObserveWindowProcess? observeWindowProcess = null,
         ICaptureImageService? captureImageService = null,
         IClipboardManager? clipboardManager = null,
         ImageProvider? imageProvider = null)
@@ -32,7 +32,7 @@ public static class SharedInitializer
             service.AddSingleton<ImageProvider>();
         else
             service.AddSingleton(imageProvider);
-        
+
         return service
             .AddSingleton<ImageDropTarget.Factory>()
             .AddTransient<CaptureTargetSelectionWindowViewModel>()

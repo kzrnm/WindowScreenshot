@@ -9,10 +9,15 @@ using System.Linq;
 namespace Kzrnm.WindowScreenshot.ViewModels;
 public partial class CaptureTargetSelectionWindowViewModel : ObservableRecipient, IRecipient<CurrentWindowProcessHandlesMessage>
 {
-    public CaptureTargetSelectionWindowViewModel() : this(WeakReferenceMessenger.Default) { }
-    public CaptureTargetSelectionWindowViewModel(IMessenger messenger) : base(messenger)
+    public CaptureTargetSelectionWindowViewModel(ObserveWindowProcess observeWindowProcess)
+        : this(WeakReferenceMessenger.Default, observeWindowProcess) { }
+    public CaptureTargetSelectionWindowViewModel(IMessenger messenger, ObserveWindowProcess observeWindowProcess)
+        : this(messenger, observeWindowProcess.CurrentWindows.ToArray()) { }
+
+    public CaptureTargetSelectionWindowViewModel(IMessenger messenger, IEnumerable<IWindowProcessHandle> windowProcesses)
+        : base(messenger)
     {
-        _WindowProcesses = ObserveWindowProcess.Instanse.CurrentWindows.ToArray();
+        _WindowProcesses = windowProcesses;
         IsActive = true;
     }
 
@@ -72,9 +77,9 @@ public partial class CaptureTargetSelectionWindowViewModel : ObservableRecipient
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FilteredWindowProcesses))]
-    private IEnumerable<WindowProcessHandle> _WindowProcesses;
+    private IEnumerable<IWindowProcessHandle> _WindowProcesses;
 
-    public IEnumerable<WindowProcessHandle>? FilteredWindowProcesses
+    public IEnumerable<IWindowProcessHandle>? FilteredWindowProcesses
         => WindowProcesses?.Where(w => SelectedTarget?.IsFitFor(w) ?? false);
 
     [RelayCommand]
@@ -164,7 +169,7 @@ public partial class CaptureTargetSelectionWindowViewModel : ObservableRecipient
             }
         }
 
-        public bool IsFitFor(WindowProcessHandle window)
+        public bool IsFitFor(IWindowProcessHandle window)
             => CaptureTarget.IsFitFor(window, ProcessName, WindowName);
     }
 }

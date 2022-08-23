@@ -9,29 +9,41 @@ using static Kzrnm.WindowScreenshot.Windows.NativeMethods;
 using static Windows.Win32.PInvoke;
 
 namespace Kzrnm.WindowScreenshot.Image.Capture;
-public class WindowProcessHandle : IDisposable
+
+
+public interface IWindowProcessHandle
+{
+    bool IsActive { get; }
+    string ProcessName { get; }
+    string GetCurrentWindowName();
+}
+public class WindowProcessHandle : IWindowProcessHandle, IDisposable
 {
     public HWND Handle { get; private set; }
-    public string GetCurrentWindowName() => GetWindowText(Handle);
-
     public string ProcessName { get; }
     public string DefaultWindowName { get; }
 
     private bool disposed = false;
 
     public WindowProcessHandle(nint handle) : this((HWND)handle) { }
-    internal WindowProcessHandle(HWND handle)
+    internal WindowProcessHandle(HWND handle) : this(handle, GetProcessName(handle), GetWindowText(handle)) { }
+    internal WindowProcessHandle(HWND handle, string processName, string defaultWindowName)
     {
         Handle = handle;
-        _ = GetWindowThreadProcessId(handle, out var processId);
-        using (var process = Process.GetProcessById((int)processId))
-            ProcessName = process.ProcessName;
-        DefaultWindowName = GetCurrentWindowName();
+        ProcessName = processName;
+        DefaultWindowName = defaultWindowName;
     }
 
-    public bool IsActive => IsWindow(Handle);
-    public override string ToString() => GetCurrentWindowName();
+    public override string ToString() => $"HWND:{Handle.Value} Process:{ProcessName}";
 
+    private static string GetProcessName(HWND handle)
+    {
+        _ = GetWindowThreadProcessId(handle, out var processId);
+        using var process = Process.GetProcessById((int)processId);
+        return process.ProcessName;
+    }
+    public bool IsActive => IsWindow(Handle);
+    public string GetCurrentWindowName() => GetWindowText(Handle);
     public void Dispose()
     {
         Dispose(true);

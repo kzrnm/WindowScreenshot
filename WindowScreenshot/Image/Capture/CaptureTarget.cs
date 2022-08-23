@@ -14,11 +14,11 @@ namespace Kzrnm.WindowScreenshot.Image.Capture;
 public record CaptureTarget(
     string ProcessName,
     string WindowName,
-    CaptureRegion Region,
+    [property: JsonPropertyOrder(1000)] CaptureRegion Region,
     bool OnlyTargetWindow)
 {
-    public bool IsFitFor(WindowProcessHandle window) => IsFitFor(window, ProcessName, WindowName);
-    public static bool IsFitFor(WindowProcessHandle window, string? targetProcessName, string? targetWindowName)
+    public bool IsFitFor(IWindowProcessHandle window) => IsFitFor(window, ProcessName, WindowName);
+    public static bool IsFitFor(IWindowProcessHandle window, string? targetProcessName, string? targetWindowName)
     {
         if (!window.IsActive)
             return false;
