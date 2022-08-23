@@ -19,7 +19,6 @@ public class WindowCapturer : DockPanel
     {
         ViewModel = Ioc.Default.GetRequiredServiceIfIsNotInDesignMode<WindowCapturerViewModel>(this);
 
-        ContextMenu = BuildContextMenu();
         Children.Add(ImageSettings);
         Children.Add(ImageListView);
         SetDock(ImageSettings, Dock.Right);
@@ -56,29 +55,6 @@ public class WindowCapturer : DockPanel
         Unloaded += OnUnloaded;
     }
 
-    ContextMenu BuildContextMenu()
-    {
-        var pasteMenuItem = new MenuItem
-        {
-            Header = Properties.Resources.Paste,
-        };
-        pasteMenuItem.SetBinding(MenuItem.CommandProperty, new Binding(nameof(ViewModel.PasteImageFromClipboardCommand))
-        {
-            Source = ViewModel,
-            Mode = BindingMode.OneTime,
-        });
-
-        var contextMenu = new ContextMenu
-        {
-            Items =
-            {
-                pasteMenuItem,
-            },
-        };
-        contextMenu.Opened += (_, e) => ViewModel.UpdateCanPaste();
-        return contextMenu;
-    }
-
     public WindowCapturerViewModel ViewModel { get; }
     public ImageSettings ImageSettings { get; } = new();
     public ImageListView ImageListView { get; } = new();
@@ -94,6 +70,7 @@ public class WindowCapturer : DockPanel
         get => (double)GetValue(ImageWidthProperty);
         set => SetValue(ImageWidthProperty, value);
     }
+
     public static readonly DependencyProperty ListHeightProperty =
         DependencyProperty.Register(
             nameof(ListHeight),
@@ -103,6 +80,17 @@ public class WindowCapturer : DockPanel
     {
         get => (double)GetValue(ListHeightProperty);
         set => SetValue(ListHeightProperty, value);
+    }
+
+    public static readonly DependencyProperty HorizontalScrollBarVisibilityProperty =
+        DependencyProperty.Register(
+            nameof(HorizontalScrollBarVisibility),
+            typeof(ScrollBarVisibility),
+            typeof(WindowCapturer));
+    public ScrollBarVisibility HorizontalScrollBarVisibility
+    {
+        get => (ScrollBarVisibility)GetValue(HorizontalScrollBarVisibilityProperty);
+        set => SetValue(HorizontalScrollBarVisibilityProperty, value);
     }
 
     public static readonly DependencyProperty SettingsWidthProperty =
@@ -141,6 +129,7 @@ public class WindowCapturer : DockPanel
     }
 
     private ImagePreviewWindow? imagePreviewWindow;
+    public ImagePreviewWindow? ImagePreviewWindow => imagePreviewWindow;
     public static readonly DependencyProperty HasPreviewWindowProperty =
         DependencyProperty.Register(
             nameof(HasPreviewWindow),
@@ -163,6 +152,7 @@ public class WindowCapturer : DockPanel
         {
             ipw.Owner = null;
             ipw.Close();
+            imagePreviewWindow = null;
         }
     }
     private void MakePreviewWindow(Window window)
@@ -170,8 +160,6 @@ public class WindowCapturer : DockPanel
         imagePreviewWindow = new()
         {
             Owner = window,
-            Top = window.Top + window.Height / 2,
-            Left = window.Left + window.Width / 2
         };
     }
 

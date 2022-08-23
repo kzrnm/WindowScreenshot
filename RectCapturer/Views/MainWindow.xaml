@@ -4,6 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:Kzrnm.RectCapturer.Properties"
+    xmlns:wsproperties="urn:kzrnm-wpf-window-screenshot/properties"
     xmlns:local="clr-namespace:Kzrnm.RectCapturer.Views"
     xmlns:vm="clr-namespace:Kzrnm.RectCapturer.ViewModels"
     xmlns:dd="urn:gong-wpf-dragdrop"
@@ -20,7 +22,7 @@
     dd:DragDrop.DropHandler="{Binding DropHandler}"
     dd:DragDrop.IsDropTarget="True"
     d:DesignHeight="200"
-    d:DesignWidth="400"
+    d:DesignWidth="600"
     Background="AliceBlue"
     mc:Ignorable="d">
     <b:Interaction.Triggers>
@@ -28,11 +30,24 @@
             <b:InvokeCommandAction Command="{Binding ClearImageCommand, Mode=OneTime}" />
         </b:KeyTrigger>
     </b:Interaction.Triggers>
+    <Window.ContextMenu>
+        <ContextMenu>
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="Opened">
+                    <b:CallMethodAction MethodName="UpdateMenuCommandState" TargetObject="{Binding}" />
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
+            <MenuItem Click="MovePreviewWindowHereClick" IsEnabled="{Binding PreviewWindowShown}" Header="{x:Static properties:Resources.MovePreviewWindowHere}" />
+            <Separator />
+            <MenuItem Command="{Binding PasteImageFromClipboardCommand, Mode=OneTime}" Header="{x:Static wsproperties:Resources.Paste}" />
+        </ContextMenu>
+    </Window.ContextMenu>
     <ws:WindowCapturer
-        d:ImageVisibility="Collapsed"
+        Name="WindowCapturer"
         AlwaysImageArea="False"
+        HorizontalScrollBarVisibility="Visible"
         ImageWidth="65"
-        ListHeight="70">
+        ListHeight="80">
         <local:MainBody  Background="WhiteSmoke" />
     </ws:WindowCapturer>
 </Window>

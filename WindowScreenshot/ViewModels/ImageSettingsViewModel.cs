@@ -22,7 +22,7 @@ public partial class ImageSettingsViewModel : ObservableRecipient, IRecipient<Se
         : base(messenger)
     {
         ImageProvider = imageProvider;
-        SelectedImage = imageProvider.SelectedImage;
+        SelectedImage = imageProvider.Images.SelectedItem;
         IsActive = true;
     }
 

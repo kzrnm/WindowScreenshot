@@ -45,7 +45,10 @@ public partial class ImagePreviewWindowViewModel : ObservableRecipient, IRecipie
         ImageProvider.Images.Clear();
     }
 
-    public void UpdateCanPaste() => pasteImageFromClipboardCommand?.NotifyCanExecuteChanged();
+    public void UpdateMenuCommandState()
+    {
+        pasteImageFromClipboardCommand?.NotifyCanExecuteChanged();
+    }
     private bool CanAddImmageFromClipboard() => ImageProvider.CanAddImage && ClipboardManager.ContainsImage();
     [RelayCommand(CanExecute = nameof(CanAddImmageFromClipboard))]
     private void PasteImageFromClipboard()

@@ -49,7 +49,7 @@ public partial class CaptureTargetSelectionWindow : Window
                     break;
                 case MessageBoxResult.Cancel:
                     e.Cancel = true;
-                    break;
+                    return;
             }
         }
     }

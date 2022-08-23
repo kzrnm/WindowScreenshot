@@ -26,7 +26,7 @@ public class ImageProviderTests : IDisposable, IRecipient<SelectedImageChangedMe
     public void AddImageTest()
     {
         var imagesCollectionChangedHistory = new CollectionChangedHistory(ImageProvider.Images);
-        ImageProvider.SelectedImage.Should().BeNull();
+        ImageProvider.Images.SelectedItem.Should().BeNull();
         selectedImageChangedHistories.Should().HaveCount(0);
 
         ImageProvider.AddImage(BitmapSource.Create(
@@ -35,7 +35,7 @@ public class ImageProviderTests : IDisposable, IRecipient<SelectedImageChangedMe
                 new BitmapPalette(new[] { Colors.Transparent }),
                 new byte[] { 0, 0, 0, 0 }, 1));
 
-        ImageProvider.SelectedImageIndex.Should().Be(0);
+        ImageProvider.Images.SelectedIndex.Should().Be(0);
         ImageProvider.Images.Should().ContainSingle();
 
         selectedImageChangedHistories.Should().HaveCount(1);
@@ -48,15 +48,15 @@ public class ImageProviderTests : IDisposable, IRecipient<SelectedImageChangedMe
                 new byte[] { 0, 0, 0, 0 }, 1)
             );
 
-        ImageProvider.SelectedImageIndex.Should().Be(1);
+        ImageProvider.Images.SelectedIndex.Should().Be(1);
         ImageProvider.Images.Should().HaveCount(2);
         imagesCollectionChangedHistory.Should().HaveCount(2);
         imagesCollectionChangedHistory[0].Action
             .Should()
             .Be(NotifyCollectionChangedAction.Add);
 
-        ImageProvider.SelectedImage.Should().NotBeNull();
-        ImageProvider.SelectedImage!.ImageSource.Height.Should().Be(4);
+        ImageProvider.Images.SelectedItem.Should().NotBeNull();
+        ImageProvider.Images.SelectedItem!.ImageSource.Height.Should().Be(4);
         selectedImageChangedHistories.Should().HaveCount(2);
     }
 

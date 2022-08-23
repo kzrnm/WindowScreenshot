@@ -36,4 +36,13 @@ public partial class MainWindow : Window
             await configMaster.SaveAsync().ConfigureAwait(false);
         }
     }
+
+    private void MovePreviewWindowHereClick(object sender, RoutedEventArgs e)
+    {
+        if (WindowCapturer.ImagePreviewWindow is { } ipw)
+        {
+            ipw.Top = Top;
+            ipw.Left = Left;
+        }
+    }
 }

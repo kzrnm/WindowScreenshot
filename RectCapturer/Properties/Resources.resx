@@ -123,6 +123,9 @@
   <data name="MainWindowTitle" xml:space="preserve">
     <value>RectCapturer</value>
   </data>
+  <data name="MovePreviewWindowHere" xml:space="preserve">
+    <value>プレビュー画面をここに移動</value>
+  </data>
   <data name="PostContent" xml:space="preserve">
     <value>Post</value>
   </data>

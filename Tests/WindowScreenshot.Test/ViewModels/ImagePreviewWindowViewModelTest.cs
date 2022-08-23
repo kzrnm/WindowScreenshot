@@ -50,7 +50,7 @@ public class ImagePreviewWindowViewModelTest
         clipboardMock.Setup(m => m.ContainsImage()).Returns(true);
         clipboardMock.Setup(m => m.GetImage()).Returns(img);
 
-        viewModel.UpdateCanPaste();
+        viewModel.UpdateMenuCommandState();
         viewModel.PasteImageFromClipboardCommand.CanExecute(null).Should().BeTrue();
         viewModel.PasteImageFromClipboardCommand.Execute(null);
         ImageProvider.Images.Should().ContainSingle();

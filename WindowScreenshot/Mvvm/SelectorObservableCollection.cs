@@ -54,7 +54,7 @@ public class SelectorObservableCollection<T> : ObservableCollection<T>
         var oldIndex = SelectedIndex;
         var oldItem = SelectedItem;
         base.ClearItems();
-        if (_SelectedIndex != -1)
+        if (oldIndex != -1)
             OnSelectedChanged(oldIndex, _SelectedIndex = -1, oldItem, default);
     }
 

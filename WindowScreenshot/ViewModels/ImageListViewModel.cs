@@ -29,7 +29,7 @@ public partial class ImageListViewModel : ObservableRecipient, IRecipient<Select
     public ImageDropTarget DropHandler { get; }
     public ImageDragSource DragHandler { get; }
 
-    private bool IsSelectedImage() => ImageProvider.SelectedImageIndex >= 0;
+    private bool IsSelectedImage() => ImageProvider.Images.SelectedIndex >= 0;
     [RelayCommand(CanExecute = nameof(IsSelectedImage))]
     private void RemoveSelectedImage()
     {
@@ -43,7 +43,7 @@ public partial class ImageListViewModel : ObservableRecipient, IRecipient<Select
     private void InsertImageFromClipboard()
     {
         if (ClipboardManager.GetImage() is { } image)
-            ImageProvider.InsertImage(ImageProvider.SelectedImageIndex + 1, image);
+            ImageProvider.InsertImage(ImageProvider.Images.SelectedIndex + 1, image);
     }
 
     [RelayCommand]

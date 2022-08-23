@@ -37,9 +37,9 @@
                             dd:DragDrop.IsDragSource="True"
                             dd:DragDrop.IsDropTarget="True"
                             ItemsSource="{Binding ImageProvider.Images, Mode=OneWay}"
-                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.HorizontalScrollBarVisibility="{Binding HorizontalScrollBarVisibility, RelativeSource={RelativeSource AncestorType=views:WindowCapturer}}"
                             ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                            SelectedIndex="{Binding ImageProvider.SelectedImageIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            SelectedIndex="{Binding ImageProvider.Images.SelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource AncestorType=views:ImageListView}}" />

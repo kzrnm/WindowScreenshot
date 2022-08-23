@@ -32,7 +32,7 @@ public class ImageListViewModelTest
         ImageProvider.AddImage(TestUtil.DummyBitmapSource(10, 10));
         viewModel.RemoveSelectedImageCommand.CanExecute(null).Should().BeTrue();
         viewModel.RemoveSelectedImageCommand.Execute(null);
-        ImageProvider.SelectedImage.Should().BeNull();
+        ImageProvider.Images.SelectedItem.Should().BeNull();
         ImageProvider.Images.Should().BeEmpty();
     }
 

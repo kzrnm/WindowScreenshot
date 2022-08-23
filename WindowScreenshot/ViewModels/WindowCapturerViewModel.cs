@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Image.DragDrop;
@@ -43,15 +42,6 @@ public partial class WindowCapturerViewModel : ObservableRecipient, IRecipient<I
 
     [ObservableProperty]
     private Visibility _ImageVisibility = Visibility.Collapsed;
-
-    public void UpdateCanPaste() => pasteImageFromClipboardCommand?.NotifyCanExecuteChanged();
-    private bool CanAddImmageFromClipboard() => ImageProvider.CanAddImage && ClipboardManager.ContainsImage();
-    [RelayCommand(CanExecute = nameof(CanAddImmageFromClipboard))]
-    private void PasteImageFromClipboard()
-    {
-        if (ClipboardManager.GetImage() is { } image)
-            ImageProvider.AddImage(image);
-    }
 
     public void OnWindowClosing() => Messenger.Send<ImageClearRequestMessage>();
     void IRecipient<ImageCountChangedMessage>.Receive(ImageCountChangedMessage message)

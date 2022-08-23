@@ -79,6 +79,15 @@ namespace Kzrnm.RectCapturer.Properties {
         }
         
         /// <summary>
+        ///   プレビュー画面をここに移動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MovePreviewWindowHere {
+            get {
+                return ResourceManager.GetString("MovePreviewWindowHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Post に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string PostContent {

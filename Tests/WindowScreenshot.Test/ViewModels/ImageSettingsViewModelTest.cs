@@ -246,7 +246,7 @@ public class ImageSettingsViewModelTest
 
         using (var ph = new PropertyChangedHistory(viewModel))
         {
-            ImageProvider.SelectedImageIndex = 0;
+            ImageProvider.Images.SelectedIndex = 0;
             ph.Should().Equal(new Dictionary<string, int>
             {
                 { "SelectedImage", 1 },
@@ -267,7 +267,7 @@ public class ImageSettingsViewModelTest
             viewModel.IsSideCutMode.Should().BeFalse();
 
 
-            ImageProvider.SelectedImageIndex = 1;
+            ImageProvider.Images.SelectedIndex = 1;
             ph.Should().Equal(new Dictionary<string, int>
             {
                 { "SelectedImage", 2 },

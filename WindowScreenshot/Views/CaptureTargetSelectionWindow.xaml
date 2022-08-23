@@ -15,7 +15,6 @@
         Background="WhiteSmoke"
         Title="{x:Static properties:Resources.SelectCaptureProcess}"
         d:DataContext="{d:DesignInstance Type=viewmodels:CaptureTargetSelectionWindowViewModel}"
-        x:FieldModifier="private" Name="WindowRoot"
         SizeToContent="Manual"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
@@ -24,7 +23,7 @@
         d:DesignHeight="500" d:DesignWidth="400">
     <b:Interaction.Triggers>
         <b:KeyTrigger Key="Esc">
-            <b:CallMethodAction MethodName="Close" TargetObject="{Binding ElementName=WindowRoot}" />
+            <b:CallMethodAction MethodName="Close" />
         </b:KeyTrigger>
     </b:Interaction.Triggers>
     <Grid Margin="5">

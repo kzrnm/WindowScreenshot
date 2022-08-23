@@ -39,7 +39,7 @@
         <ContextMenu>
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="Opened">
-                    <b:CallMethodAction MethodName="UpdateCanPaste" TargetObject="{Binding}" />
+                    <b:CallMethodAction MethodName="UpdateMenuCommandState" TargetObject="{Binding}" />
                 </b:EventTrigger>
             </b:Interaction.Triggers>
             <MenuItem

@@ -9,9 +9,10 @@ using System.Linq;
 namespace Kzrnm.WindowScreenshot.ViewModels;
 public partial class CaptureTargetSelectionWindowViewModel : ObservableRecipient, IRecipient<CurrentWindowProcessHandlesMessage>
 {
-    public CaptureTargetSelectionWindowViewModel(ObserveWindowProcess observeWindowProcess)
+    public CaptureTargetSelectionWindowViewModel(IObserveWindowProcess observeWindowProcess)
         : this(WeakReferenceMessenger.Default, observeWindowProcess) { }
-    public CaptureTargetSelectionWindowViewModel(IMessenger messenger, ObserveWindowProcess observeWindowProcess)
+
+    public CaptureTargetSelectionWindowViewModel(IMessenger messenger, IObserveWindowProcess observeWindowProcess)
         : this(messenger, observeWindowProcess.CurrentWindows.ToArray()) { }
 
     public CaptureTargetSelectionWindowViewModel(IMessenger messenger, IEnumerable<IWindowProcessHandle> windowProcesses)

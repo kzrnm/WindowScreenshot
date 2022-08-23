@@ -15,11 +15,7 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearR
         this.captureImageService = captureImageService;
         Images = images;
         IsActive = true;
-        images.SelectedChanged += (_, e) =>
-        {
-            SelectedImageIndex = e.NewIndex;
-            SelectedImage = e.NewItem;
-        };
+        images.SelectedChanged += (_, e) => OnSelectedImageChanged(e.NewItem);
         ((INotifyPropertyChanged)images).PropertyChanged += (_, e) =>
         {
             switch (e.PropertyName)
@@ -36,16 +32,7 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearR
 
     private readonly ICaptureImageService captureImageService;
 
-    [ObservableProperty]
-    private int _SelectedImageIndex = -1;
-    partial void OnSelectedImageIndexChanged(int value)
-    {
-        Images.SelectedIndex = value;
-    }
-
-    [ObservableProperty]
-    private CaptureImage? _SelectedImage;
-    partial void OnSelectedImageChanged(CaptureImage? value)
+    void OnSelectedImageChanged(CaptureImage? value)
     {
         if (value != null) lastSelectedOption = new(value);
         Messenger.Send(new SelectedImageChangedMessage(value));
@@ -55,7 +42,7 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearR
 
     private void ApplyLastOption(CaptureImage image)
     {
-        if (SelectedImage is { } selectedImage)
+        if (Images.SelectedItem is { } selectedImage)
         {
             image.ImageRatioSize.WidthPercentage = selectedImage.ImageRatioSize.WidthPercentage;
             image.ImageRatioSize.HeightPercentage = selectedImage.ImageRatioSize.HeightPercentage;
