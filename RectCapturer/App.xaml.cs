@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using Kzrnm.RectCapturer.ViewModels;
 using Kzrnm.WindowScreenshot;
+using Kzrnm.WindowScreenshot.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;

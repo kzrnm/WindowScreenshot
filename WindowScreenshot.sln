@@ -17,12 +17,17 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowScreenshot.Test", "Tests\WindowScreenshot.Test\WindowScreenshot.Test.csproj", "{B72EDE5E-2AD3-4CBF-96EE-8565D82F43EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C1D636DB-910B-40D2-8207-440C86D87EE4}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Directory.Build.props = Tests\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{FD400861-E061-420A-9E31-EE012339850B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfLibrary", "WpfLibrary\WpfLibrary.csproj", "{8C3AA26C-2482-451C-95C1-9C9001BC772E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfLibrary", "WpfLibrary\WpfLibrary.csproj", "{8C3AA26C-2482-451C-95C1-9C9001BC772E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfLibrary.Test", "Tests\WpfLibrary.Test\WpfLibrary.Test.csproj", "{CDD5E03F-E937-474A-83CF-BB3B136BAF8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfLibrary.Test", "Tests\WpfLibrary.Test\WpfLibrary.Test.csproj", "{CDD5E03F-E937-474A-83CF-BB3B136BAF8E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RectCapturer.Test", "Tests\RectCapturer.Test\RectCapturer.Test.csproj", "{05003B77-E8EB-4E14-9FAF-49367C7A1E86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +55,10 @@ Global
 		{CDD5E03F-E937-474A-83CF-BB3B136BAF8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDD5E03F-E937-474A-83CF-BB3B136BAF8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDD5E03F-E937-474A-83CF-BB3B136BAF8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05003B77-E8EB-4E14-9FAF-49367C7A1E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05003B77-E8EB-4E14-9FAF-49367C7A1E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05003B77-E8EB-4E14-9FAF-49367C7A1E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05003B77-E8EB-4E14-9FAF-49367C7A1E86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +68,7 @@ Global
 		{B72EDE5E-2AD3-4CBF-96EE-8565D82F43EB} = {C1D636DB-910B-40D2-8207-440C86D87EE4}
 		{8C3AA26C-2482-451C-95C1-9C9001BC772E} = {FD400861-E061-420A-9E31-EE012339850B}
 		{CDD5E03F-E937-474A-83CF-BB3B136BAF8E} = {C1D636DB-910B-40D2-8207-440C86D87EE4}
+		{05003B77-E8EB-4E14-9FAF-49367C7A1E86} = {C1D636DB-910B-40D2-8207-440C86D87EE4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C78D062-B90F-4F23-8903-D6837E232478}

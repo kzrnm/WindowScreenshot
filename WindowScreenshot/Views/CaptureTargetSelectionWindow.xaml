@@ -6,10 +6,10 @@
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:dd="urn:gong-wpf-dragdrop"
         xmlns:properties="clr-namespace:Kzrnm.WindowScreenshot.Properties"
-        xmlns:wlproperties="urn:kzrnm-wpf-window-screenshot/core/properties"
+        xmlns:wcproperties="urn:kzrnm-wpf-window-screenshot/core/properties"
         xmlns:local="clr-namespace:Kzrnm.WindowScreenshot.Views"
         xmlns:viewmodels="clr-namespace:Kzrnm.WindowScreenshot.ViewModels"
-        xmlns:mvvm="clr-namespace:Kzrnm.WindowScreenshot.Mvvm"
+        xmlns:wc="urn:kzrnm-wpf-window-screenshot/core"
         xmlns:kw="urn:kzrnm-wpf/controls"
         mc:Ignorable="d"
         Background="WhiteSmoke"
@@ -21,6 +21,11 @@
         MinWidth="300" MinHeight="300"
         Width="550" Height="700"
         d:DesignHeight="500" d:DesignWidth="400">
+    <b:Interaction.Triggers>
+        <b:KeyTrigger Key="Esc">
+            <b:CallMethodAction MethodName="Close" />
+        </b:KeyTrigger>
+    </b:Interaction.Triggers>
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
@@ -115,7 +120,7 @@
                         <Style TargetType="TextBox">
                             <Setter Property="kw:TextBoxBehavior.SelectAllOnFocus" Value="True" />
                         </Style>
-                        <mvvm:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+                        <wc:InverseBooleanConverter x:Key="InverseBooleanConverter" />
                     </Grid.Resources>
                     <TextBlock Grid.Row="0" Grid.ColumnSpan="100000" Text="{x:Static properties:Resources.SetCaptureTargetRegion}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedTarget.RegionLeft, UpdateSourceTrigger=PropertyChanged}" />
@@ -171,14 +176,21 @@
                     </Style>
                 </StackPanel.Resources>
                 <Button
-                    x:Name="OkButton" 
-                    Content="{x:Static wlproperties:Resources.OK}"
-                    Click="OkButton_Click"/>
+                    Content="{x:Static wcproperties:Resources.OK}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType=Window}}" PropertyName="DialogResult" Value="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
                 <Separator Width="15" Background="Transparent"/>
-                <Button
-                    x:Name="CancelButton" 
-                    Content="{x:Static wlproperties:Resources.Cancel}"
-                    IsCancel="True"/>
+                <Button Content="{x:Static wcproperties:Resources.Cancel}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType=Window}}" PropertyName="DialogResult" Value="False" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
             </StackPanel>
         </Grid>
     </Grid>

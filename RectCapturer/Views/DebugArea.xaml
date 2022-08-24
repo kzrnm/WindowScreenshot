@@ -7,7 +7,7 @@
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:dd="urn:gong-wpf-dragdrop"
     xmlns:ktk="urn:kzrnm-wpf/toolkit"
-    xmlns:kw="urn:kzrnm-wpf-window-screenshot/core"
+    xmlns:wc="urn:kzrnm-wpf-window-screenshot/core"
     xmlns:ws="urn:kzrnm-wpf-window-screenshot"
     xmlns:properties="clr-namespace:Kzrnm.RectCapturer.Properties"
     xmlns:local="clr-namespace:Kzrnm.RectCapturer.Views"

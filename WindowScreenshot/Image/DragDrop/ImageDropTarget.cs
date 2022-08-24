@@ -7,14 +7,8 @@ namespace Kzrnm.WindowScreenshot.Image.DragDrop;
 
 public class ImageDropTarget : IDropTarget
 {
-    public class Factory
+    public record Factory(ImageProvider ImageProvider)
     {
-        public ImageProvider ImageProvider { get; }
-        public Factory(ImageProvider imageProvider)
-        {
-            ImageProvider = imageProvider;
-        }
-
         public ImageDropTarget Build(bool allowOtherDrop) => new(ImageProvider, allowOtherDrop);
     }
 

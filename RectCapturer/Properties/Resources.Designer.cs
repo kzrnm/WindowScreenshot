@@ -61,11 +61,29 @@ namespace Kzrnm.RectCapturer.Properties {
         }
         
         /// <summary>
+        ///   キャプチャする に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string CaptureScreenshot {
+            get {
+                return ResourceManager.GetString("CaptureScreenshot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   設定 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Config {
             get {
                 return ResourceManager.GetString("Config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   常に最前面に表示する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string IsTopmostSetting {
+            get {
+                return ResourceManager.GetString("IsTopmostSetting", resourceCulture);
             }
         }
         
@@ -93,6 +111,33 @@ namespace Kzrnm.RectCapturer.Properties {
         public static string PostContent {
             get {
                 return ResourceManager.GetString("PostContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   POSTキー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string PostKey {
+            get {
+                return ResourceManager.GetString("PostKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   初期設定に戻す に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string RestoreDefaultConfig {
+            get {
+                return ResourceManager.GetString("RestoreDefaultConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   スクリーンショット に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Screenshot {
+            get {
+                return ResourceManager.GetString("Screenshot", resourceCulture);
             }
         }
     }

@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Kzrnm.WindowScreenshot;
 public class SelectorObservableCollection<T> : ObservableCollection<T>
 {
+    public SelectorObservableCollection() : base() { }
+    public SelectorObservableCollection(IEnumerable<T> collection) : base(collection) { }
+
     private int _SelectedIndex = -1;
     public int SelectedIndex
     {

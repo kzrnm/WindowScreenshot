@@ -1,19 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using System.Collections.Generic;
-using System.ComponentModel;
 using Kzrnm.WindowScreenshot.Image;
+using System.ComponentModel;
 
 namespace Kzrnm.WindowScreenshot.ViewModels;
 
 public partial class ImageSettingsViewModel : ObservableRecipient, IRecipient<SelectedImageChangedMessage>
 {
-    public static IReadOnlyCollection<ImageKind> ImageKinds { get; }
-    static ImageSettingsViewModel()
-    {
-        ImageKinds = (ImageKind[])typeof(ImageKind).GetEnumValues();
-    }
-
     public ImageProvider ImageProvider { get; }
     public ImageSettingsViewModel(ImageProvider imageProvider)
         : this(WeakReferenceMessenger.Default, imageProvider)

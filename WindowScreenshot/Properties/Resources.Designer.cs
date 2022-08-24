@@ -169,7 +169,7 @@ namespace Kzrnm.WindowScreenshot.Properties {
         }
         
         /// <summary>
-        ///   対象のプロセスを選択してください に類似しているローカライズされた文字列を検索します。
+        ///   キャプチャ対象のプロセスを選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string SelectCaptureProcess {
             get {

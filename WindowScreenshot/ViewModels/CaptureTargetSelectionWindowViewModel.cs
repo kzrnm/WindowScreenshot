@@ -9,27 +9,29 @@ using System.Linq;
 namespace Kzrnm.WindowScreenshot.ViewModels;
 public partial class CaptureTargetSelectionWindowViewModel : ObservableRecipient, IRecipient<CurrentWindowProcessHandlesMessage>
 {
-    public CaptureTargetSelectionWindowViewModel(IObserveWindowProcess observeWindowProcess)
-        : this(WeakReferenceMessenger.Default, observeWindowProcess) { }
+    public record Factory(IMessenger Messenger, IObserveWindowProcess ObserveWindowProcess)
+    {
+        public Factory(IObserveWindowProcess observeWindowProcess)
+            : this(WeakReferenceMessenger.Default, observeWindowProcess) { }
 
-    public CaptureTargetSelectionWindowViewModel(IMessenger messenger, IObserveWindowProcess observeWindowProcess)
-        : this(messenger, observeWindowProcess.CurrentWindows.ToArray()) { }
+        public CaptureTargetSelectionWindowViewModel Build(IEnumerable<CaptureTarget> targets)
+        {
+            return new(Messenger, ObserveWindowProcess.CurrentWindows.ToArray(), targets);
+        }
+    }
 
-    public CaptureTargetSelectionWindowViewModel(IMessenger messenger, IEnumerable<IWindowProcessHandle> windowProcesses)
+    public CaptureTargetSelectionWindowViewModel(IMessenger messenger, IEnumerable<IWindowProcessHandle> windowProcesses, IEnumerable<CaptureTarget> targets)
         : base(messenger)
     {
         _WindowProcesses = windowProcesses;
+        CaptureTargetWindows = new(targets.Select(c => new ObservableCaptureTarget(c)));
+        if (CaptureTargetWindows.Count > 0)
+            CaptureTargetWindows.SelectedIndex = 0;
+        CaptureTargetWindows.CollectionChanged += UpdatedHandler;
         IsActive = true;
     }
 
-    public void InitializeCaptureTargetWindows(IEnumerable<CaptureTarget> collection)
-    {
-        foreach (var item in collection)
-            CaptureTargetWindows.Add(new(item));
-        CaptureTargetWindows.SelectedIndex = 0;
-        CaptureTargetWindows.CollectionChanged += UpdatedHandler;
-    }
-    public SelectorObservableCollection<ObservableCaptureTarget> CaptureTargetWindows { get; } = new();
+    public SelectorObservableCollection<ObservableCaptureTarget> CaptureTargetWindows { get; }
     public IEnumerable<CaptureTarget> GetCaptureTargets()
         => CaptureTargetWindows.Select(c => c.ToCaptureTarget());
 

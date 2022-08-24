@@ -48,6 +48,6 @@
         HorizontalScrollBarVisibility="Visible"
         ImageWidth="65"
         ListHeight="80">
-        <local:MainBody  Background="WhiteSmoke" />
+        <local:MainBody Background="WhiteSmoke" />
     </ws:WindowCapturer>
 </Window>

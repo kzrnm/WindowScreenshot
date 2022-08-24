@@ -35,7 +35,7 @@ public static class SharedInitializer
 
         return service
             .AddSingleton<ImageDropTarget.Factory>()
-            .AddTransient<CaptureTargetSelectionWindowViewModel>()
+            .AddSingleton<CaptureTargetSelectionWindowViewModel.Factory>()
             .AddTransient<WindowCapturerViewModel>()
             .AddTransient<ImageListViewModel>()
             .AddTransient<ImageSettingsViewModel>()

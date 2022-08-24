@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Windows.Input;
@@ -33,12 +32,12 @@ public record struct ShortcutKey(ModifierKeys Modifiers, Key Key)
 
         public override void Write(Utf8JsonWriter writer, ShortcutKey value, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(value.CreateText(stackalloc char[80]));
+            writer.WriteStringValue(value.CreateText('-', stackalloc char[80]));
         }
     }
 
-    public override string ToString() => new(CreateText(stackalloc char[80]));
-    private ReadOnlySpan<char> CreateText(Span<char> buffer = default)
+    public override string ToString() => new(CreateText('+', stackalloc char[80]));
+    private ReadOnlySpan<char> CreateText(char sep, Span<char> buffer = default)
     {
         var modifiersText = modifierKeysConverter.ConvertToInvariantString(Modifiers) ?? "";
         var keyText = keyConverter.ConvertToInvariantString(Key) ?? "";
@@ -51,7 +50,7 @@ public record struct ShortcutKey(ModifierKeys Modifiers, Key Key)
         {
             modifiersText.CopyTo(buffer);
             bufIndex += modifiersText.Length;
-            buffer[bufIndex++] = '-';
+            buffer[bufIndex++] = sep;
         }
 
         if (keyText.Length > 0)

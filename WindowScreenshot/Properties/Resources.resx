@@ -154,7 +154,7 @@
     <value>変更を保存しますか？</value>
   </data>
   <data name="SelectCaptureProcess" xml:space="preserve">
-    <value>対象のプロセスを選択してください</value>
+    <value>キャプチャ対象のプロセスを選択</value>
   </data>
   <data name="SetCaptureTargetRegion" xml:space="preserve">
     <value>キャプチャ領域の指定</value>

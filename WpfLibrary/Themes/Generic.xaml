@@ -1,0 +1,51 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mvvm="clr-namespace:Kzrnm.Wpf.Mvvm"
+    xmlns:local="clr-namespace:Kzrnm.Wpf.Views">
+
+    <Style TargetType="{x:Type local:KeySelector}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:KeySelector}">
+                    <StackPanel Width="{TemplateBinding Width}">
+                        <StackPanel.Resources>
+                            <ResourceDictionary>
+                                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+                            </ResourceDictionary>
+                        </StackPanel.Resources>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox
+                                Visibility="{Binding HasCtrl, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:KeySelector}}}" 
+                                IsChecked="{Binding CheckedCtrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:KeySelector}}}" 
+                                Margin="0 0 10 0"
+                                x:Name="PART_ModifierKeysControl" Content="{x:Static ModifierKeys.Control}" />
+                            <CheckBox
+                                Visibility="{Binding HasShift, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:KeySelector}}}" 
+                                IsChecked="{Binding CheckedShift, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:KeySelector}}}" 
+                                Margin="0 0 10 0"
+                                x:Name="PART_ModifierKeysShift" Content="{x:Static ModifierKeys.Shift}" />
+                            <CheckBox
+                                Visibility="{Binding HasAlt, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:KeySelector}}}" 
+                                IsChecked="{Binding CheckedAlt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:KeySelector}}}" 
+                                Margin="0 0 10 0"
+                                x:Name="PART_ModifierKeysAlt" Content="{x:Static ModifierKeys.Alt}" />
+                            <CheckBox
+                                Visibility="{Binding HasWindowsKey, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:KeySelector}}}" 
+                                IsChecked="{Binding CheckedWindowsKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:KeySelector}}}" 
+                                Margin="0 0 10 0"
+                                x:Name="PART_ModifierKeysWindows" Content="{x:Static ModifierKeys.Windows}" />
+                        </StackPanel>
+                        <Separator Height="0" Background="Transparent" />
+                        <ComboBox
+                            x:Name="PART_Key"
+                            VerticalAlignment="Center"
+                            ItemsSource="{mvvm:EnumValues Type=Key}"
+                            SelectedValue="{Binding Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:KeySelector}}}"
+                            />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -5,11 +5,11 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
-    <RootNamespace>Kzrnm.WindowScreenshot</RootNamespace>
+    <RootNamespace>Kzrnm.RectCapturer</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WindowScreenshot\WindowScreenshot.csproj" />
+    <ProjectReference Include="..\..\RectCapturer\RectCapturer.csproj" />
   </ItemGroup>
 
 </Project>

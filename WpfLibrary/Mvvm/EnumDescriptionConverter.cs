@@ -5,7 +5,9 @@ using System.Reflection;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Kzrnm.WindowScreenshot.Mvvm;
+namespace Kzrnm.Wpf.Mvvm;
+
+[ValueConversion(typeof(Enum), typeof(string))]
 public class EnumDescriptionConverter : MarkupExtension, IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

@@ -17,11 +17,10 @@ public class CaptureTargetSelectionWindowViewModelTest
             ProcessName = "test1",
             WindowName = "win1",
         };
-        var viewModel = new CaptureTargetSelectionWindowViewModel(messenger, Array.Empty<IWindowProcessHandle>())
+        var viewModel = new CaptureTargetSelectionWindowViewModel(messenger, Array.Empty<IWindowProcessHandle>(), Array.Empty<CaptureTarget>())
         {
             SelectedTarget = selected,
         };
-        viewModel.InitializeCaptureTargetWindows(Array.Empty<CaptureTarget>());
         var ph = new PropertyChangedHistory(selected);
 
         viewModel.ProcessName.Should().Be("test1");
@@ -92,7 +91,7 @@ public class CaptureTargetSelectionWindowViewModelTest
         };
 
         var messenger = new WeakReferenceMessenger();
-        var viewModel = new CaptureTargetSelectionWindowViewModel(messenger, processes.Select(m => m.Object).ToArray())
+        var viewModel = new CaptureTargetSelectionWindowViewModel(messenger, processes.Select(m => m.Object).ToArray(), Array.Empty<CaptureTarget>())
         {
             SelectedTarget = new ObservableCaptureTarget
             {
@@ -166,12 +165,11 @@ public class CaptureTargetSelectionWindowViewModelTest
         var processes2 = new IWindowProcessHandle[1];
         processes1.Should().NotBeSameAs(processes2);
 
-        var viewModel = new CaptureTargetSelectionWindowViewModel(messenger, processes1)
+        var viewModel = new CaptureTargetSelectionWindowViewModel(messenger, processes1, Array.Empty<CaptureTarget>())
         {
             SelectedTarget = selected,
         };
         viewModel.WindowProcesses.Should().BeSameAs(processes1);
-        viewModel.InitializeCaptureTargetWindows(Array.Empty<CaptureTarget>());
         messenger.Send(new CurrentWindowProcessHandlesMessage(processes2));
         viewModel.WindowProcesses.Should().BeSameAs(processes2);
     }

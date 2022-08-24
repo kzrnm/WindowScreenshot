@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Kzrnm.WindowScreenshot.Mvvm;
+namespace Kzrnm.Wpf.Mvvm;
 
 [ValueConversion(typeof(bool), typeof(bool))]
 public class InverseBooleanConverter : MarkupExtension, IValueConverter

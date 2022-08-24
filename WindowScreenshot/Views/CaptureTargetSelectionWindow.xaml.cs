@@ -16,10 +16,8 @@ public partial class CaptureTargetSelectionWindow : Window
     public CaptureTargetSelectionWindow(IList<CaptureTarget> collection)
     {
         InitializeComponent();
-
-        CaptureTargetSelectionWindowViewModel viewModel;
-        DataContext = viewModel = Ioc.Default.GetRequiredServiceIfIsNotInDesignMode<CaptureTargetSelectionWindowViewModel>(this);
-        viewModel.InitializeCaptureTargetWindows(collection);
+        var factory = Ioc.Default.GetRequiredServiceIfIsNotInDesignMode<CaptureTargetSelectionWindowViewModel.Factory>(this);
+        DataContext = factory.Build(collection);
     }
     public IList<CaptureTarget>? ShowDialogWithResponse()
     {
@@ -27,11 +25,6 @@ public partial class CaptureTargetSelectionWindow : Window
             return null;
 
         return (DataContext as CaptureTargetSelectionWindowViewModel)?.GetCaptureTargets().ToArray();
-    }
-
-    private void OkButton_Click(object sender, RoutedEventArgs e)
-    {
-        DialogResult = true;
     }
 
     protected override void OnClosing(CancelEventArgs e)

@@ -7,10 +7,12 @@
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:dd="urn:gong-wpf-dragdrop"
     xmlns:ktk="urn:kzrnm-wpf/toolkit"
-    xmlns:kw="urn:kzrnm-wpf-window-screenshot/core"
+    xmlns:wc="urn:kzrnm-wpf-window-screenshot/core"
     xmlns:ws="urn:kzrnm-wpf-window-screenshot"
     xmlns:properties="clr-namespace:Kzrnm.RectCapturer.Properties"
+    xmlns:wsproperties="urn:kzrnm-wpf-window-screenshot/properties"
     xmlns:local="clr-namespace:Kzrnm.RectCapturer.Views"
+    xmlns:localbehavior="clr-namespace:Kzrnm.RectCapturer.Behaviors"
     xmlns:vm="clr-namespace:Kzrnm.RectCapturer.ViewModels"
     d:DataContext="{d:DesignInstance Type=vm:MainBodyViewModel}"
     ktk:IocBehavior.AutoViewModel="{x:Type vm:MainBodyViewModel}"
@@ -20,6 +22,7 @@
     d:DesignWidth="400">
     <b:Interaction.Behaviors>
         <ws:CaptureTargetSelectionDialogBehavior />
+        <localbehavior:ConfigDialogBehavior />
     </b:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
@@ -40,6 +43,7 @@
                     BorderBrush="Transparent"
                     Focusable="False"
                     Command="{Binding OpenSelectCaptureWindowDialogCommand, Mode=OneTime}"
+                    ToolTip="{x:Static wsproperties:Resources.SelectCaptureProcess}"
                     Content="🖼" />
                 <Button
                     MinWidth="32"
@@ -47,11 +51,13 @@
                     BorderBrush="Transparent"
                     Focusable="False"
                     Command="{Binding OpenConfigDialogCommand, Mode=OneTime}"
+                    ToolTip="{x:Static properties:Resources.Config}"
                     Content="⚙" />
                 <Button
                     MinWidth="40"
                     Background="Transparent"
                     Command="{Binding CaptureScreenshotCommand, Mode=OneTime}"
+                    ToolTip="{x:Static properties:Resources.CaptureScreenshot}"
                     Content="Cap" />
                 <Button
                     MinWidth="40"

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Kzrnm.WindowScreenshot.Mvvm;
+namespace Kzrnm.Wpf.Mvvm;
 public class InverseBooleanConverterTest
 {
     [Theory]
