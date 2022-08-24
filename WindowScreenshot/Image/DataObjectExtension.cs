@@ -13,7 +13,7 @@ public static class DataObjectExtension
     {
         var ms = new MemoryStream();
         JsonSerializer.Serialize(ms, CaptureImageMetadata.FromCaptureImage(img));
-        data.SetData(typeof(CaptureImageMetadata), ms);
+        data.SetData(typeof(CaptureImageMetadata), ms.ToArray());
         data.SetImageSafe(img.ImageSource);
         return data;
     }
@@ -23,12 +23,11 @@ public static class DataObjectExtension
     }
     public static CaptureImage? GetCaptureImage(this DataObject data)
     {
-        if (data.GetData(typeof(CaptureImageMetadata)) is not MemoryStream ms)
+        if (data.GetData(typeof(CaptureImageMetadata)) is not byte[] bytes)
             return null;
         if (data.GetImageSafe() is not { } bitmap)
             return null;
-        ms.Position = 0;
-        return JsonSerializer.Deserialize<CaptureImageMetadata>(ms)?.ToCaptureImage(bitmap);
+        return JsonSerializer.Deserialize<CaptureImageMetadata>(bytes)?.ToCaptureImage(bitmap);
     }
 
     /// <summary>
@@ -36,7 +35,7 @@ public static class DataObjectExtension
     /// </summary>
     public static DataObject SetImageSafe(this DataObject data, BitmapSource source)
     {
-        data.SetData("PNG", ImageUtility.ImageToStream(source));
+        data.SetData("PNG", ImageUtility.ImageToByteArray(source));
         data.SetImage(source);
         return data;
     }
@@ -46,9 +45,9 @@ public static class DataObjectExtension
     /// </summary>
     public static BitmapSource? GetImageSafe(this IDataObject data)
     {
-        if (data.GetDataPresent("PNG") && data.GetData("PNG") is MemoryStream pngMemoryStream)
+        if (data.GetDataPresent("PNG") && data.GetData("PNG") is byte[] pngBytes)
         {
-            if (ImageUtility.GetImageFromStream(pngMemoryStream) is { } result)
+            if (ImageUtility.GetImageFromBinary(pngBytes) is { } result)
                 return result;
         }
 

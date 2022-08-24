@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Kzrnm.Wpf.Common;
+using System;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Windows;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace Kzrnm.WindowScreenshot.Image;
@@ -14,6 +14,14 @@ public class ImageUtility
     public static byte[] ImageToByteArray(BitmapSource source, BitmapEncoder encoder)
     {
         using var ms = ImageToStream(source, encoder);
+        return ms.ToArray();
+    }
+    /// <summary>
+    /// 画像を <see cref="byte[]"/> に変換
+    /// </summary>
+    public static byte[] ImageToByteArray(BitmapSource source)
+    {
+        using var ms = ImageToStream(source);
         return ms.ToArray();
     }
 
