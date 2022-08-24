@@ -34,6 +34,7 @@ public class ImageUtility
         encoder.Frames.Add(BitmapFrame.Create(source));
         var ms = new MemoryStream();
         encoder.Save(ms);
+        ms.Position = 0;
         return ms;
     }
 

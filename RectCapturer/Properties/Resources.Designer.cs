@@ -79,6 +79,25 @@ namespace Kzrnm.RectCapturer.Properties {
         }
         
         /// <summary>
+        ///   保存するディレクトリが存在しません
+        ///作成しますか？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string DirectoryDoesNotExist {
+            get {
+                return ResourceManager.GetString("DirectoryDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ディレクトリ作成に失敗しました に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FailedToCreateDirectory {
+            get {
+                return ResourceManager.GetString("FailedToCreateDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   常に最前面に表示する に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string IsTopmostSetting {

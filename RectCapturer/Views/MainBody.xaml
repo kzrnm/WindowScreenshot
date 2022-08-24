@@ -36,13 +36,19 @@
         <StackPanel Grid.Row="1">
             <TextBlock Text="保存するパス" />
             <ComboBox
+                Text="{Binding ContentService.DestinationFolder, UpdateSourceTrigger=PropertyChanged}"
+                ItemsSource="{Binding SaveDstDirectories}"
                 TabIndex="1"
+                SelectedIndex="0"
                 AllowDrop="True"
                 IsEditable="True" />
 
             <TextBlock Text="保存するファイル名" />
             <ComboBox
+                Text="{Binding ContentService.SaveFileName, UpdateSourceTrigger=PropertyChanged}"
+                ItemsSource="{Binding SaveFileNames}"
                 TabIndex="2"
+                SelectedIndex="0"
                 AllowDrop="True"
                 IsEditable="True" />
         </StackPanel>

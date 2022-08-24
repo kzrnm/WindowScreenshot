@@ -24,9 +24,13 @@ public class CaptureImageTests
 
     [Theory]
     [MemberData(nameof(ToByteArrayJpegTest_Data))]
-    public void ToByteArrayJpegTest(CaptureImage ci, IEnumerable<byte> startsWith)
+    public void ToByteArrayJpegTest(CaptureImage ci, byte[] startsWith)
     {
-        ci.ToByteArray()
+        using var ms = new MemoryStream();
+        using (var stream = ci.ToStream())
+            stream.CopyTo(ms);
+        ms.Position = 0;
+        ms.ToArray()
             .Should()
             .StartWith(startsWith);
     }
@@ -43,9 +47,13 @@ public class CaptureImageTests
 
     [Theory]
     [MemberData(nameof(ToByteArrayPngTest_Data))]
-    public void ToByteArrayPngTest(CaptureImage ci, IEnumerable<byte> startsWith, int length)
+    public void ToByteArrayPngTest(CaptureImage ci, byte[] startsWith, int length)
     {
-        ci.ToByteArray()
+        using var ms = new MemoryStream();
+        using var stream = ci.ToStream();
+        stream.CopyTo(ms);
+        ms.Position = 0;
+        ms.ToArray()
             .Should()
             .StartWith(startsWith)
             .And

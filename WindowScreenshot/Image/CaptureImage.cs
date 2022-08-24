@@ -102,8 +102,8 @@ public partial class CaptureImage : ObservableObject
             _ => throw new InvalidOperationException($"invalid {nameof(ImageKind)}"),
         };
 
-    private byte[] ToStreamImpl()
-        => ImageUtility.ImageToByteArray(TransformedImage, GetEncoder());
+    private Stream ToStreamImpl()
+        => ImageUtility.ImageToStream(TransformedImage, GetEncoder());
 
     [MemberNotNullWhen(returnValue: true, member: nameof(SourcePath))]
     private bool CanUseFileStream()
@@ -112,5 +112,5 @@ public partial class CaptureImage : ObservableObject
             && !IsSideCutMode
             && ImageKind == OrigKind
             && File.Exists(SourcePath);
-    public byte[] ToByteArray() => CanUseFileStream() ? File.ReadAllBytes(SourcePath) : ToStreamImpl();
+    public Stream ToStream() => CanUseFileStream() ? new FileStream(SourcePath, FileMode.Open, FileAccess.Read) : ToStreamImpl();
 }

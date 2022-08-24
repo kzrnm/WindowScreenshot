@@ -3,6 +3,7 @@ using Kzrnm.WindowScreenshot.Image.Capture;
 using Kzrnm.WindowScreenshot.Windows;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace Kzrnm.RectCapturer.Models;
@@ -36,10 +37,5 @@ public class GlobalService
         {
             ImageProvider.AddImage(image);
         }
-    }
-    public void PostContent()
-    {
-        // TODO: PostContent
-        Debug.WriteLine("PostContentCommand");
     }
 }

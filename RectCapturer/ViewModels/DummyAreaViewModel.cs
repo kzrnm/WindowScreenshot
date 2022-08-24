@@ -7,11 +7,11 @@ namespace Kzrnm.RectCapturer.ViewModels;
 
 public partial class DebugAreaViewModel : ObservableObject
 {
-    public DebugAreaViewModel(GlobalService globalOperations)
+    public DebugAreaViewModel(GlobalService globalService)
     {
-        GlobalOperations = globalOperations;
+        GlobalService = globalService;
     }
-    public GlobalService GlobalOperations { get; }
+    public GlobalService GlobalService { get; }
 
     [RelayCommand]
     private void AddRandomImage()
@@ -23,10 +23,10 @@ public partial class DebugAreaViewModel : ObservableObject
         var bytes = new byte[stride * height];
         Random.Shared.NextBytes(bytes);
         var img = System.Windows.Media.Imaging.BitmapSource.Create(width, height, 96, 96, pf, null, bytes, stride);
-        GlobalOperations.ImageProvider.AddImage(img);
+        GlobalService.ImageProvider.AddImage(img);
     }
 
     [RelayCommand]
     private void PasteImage()
-        => GlobalOperations.PasteImageFromClipboard();
+        => GlobalService.PasteImageFromClipboard();
 }

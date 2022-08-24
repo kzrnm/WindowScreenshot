@@ -6,19 +6,21 @@ using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Image.DragDrop;
 using Kzrnm.WindowScreenshot.Windows;
 using Kzrnm.Wpf.Input;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Kzrnm.RectCapturer.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
-    public MainWindowViewModel(GlobalService globalOperations, ImageDropTarget.Factory imageDropTargetFactory)
+    public MainWindowViewModel(GlobalService globalService, ContentService contentService, ImageDropTarget.Factory imageDropTargetFactory)
     {
-        GlobalOperations = globalOperations;
-        ConfigMaster = globalOperations.ConfigMaster;
-        ImageProvider = globalOperations.ImageProvider;
+        GlobalService = globalService;
+        ContentService = contentService;
+        ConfigMaster = globalService.ConfigMaster;
+        ImageProvider = globalService.ImageProvider;
         DropHandler = imageDropTargetFactory.Build(true);
-        ClipboardManager = globalOperations.ClipboardManager;
+        ClipboardManager = globalService.ClipboardManager;
         ImageProvider.Images.SelectedChanged += (sender, e) =>
         {
             switch ((e.OldItem, e.NewItem))
@@ -30,7 +32,8 @@ public partial class MainWindowViewModel : ObservableObject
             }
         };
     }
-    public GlobalService GlobalOperations { get; }
+    public GlobalService GlobalService { get; }
+    public ContentService ContentService { get; }
     public ConfigMaster ConfigMaster { get; }
     public ImageProvider ImageProvider { get; }
     public ImageDropTarget DropHandler { get; }
@@ -50,27 +53,30 @@ public partial class MainWindowViewModel : ObservableObject
     }
 
     public bool PreviewWindowShown => HasPreviewWindow && ImageProvider.Images.SelectedItem != null;
-    private bool CanAddImmageFromClipboard() => GlobalOperations.CanPasteImageFromClipboard;
+    private bool CanAddImmageFromClipboard() => GlobalService.CanPasteImageFromClipboard;
     [RelayCommand(CanExecute = nameof(CanAddImmageFromClipboard))]
     private void PasteImageFromClipboard()
-        => GlobalOperations.PasteImageFromClipboard();
+        => GlobalService.PasteImageFromClipboard();
 
     [RelayCommand]
-    private void OnPreviewKeyDown(KeyEventArgs e)
+    private async Task OnPreviewKeyDown(KeyEventArgs e)
     {
         var shortcuts = ConfigMaster.Shortcuts.Value;
         var input = new ShortcutKey(Keyboard.Modifiers, e.Key);
-        if (new ShortcutKey(ModifierKeys.Control, Key.V) == input)
+        if (GlobalService.CanPasteImageFromClipboard && new ShortcutKey(ModifierKeys.Control, Key.V) == input)
         {
             PasteImageFromClipboard();
+            e.Handled = true;
         }
         if (shortcuts.CaptureScreenshot == input)
         {
-            GlobalOperations.CaptureScreenshot();
+            GlobalService.CaptureScreenshot();
+            e.Handled = true;
         }
-        if (shortcuts.Post == input)
+        if (ContentService.CanPost && shortcuts.Post == input)
         {
-            GlobalOperations.PostContent();
+            await ContentService.PostContentAsync().ConfigureAwait(false);
+            e.Handled = true;
         }
     }
 }

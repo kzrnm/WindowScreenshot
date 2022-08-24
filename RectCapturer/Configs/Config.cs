@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Immutable;
+using System.Text.Json.Serialization;
 using System.Windows;
 
 namespace Kzrnm.RectCapturer.Configs;
@@ -9,9 +10,13 @@ namespace Kzrnm.RectCapturer.Configs;
 /// </summary>
 /// <param name="WindowPosition">MainWindow の位置</param>
 /// <param name="Topmost">MainWindow を常に最前面に表示するか</param>
+/// <param name="SaveDstDirectories">保存先のデフォルトディレクトリ</param>
+/// <param name="SaveFileNames">保存するファイル名</param>
 public record Config(
     WindowPosition? WindowPosition = null,
-    bool Topmost = false
+    bool Topmost = false,
+    ImmutableArray<string> SaveDstDirectories = default,
+    ImmutableArray<string> SaveFileNames = default
 )
 {
     /// <summary>
@@ -19,6 +24,11 @@ public record Config(
     /// </summary>
     [JsonPropertyOrder(int.MinValue)]
     public WindowPosition WindowPosition { get; init; } = WindowPosition ?? new(double.NaN, double.NaN, double.NaN, double.NaN);
+
+    [JsonPropertyOrder(100)]
+    public ImmutableArray<string> SaveDstDirectories { get; init; } = SaveDstDirectories.GetOrEmpty();
+    [JsonPropertyOrder(100)]
+    public ImmutableArray<string> SaveFileNames { get; init; } = SaveFileNames.GetOrEmpty();
 
 
     public Config() : this(WindowPosition: null) { }

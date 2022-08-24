@@ -2,7 +2,6 @@
 using Kzrnm.RectCapturer.Models;
 using Kzrnm.RectCapturer.ViewModels;
 using Kzrnm.WindowScreenshot;
-using Kzrnm.WindowScreenshot.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
@@ -26,6 +25,7 @@ public partial class App : Application
             .InitializeWindowScreenshot()
             .AddSingleton(ConfigMaster.LoadConfigsAsync().Result)
             .AddSingleton<GlobalService>()
+            .AddSingleton<ContentService>()
             .AddTransient<MainWindowViewModel>()
             .AddTransient<MainBodyViewModel>()
 #if DEBUG

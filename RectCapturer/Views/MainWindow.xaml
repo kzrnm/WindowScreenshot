@@ -25,6 +25,9 @@
     d:DesignWidth="600"
     Background="AliceBlue"
     mc:Ignorable="d">
+    <b:Interaction.Behaviors>
+        <ws:DialogBehavior />
+    </b:Interaction.Behaviors>
     <b:Interaction.Triggers>
         <b:KeyTrigger Key="Esc">
             <b:InvokeCommandAction Command="{Binding ClearImageCommand, Mode=OneTime}" />

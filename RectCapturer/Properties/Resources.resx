@@ -123,6 +123,13 @@
   <data name="Config" xml:space="preserve">
     <value>設定</value>
   </data>
+  <data name="DirectoryDoesNotExist" xml:space="preserve">
+    <value>保存するディレクトリが存在しません
+作成しますか？</value>
+  </data>
+  <data name="FailedToCreateDirectory" xml:space="preserve">
+    <value>ディレクトリ作成に失敗しました</value>
+  </data>
   <data name="IsTopmostSetting" xml:space="preserve">
     <value>常に最前面に表示する</value>
   </data>

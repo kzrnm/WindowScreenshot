@@ -4,25 +4,38 @@ using CommunityToolkit.Mvvm.Messaging;
 using Kzrnm.RectCapturer.Configs;
 using Kzrnm.RectCapturer.Models;
 using Kzrnm.WindowScreenshot.Image;
-using Kzrnm.WindowScreenshot.Image.Capture;
 using Kzrnm.WindowScreenshot.Image.DragDrop;
 using Kzrnm.WindowScreenshot.Models;
+using System.Collections.Immutable;
+using System.Threading.Tasks;
 
 namespace Kzrnm.RectCapturer.ViewModels;
 
 public partial class MainBodyViewModel : ObservableObject
 {
-    public MainBodyViewModel(GlobalService globalOperations, ImageDropTarget.Factory imageDropTargetFactory)
+    public MainBodyViewModel(GlobalService globalService, ContentService contentService, ImageDropTarget.Factory imageDropTargetFactory)
     {
-        GlobalOperations = globalOperations;
-        ImageProvider = globalOperations.ImageProvider;
-        ConfigMaster = globalOperations.ConfigMaster;
+        GlobalService = globalService;
+        ContentService = contentService;
+        ImageProvider = globalService.ImageProvider;
+        ConfigMaster = globalService.ConfigMaster;
         DropHandler = imageDropTargetFactory.Build(true);
+
+        SaveDstDirectories = ConfigMaster.Config.Value.SaveDstDirectories;
+        SaveFileNames = ConfigMaster.Config.Value.SaveFileNames;
+        contentService.CanPostChanged += (_, _) => postContentCommand?.NotifyCanExecuteChanged();
     }
+    public ContentService ContentService { get; }
     public ImageDropTarget DropHandler { get; }
-    public GlobalService GlobalOperations { get; }
+    public GlobalService GlobalService { get; }
     public ImageProvider ImageProvider { get; }
     public ConfigMaster ConfigMaster { get; }
+
+    [ObservableProperty]
+    public ImmutableArray<string> _SaveDstDirectories;
+    [ObservableProperty]
+    public ImmutableArray<string> _SaveFileNames;
+
     [RelayCommand]
     private void OpenSelectCaptureWindowDialog()
     {
@@ -44,9 +57,10 @@ public partial class MainBodyViewModel : ObservableObject
     }
     [RelayCommand]
     private void CaptureScreenshot()
-        => GlobalOperations.CaptureScreenshot();
+        => GlobalService.CaptureScreenshot();
 
-    [RelayCommand]
-    private void PostContent()
-        => GlobalOperations.PostContent();
+    private bool CanPostContent() => ContentService.CanPost;
+    [RelayCommand(CanExecute = nameof(CanPostContent))]
+    private async Task PostContent()
+        => await ContentService.PostContentAsync().ConfigureAwait(false);
 }
