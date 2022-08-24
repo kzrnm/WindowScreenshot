@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Kzrnm.RectCapturer.Models;
 using Kzrnm.RectCapturer.ViewModels;
 using Kzrnm.WindowScreenshot;
 using Kzrnm.WindowScreenshot.ViewModels;
@@ -24,6 +25,7 @@ public partial class App : Application
             new ServiceCollection()
             .InitializeWindowScreenshot()
             .AddSingleton(ConfigMaster.LoadConfigsAsync().Result)
+            .AddSingleton<GlobalService>()
             .AddTransient<MainWindowViewModel>()
             .AddTransient<MainBodyViewModel>()
 #if DEBUG

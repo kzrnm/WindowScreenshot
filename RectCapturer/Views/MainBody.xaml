@@ -16,7 +16,10 @@
     xmlns:vm="clr-namespace:Kzrnm.RectCapturer.ViewModels"
     d:DataContext="{d:DesignInstance Type=vm:MainBodyViewModel}"
     ktk:IocBehavior.AutoViewModel="{x:Type vm:MainBodyViewModel}"
-    mc:Ignorable="d" 
+    mc:Ignorable="d"
+    dd:DragDrop.DropEventType="Tunneled"
+    dd:DragDrop.DropHandler="{Binding DropHandler}"
+    dd:DragDrop.IsDropTarget="True"
     d:Background="LightYellow"
     d:DesignHeight="200"
     d:DesignWidth="400">
@@ -30,6 +33,19 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="保存するパス" />
+            <ComboBox
+                TabIndex="1"
+                AllowDrop="True"
+                IsEditable="True" />
+
+            <TextBlock Text="保存するファイル名" />
+            <ComboBox
+                TabIndex="2"
+                AllowDrop="True"
+                IsEditable="True" />
+        </StackPanel>
         <Grid Grid.Row="2" MinHeight="26">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

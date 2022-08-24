@@ -21,7 +21,7 @@
     dd:DragDrop.DropEventType="Bubbled"
     dd:DragDrop.DropHandler="{Binding DropHandler}"
     dd:DragDrop.IsDropTarget="True"
-    d:DesignHeight="200"
+    d:DesignHeight="250"
     d:DesignWidth="600"
     Background="AliceBlue"
     mc:Ignorable="d">
@@ -29,6 +29,9 @@
         <b:KeyTrigger Key="Esc">
             <b:InvokeCommandAction Command="{Binding ClearImageCommand, Mode=OneTime}" />
         </b:KeyTrigger>
+        <b:EventTrigger EventName="PreviewKeyDown">
+            <b:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding PreviewKeyDownCommand, Mode=OneTime}" />
+        </b:EventTrigger>
     </b:Interaction.Triggers>
     <Window.ContextMenu>
         <ContextMenu>
