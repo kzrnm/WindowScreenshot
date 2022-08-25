@@ -25,6 +25,10 @@ public partial class ConfigWindowViewModel : ObservableObject
         ShortcutPost = shortcuts.Post ?? default;
         ShortcutCaptureScreenshot = shortcuts.CaptureScreenshot ?? default;
         ToggleHashtag = shortcuts.ToggleHashtag ?? default;
+        ActivatePreviousUser = shortcuts.ActivatePreviousUser ?? default;
+        ActivateNextUser = shortcuts.ActivateNextUser ?? default;
+        ActivatePreviousImageUser = shortcuts.ActivatePreviousImageUser ?? default;
+        ActivateNextImageUser = shortcuts.ActivateNextImageUser ?? default;
         _Font = config.Font;
     }
 
@@ -46,6 +50,19 @@ public partial class ConfigWindowViewModel : ObservableObject
     [ObservableProperty]
     private ShortcutKey _ToggleHashtag;
     [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnToggleHashtagChanged(ShortcutKey value) => IsUpdated = true;
+    [ObservableProperty]
+    private ShortcutKey _ActivatePreviousUser;
+    [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnActivatePreviousUserChanged(ShortcutKey value) => IsUpdated = true;
+    [ObservableProperty]
+    private ShortcutKey _ActivateNextUser;
+    [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnActivateNextUserChanged(ShortcutKey value) => IsUpdated = true;
+    [ObservableProperty]
+    private ShortcutKey _ActivatePreviousImageUser;
+    [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnActivatePreviousImageUserChanged(ShortcutKey value) => IsUpdated = true;
+    [ObservableProperty]
+    private ShortcutKey _ActivateNextImageUser;
+    [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnActivateNextImageUserChanged(ShortcutKey value) => IsUpdated = true;
+
 
     [ObservableProperty]
     private Font _Font;
@@ -64,6 +81,11 @@ public partial class ConfigWindowViewModel : ObservableObject
             CaptureScreenshot = ShortcutCaptureScreenshot,
             Post = ShortcutPost,
             ToggleHashtag = ToggleHashtag,
+
+            ActivatePreviousUser = ActivatePreviousUser,
+            ActivateNextUser = ActivateNextUser,
+            ActivatePreviousImageUser = ActivatePreviousImageUser,
+            ActivateNextImageUser = ActivateNextImageUser,
         };
         return (config, shortcuts);
     }

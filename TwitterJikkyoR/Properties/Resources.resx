@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActivateNextImageUser" xml:space="preserve">
+    <value>次の画像ユーザーを選択</value>
+  </data>
+  <data name="ActivateNextUser" xml:space="preserve">
+    <value>次のユーザーを選択</value>
+  </data>
+  <data name="ActivatePreviousImageUser" xml:space="preserve">
+    <value>前の画像ユーザーを選択</value>
+  </data>
+  <data name="ActivatePreviousUser" xml:space="preserve">
+    <value>前のユーザーを選択</value>
+  </data>
   <data name="CaptureScreenshot" xml:space="preserve">
     <value>キャプチャする</value>
   </data>

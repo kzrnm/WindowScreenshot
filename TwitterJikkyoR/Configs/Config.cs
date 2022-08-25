@@ -19,8 +19,7 @@ public record Config(
     WindowPosition? WindowPosition = null,
     bool Topmost = false,
     Font? Font = null,
-    ImmutableArray<string> SaveDstDirectories = default,
-    ImmutableArray<string> SaveFileNames = default
+    ImmutableArray<Account> Accounts = default
 )
 {
     /// <summary>
@@ -35,10 +34,7 @@ public record Config(
     public Font Font { get; init; } = Font ?? new();
 
     [JsonPropertyOrder(100)]
-    public ImmutableArray<string> SaveDstDirectories { get; init; } = SaveDstDirectories.GetOrEmpty();
-    [JsonPropertyOrder(100)]
-    public ImmutableArray<string> SaveFileNames { get; init; } = SaveFileNames.GetOrEmpty();
-
+    public ImmutableArray<Account> Accounts { get; init; } = Accounts.GetOrEmpty();
 
     public Config() : this(WindowPosition: null) { }
 }

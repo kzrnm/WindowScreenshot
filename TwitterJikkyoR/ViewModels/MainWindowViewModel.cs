@@ -18,10 +18,11 @@ public partial class MainWindowViewModel : ObservableObject
     {
         GlobalService = globalService;
         ContentService = contentService;
-        ConfigMaster = (ConfigMaster)globalService.ConfigMaster;
+        ConfigMaster = globalService.ConfigMaster;
         ImageProvider = globalService.ImageProvider;
         DropHandler = imageDropTargetFactory.Build(true);
         ClipboardManager = globalService.ClipboardManager;
+        AccountService = globalService.AccountService;
         ImageProvider.Images.SelectedChanged += (sender, e) =>
         {
             switch ((e.OldItem, e.NewItem))
@@ -39,6 +40,7 @@ public partial class MainWindowViewModel : ObservableObject
     public ImageProvider ImageProvider { get; }
     public ImageDropTarget DropHandler { get; }
     public IClipboardManager ClipboardManager { get; }
+    public AccountService AccountService { get; }
     public string Title { get; } = Resources.MainWindowTitle;
 
     [ObservableProperty]
@@ -82,6 +84,26 @@ public partial class MainWindowViewModel : ObservableObject
         if (shortcuts.ToggleHashtag == input && GlobalService.Hashtags.Count > 0)
         {
             GlobalService.Hashtags.SelectedIndex = GlobalService.Hashtags.SelectedIndex < 0 ? 0 : -1;
+            e.Handled = true;
+        }
+        if (shortcuts.ActivatePreviousUser == input)
+        {
+            await AccountService.ActivatePreviousUserAsync().ConfigureAwait(false);
+            e.Handled = true;
+        }
+        if (shortcuts.ActivateNextUser == input)
+        {
+            await AccountService.ActivateNextUserAsync().ConfigureAwait(false);
+            e.Handled = true;
+        }
+        if (shortcuts.ActivatePreviousImageUser == input)
+        {
+            await AccountService.ActivatePreviousImageUserAsync().ConfigureAwait(false);
+            e.Handled = true;
+        }
+        if (shortcuts.ActivateNextImageUser == input)
+        {
+            await AccountService.ActivateNextImageUserAsync().ConfigureAwait(false);
             e.Handled = true;
         }
     }

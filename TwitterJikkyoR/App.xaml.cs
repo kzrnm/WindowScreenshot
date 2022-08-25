@@ -26,6 +26,7 @@ public partial class App : Application
             .AddSingleton(ConfigMaster.LoadConfigsAsync().Result)
             .AddSingleton<GlobalService>()
             .AddSingleton<ContentService>()
+            .AddSingleton<AccountService>()
             .AddTransient<MainWindowViewModel>()
             .AddTransient<MainBodyViewModel>()
             .BuildServiceProvider()

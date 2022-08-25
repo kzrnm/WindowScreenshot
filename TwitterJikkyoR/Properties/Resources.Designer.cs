@@ -61,6 +61,42 @@ namespace Kzrnm.TwitterJikkyo.Properties {
         }
         
         /// <summary>
+        ///   次の画像ユーザーを選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ActivateNextImageUser {
+            get {
+                return ResourceManager.GetString("ActivateNextImageUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   次のユーザーを選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ActivateNextUser {
+            get {
+                return ResourceManager.GetString("ActivateNextUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   前の画像ユーザーを選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ActivatePreviousImageUser {
+            get {
+                return ResourceManager.GetString("ActivatePreviousImageUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   前のユーザーを選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ActivatePreviousUser {
+            get {
+                return ResourceManager.GetString("ActivatePreviousUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   キャプチャする に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string CaptureScreenshot {

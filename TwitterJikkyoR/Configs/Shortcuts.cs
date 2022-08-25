@@ -14,7 +14,11 @@ namespace Kzrnm.TwitterJikkyo.Configs;
 public record Shortcuts(
     ShortcutKey? Post = null,
     ShortcutKey? CaptureScreenshot = null,
-    ShortcutKey? ToggleHashtag = null
+    ShortcutKey? ToggleHashtag = null,
+    ShortcutKey? ActivatePreviousUser = null,
+    ShortcutKey? ActivateNextUser = null,
+    ShortcutKey? ActivatePreviousImageUser = null,
+    ShortcutKey? ActivateNextImageUser = null
 )
 {
     /// <summary>
@@ -30,6 +34,25 @@ public record Shortcuts(
     /// </summary>
     public ShortcutKey? ToggleHashtag { get; init; } = ToggleHashtag ?? new(Control, T);
 
+    /// <summary>
+    /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivatePreviousUser']"/>
+    /// </summary>
+    public ShortcutKey? ActivatePreviousUser { get; init; } = ActivatePreviousUser ?? new(Control | Shift, U);
+
+    /// <summary>
+    /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivateNextUser']"/>
+    /// </summary>
+    public ShortcutKey? ActivateNextUser { get; init; } = ActivateNextUser ?? new(Control, U);
+
+    /// <summary>
+    /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivatePreviousImageUser']"/>
+    /// </summary>
+    public ShortcutKey? ActivatePreviousImageUser { get; init; } = ActivatePreviousImageUser ?? new(Control | Shift, I);
+
+    /// <summary>
+    /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivateNextImageUser']"/>
+    /// </summary>
+    public ShortcutKey? ActivateNextImageUser { get; init; } = ActivateNextImageUser ?? new(Control, I);
 
     public Shortcuts() : this(CaptureScreenshot: default) { }
 }

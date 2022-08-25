@@ -29,49 +29,76 @@
     <b:Interaction.Behaviors>
         <wc:FontDialogBehavior />
     </b:Interaction.Behaviors>
-    <StackPanel Margin="10">
-        <Grid>
-            <Grid.Resources>
-                <Style TargetType="wc:KeySelector">
-                    <Setter Property="Margin" Value="0 5" />
-                </Style>
-                <Style TargetType="TextBlock" x:Key="SettingLabel">
-                    <Setter Property="Grid.Column" Value="0" />
-                    <Setter Property="VerticalAlignment" Value="Center" />
-                    <Setter Property="HorizontalAlignment" Value="Center" />
-                </Style>
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <CheckBox Grid.ColumnSpan="11111" Margin="5 0"
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer>
+            <StackPanel>
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="wc:KeySelector">
+                            <Setter Property="Margin" Value="0 5" />
+                        </Style>
+                        <Style TargetType="TextBlock" x:Key="SettingLabel">
+                            <Setter Property="Grid.Column" Value="0" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.ColumnSpan="11111" Margin="5 0"
                       IsChecked="{Binding Topmost, Mode=TwoWay}"
                       Content="{x:Static properties:Resources.IsTopmostSetting}" />
 
-            <TextBlock Grid.Row="1" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.Screenshot}" />
-            <wc:KeySelector Grid.Row="1" Grid.Column="2" ShortcutKey="{Binding ShortcutCaptureScreenshot}"/>
+                    <TextBlock Grid.Row="1" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.Screenshot}" />
+                    <wc:KeySelector Grid.Row="1" Grid.Column="2" ShortcutKey="{Binding ShortcutCaptureScreenshot}"/>
 
-            <TextBlock Grid.Row="2" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.PostKey}" />
-            <wc:KeySelector Grid.Row="2" Grid.Column="2" ShortcutKey="{Binding ShortcutPost, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="2" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.PostKey}" />
+                    <wc:KeySelector Grid.Row="2" Grid.Column="2" ShortcutKey="{Binding ShortcutPost, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-            <TextBlock Grid.Row="3" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ToggleHashtag}" />
-            <wc:KeySelector Grid.Row="3" Grid.Column="2" ShortcutKey="{Binding ToggleHashtag, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-        </Grid>
-        <StackPanel Orientation="Horizontal">
-            <Button Width="Auto" Padding="10 2"
-                    Command="{Binding UpdateFontCommand, Mode=OneTime}"
-                    Content="{x:Static wcproperties:Resources.Font}" />
-        </StackPanel>
-        <Separator Height="10" Background="Transparent" />
-        <Grid>
+                    <TextBlock Grid.Row="3" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ToggleHashtag}" />
+                    <wc:KeySelector Grid.Row="3" Grid.Column="2" ShortcutKey="{Binding ToggleHashtag, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                    <TextBlock Grid.Row="4" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivatePreviousUser}" />
+                    <wc:KeySelector Grid.Row="4" Grid.Column="2" ShortcutKey="{Binding ActivatePreviousUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                    <TextBlock Grid.Row="5" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivateNextUser}" />
+                    <wc:KeySelector Grid.Row="5" Grid.Column="2" ShortcutKey="{Binding ActivateNextUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                    <TextBlock Grid.Row="6" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivatePreviousImageUser}" />
+                    <wc:KeySelector Grid.Row="6" Grid.Column="2" ShortcutKey="{Binding ActivatePreviousImageUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                    <TextBlock Grid.Row="7" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivateNextImageUser}" />
+                    <wc:KeySelector Grid.Row="7" Grid.Column="2" ShortcutKey="{Binding ActivateNextImageUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                </Grid>
+                <StackPanel
+                    Grid.Row="1"
+                    Orientation="Horizontal">
+                    <Button
+                        Width="Auto" Padding="10 2"
+                        Command="{Binding UpdateFontCommand, Mode=OneTime}"
+                        Content="{x:Static wcproperties:Resources.Font}" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+        <Grid Grid.Row="2" Grid.ColumnSpan="11111">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -103,5 +130,5 @@
                 </Button>
             </StackPanel>
         </Grid>
-    </StackPanel>
+    </Grid>
 </Window>
