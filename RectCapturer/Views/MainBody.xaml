@@ -37,6 +37,8 @@
         <StackPanel Grid.Row="1">
             <TextBlock Text="保存するパス" />
             <ComboBox
+                FontFamily="{Binding ConfigMaster.Config.Value.Font.FontName}"
+                FontSize="{Binding ConfigMaster.Config.Value.Font.FontSize}"
                 Text="{Binding ContentService.DestinationFolder, UpdateSourceTrigger=PropertyChanged}"
                 ItemsSource="{Binding SaveDstDirectories}"
                 SelectedIndex="0"
@@ -45,6 +47,8 @@
 
             <TextBlock Text="保存するファイル名" />
             <ComboBox
+                FontFamily="{Binding ConfigMaster.Config.Value.Font.FontName}"
+                FontSize="{Binding ConfigMaster.Config.Value.Font.FontSize}"
                 Text="{Binding ContentService.SaveFileName, UpdateSourceTrigger=PropertyChanged}"
                 ItemsSource="{Binding SaveFileNames}"
                 SelectedIndex="0"
@@ -59,7 +63,7 @@
             <StackPanel Orientation="Horizontal" Name="FooterLeft" />
             <StackPanel Orientation="Horizontal" Grid.Column="1">
                 <Button
-                    MinWidth="32"
+                    MinWidth="24"
                     Background="Transparent"
                     BorderBrush="Transparent"
                     Focusable="False"
@@ -67,7 +71,7 @@
                     ToolTip="{x:Static wsproperties:Resources.SelectCaptureProcess}"
                     Content="🖼" />
                 <Button
-                    MinWidth="32"
+                    MinWidth="24"
                     Background="Transparent"
                     BorderBrush="Transparent"
                     Focusable="False"

@@ -26,6 +26,9 @@
             <b:CallMethodAction MethodName="Close" />
         </b:KeyTrigger>
     </b:Interaction.Triggers>
+    <b:Interaction.Behaviors>
+        <wc:FontDialogBehavior />
+    </b:Interaction.Behaviors>
     <StackPanel Margin="10">
         <Grid>
             <Grid.Resources>
@@ -47,6 +50,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <CheckBox Grid.ColumnSpan="11111" Margin="5 0"
                       IsChecked="{Binding Topmost, Mode=TwoWay}"
@@ -57,6 +61,11 @@
 
             <TextBlock Grid.Row="2" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.PostKey}" />
             <wc:KeySelector Grid.Row="2" Grid.Column="2" ShortcutKey="{Binding ShortcutPost, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <StackPanel Grid.Row="3" Grid.ColumnSpan="11111" Orientation="Horizontal">
+                <Button Width="Auto" Padding="10 2"
+                        Command="{Binding UpdateFontCommand, Mode=OneTime}"
+                        Content="{x:Static wcproperties:Resources.Font}" />
+            </StackPanel>
         </Grid>
         <Separator Height="10" Background="Transparent" />
         <Grid>

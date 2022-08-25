@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -61,6 +62,7 @@ public class ConfigWrapper<T> where T : new()
         {
             return (await JsonSerializer.DeserializeAsync<T>(stream, new JsonSerializerOptions
             {
+                NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals,
                 AllowTrailingCommas = true,
                 ReadCommentHandling = JsonCommentHandling.Skip,
             }, cancellationToken: cancellationToken).ConfigureAwait(false)) ?? new();
@@ -87,6 +89,7 @@ public class ConfigWrapper<T> where T : new()
             Value,
             new JsonSerializerOptions
             {
+                NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals,
                 WriteIndented = true,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             }, cancellationToken: cancellationToken).ConfigureAwait(false);

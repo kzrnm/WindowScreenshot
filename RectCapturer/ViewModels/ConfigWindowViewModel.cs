@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Kzrnm.RectCapturer.Configs;
+using Kzrnm.Wpf.Font;
 using Kzrnm.Wpf.Input;
 using System.Diagnostics.CodeAnalysis;
 
@@ -16,11 +18,13 @@ public partial class ConfigWindowViewModel : ObservableObject
     }
     public Config Config { get; }
     public Shortcuts Shortcuts { get; }
+    [MemberNotNull(nameof(_Font))]
     private void Load(Config config, Shortcuts shortcuts)
     {
         Topmost = config.Topmost;
         ShortcutPost = shortcuts.Post ?? default;
         ShortcutCaptureScreenshot = shortcuts.CaptureScreenshot ?? default;
+        _Font = config.Font;
     }
 
     [ObservableProperty]
@@ -38,12 +42,17 @@ public partial class ConfigWindowViewModel : ObservableObject
     private ShortcutKey _ShortcutPost;
     [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnShortcutPostChanged(ShortcutKey value) => IsUpdated = true;
 
+    [ObservableProperty]
+    private Font _Font;
+    [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnFontChanged(Font value) => IsUpdated = true;
+
 
     public (Config Config, Shortcuts Shortcuts) ToResult()
     {
         var config = Config with
         {
             Topmost = Topmost,
+            Font = Font,
         };
         var shortcuts = Shortcuts with
         {
@@ -51,6 +60,16 @@ public partial class ConfigWindowViewModel : ObservableObject
             Post = ShortcutPost,
         };
         return (config, shortcuts);
+    }
+
+    [RelayCommand]
+    private void UpdateFont()
+    {
+        var result = WeakReferenceMessenger.Default.Send(new FontDialogMessage(Font));
+        if (result.Response is { } font)
+        {
+            Font = font;
+        }
     }
 
     [RelayCommand]

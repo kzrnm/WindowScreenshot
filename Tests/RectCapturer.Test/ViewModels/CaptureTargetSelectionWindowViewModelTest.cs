@@ -1,4 +1,5 @@
 ﻿using Kzrnm.RectCapturer.Configs;
+using Kzrnm.Wpf.Font;
 using Kzrnm.Wpf.Input;
 using static System.Windows.Input.Key;
 using static System.Windows.Input.ModifierKeys;
@@ -12,8 +13,8 @@ public class ConfigWindowViewModelTest
     {
         var viewModel = new ConfigWindowViewModel(new(WindowPosition: new(1, 2, 3, 4)), new());
         viewModel.ToResult().Should().Be((
-            new Config(WindowPosition: new(1, 2, 3, 4)),
-            new Shortcuts()
+            new(WindowPosition: new(1, 2, 3, 4)),
+            new()
         ));
     }
 
@@ -24,8 +25,8 @@ public class ConfigWindowViewModelTest
         viewModel.IsUpdated.Should().BeFalse();
         viewModel.Topmost.Should().BeTrue();
         viewModel.ToResult().Should().Be((
-            new Config(Topmost: true),
-            new Shortcuts()
+            new(Topmost: true),
+            new()
         ));
 
         viewModel.Topmost = true;
@@ -35,16 +36,16 @@ public class ConfigWindowViewModelTest
         viewModel.IsUpdated.Should().BeTrue();
         viewModel.Topmost.Should().BeFalse();
         viewModel.ToResult().Should().Be((
-            new Config(Topmost: false),
-            new Shortcuts()
+            new(Topmost: false),
+            new()
         ));
 
         viewModel = new ConfigWindowViewModel(new(Topmost: false), new());
         viewModel.IsUpdated.Should().BeFalse();
         viewModel.Topmost.Should().BeFalse();
         viewModel.ToResult().Should().Be((
-            new Config(Topmost: false),
-            new Shortcuts()
+            new(Topmost: false),
+            new()
         ));
 
         viewModel.Topmost = false;
@@ -54,8 +55,8 @@ public class ConfigWindowViewModelTest
         viewModel.IsUpdated.Should().BeTrue();
         viewModel.Topmost.Should().BeTrue();
         viewModel.ToResult().Should().Be((
-            new Config(Topmost: true),
-            new Shortcuts()
+            new(Topmost: true),
+            new()
         ));
     }
 
@@ -66,8 +67,8 @@ public class ConfigWindowViewModelTest
         viewModel.IsUpdated.Should().BeFalse();
         viewModel.ShortcutPost.Should().Be(new ShortcutKey(Control | Alt, Space));
         viewModel.ToResult().Should().Be((
-            new Config(),
-            new Shortcuts(Post: new(Control | Alt, Space))
+            new(),
+            new(Post: new(Control | Alt, Space))
         ));
 
         viewModel.ShortcutPost = new(Control | Alt, Space);
@@ -77,8 +78,8 @@ public class ConfigWindowViewModelTest
         viewModel.IsUpdated.Should().BeTrue();
         viewModel.ShortcutPost.Should().Be(new ShortcutKey(Shift, Enter));
         viewModel.ToResult().Should().Be((
-            new Config(),
-            new Shortcuts(Post: new(Shift, Enter))
+            new(),
+            new(Post: new(Shift, Enter))
         ));
     }
 
@@ -89,8 +90,8 @@ public class ConfigWindowViewModelTest
         viewModel.IsUpdated.Should().BeFalse();
         viewModel.ShortcutCaptureScreenshot.Should().Be(new ShortcutKey(Control | Alt, Space));
         viewModel.ToResult().Should().Be((
-            new Config(),
-            new Shortcuts(CaptureScreenshot: new(Control | Alt, Space))
+            new(),
+            new(CaptureScreenshot: new(Control | Alt, Space))
         ));
 
         viewModel.ShortcutCaptureScreenshot = new(Control | Alt, Space);
@@ -100,8 +101,31 @@ public class ConfigWindowViewModelTest
         viewModel.IsUpdated.Should().BeTrue();
         viewModel.ShortcutCaptureScreenshot.Should().Be(new ShortcutKey(Shift, Enter));
         viewModel.ToResult().Should().Be((
-            new Config(),
-            new Shortcuts(CaptureScreenshot: new(Shift, Enter))
+            new(),
+            new(CaptureScreenshot: new(Shift, Enter))
+        ));
+    }
+
+    [Fact]
+    public void Font()
+    {
+        var viewModel = new ConfigWindowViewModel(new(Font: new("Meiryo", 16)), new());
+        viewModel.IsUpdated.Should().BeFalse();
+        viewModel.Font.Should().Be(new Font("Meiryo", 16));
+        viewModel.ToResult().Should().Be((
+            new(Font: new("Meiryo", 16)),
+            new()
+        ));
+
+        viewModel.Font = new("Meiryo", 16);
+        viewModel.IsUpdated.Should().BeFalse();
+
+        viewModel.Font = new("Yu Gothic", 12);
+        viewModel.IsUpdated.Should().BeTrue();
+        viewModel.Font.Should().Be(new Font("Meiryo", 16));
+        viewModel.ToResult().Should().Be((
+            new(Font: new Font("Meiryo", 16)),
+            new()
         ));
     }
 
@@ -109,7 +133,11 @@ public class ConfigWindowViewModelTest
     public void RestoreDefaultConfig()
     {
         var viewModel = new ConfigWindowViewModel(
-            new(WindowPosition: new(1, 2, 3, 4), Topmost: true),
+            new(
+                WindowPosition: new(1, 2, 3, 4),
+                Font: new("Meiryo", 16),
+                Topmost: true
+            ),
             new(Post: new(Control | Alt, Space), CaptureScreenshot: new(System.Windows.Input.ModifierKeys.Windows, D7)));
 
         viewModel.RestoreDefaultConfig();
@@ -117,6 +145,7 @@ public class ConfigWindowViewModelTest
         viewModel.ToResult().Should().Be((
             new Config(
                 WindowPosition: new(1, 2, 3, 4),
+                Font: new(),
                 Topmost: false
             ),
             new Shortcuts(
