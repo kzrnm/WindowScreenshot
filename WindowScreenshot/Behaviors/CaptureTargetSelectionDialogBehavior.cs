@@ -6,11 +6,12 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace Kzrnm.WindowScreenshot.Behaviors;
-public class CaptureTargetSelectionDialogBehavior : Behavior<Control>
+public class CaptureTargetSelectionDialogBehavior : Behavior<Window>
 {
     protected override void OnAttached()
     {
         WeakReferenceMessenger.Default.Register<CaptureTargetSelectionDialogBehavior, CaptureTargetSelectionDialogMessage>(this, OnMessage);
+        AssociatedObject.Closed += (_, _) => Detach();
     }
 
     protected override void OnDetaching()
@@ -22,7 +23,7 @@ public class CaptureTargetSelectionDialogBehavior : Behavior<Control>
     {
         var dialog = new CaptureTargetSelectionWindow(message.InitialValue)
         {
-            Owner = Window.GetWindow(AssociatedObject),
+            Owner = AssociatedObject,
         };
 
         message.Reply(dialog.ShowDialogWithResponse());

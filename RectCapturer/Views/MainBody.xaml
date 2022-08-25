@@ -12,7 +12,6 @@
     xmlns:properties="clr-namespace:Kzrnm.RectCapturer.Properties"
     xmlns:wsproperties="urn:kzrnm-wpf-window-screenshot/properties"
     xmlns:local="clr-namespace:Kzrnm.RectCapturer.Views"
-    xmlns:localbehavior="clr-namespace:Kzrnm.RectCapturer.Behaviors"
     xmlns:vm="clr-namespace:Kzrnm.RectCapturer.ViewModels"
     KeyboardNavigation.TabNavigation ="Local"
     d:DataContext="{d:DesignInstance Type=vm:MainBodyViewModel}"
@@ -24,10 +23,6 @@
     d:Background="LightYellow"
     d:DesignHeight="200"
     d:DesignWidth="400">
-    <b:Interaction.Behaviors>
-        <ws:CaptureTargetSelectionDialogBehavior />
-        <localbehavior:ConfigDialogBehavior />
-    </b:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

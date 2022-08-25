@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -8,15 +9,7 @@ using System.Threading.Tasks;
 
 namespace Kzrnm.Wpf.Configs;
 
-public class ConfigUpdatedEventArgs<T> : EventArgs
-{
-    public ConfigUpdatedEventArgs(T config)
-    {
-        Config = config;
-    }
-    public T Config { get; }
-}
-public class ConfigWrapper<T> where T : new()
+public partial class ConfigWrapper<T> : ObservableObject where T : new()
 {
     private ConfigWrapper(T value, string loadPath)
     {
@@ -25,18 +18,14 @@ public class ConfigWrapper<T> where T : new()
     }
 
     public string LoadPath { get; }
+    [ObservableProperty]
     private T _value;
-    public T Value
+    partial void OnValueChanged(T value)
     {
-        set
-        {
-            _value = value;
-            ConfigUpdated?.Invoke(this, new(value));
-        }
-        get => _value;
+        ConfigUpdated?.Invoke(this, value);
     }
 
-    public event EventHandler<ConfigUpdatedEventArgs<T>>? ConfigUpdated;
+    public event EventHandler<T>? ConfigUpdated;
 
     public static async Task<ConfigWrapper<T>> LoadAsync(string path, CancellationToken cancellationToken = default)
     {

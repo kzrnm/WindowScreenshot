@@ -3,14 +3,14 @@ using Kzrnm.RectCapturer.Views;
 using Kzrnm.WindowScreenshot.Models;
 using Microsoft.Xaml.Behaviors;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Kzrnm.RectCapturer.Behaviors;
-public class ConfigDialogBehavior : Behavior<Control>
+public class ConfigDialogBehavior : Behavior<Window>
 {
     protected override void OnAttached()
     {
         WeakReferenceMessenger.Default.Register<ConfigDialogBehavior, ConfigDialogMessage>(this, OnMessage);
+        AssociatedObject.Closed += (_, _) => Detach();
     }
 
     protected override void OnDetaching()
@@ -28,7 +28,7 @@ public class ConfigDialogBehavior : Behavior<Control>
         var (config, shortcuts) = tup;
         var dialog = new ConfigWindow(config, shortcuts)
         {
-            Owner = Window.GetWindow(AssociatedObject),
+            Owner = AssociatedObject,
         };
 
         message.Reply(dialog.ShowDialogWithResponse());

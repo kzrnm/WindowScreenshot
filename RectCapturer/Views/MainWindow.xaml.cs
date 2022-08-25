@@ -20,7 +20,7 @@ public partial class MainWindow : Window
             Topmost = confWrapper.Value.Topmost;
             confWrapper.ConfigUpdated += (sender, e) =>
             {
-                Topmost = e.Config.Topmost;
+                Topmost = e.Topmost;
             };
         }
     }

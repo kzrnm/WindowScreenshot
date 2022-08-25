@@ -7,6 +7,7 @@
     xmlns:properties="clr-namespace:Kzrnm.RectCapturer.Properties"
     xmlns:wsproperties="urn:kzrnm-wpf-window-screenshot/properties"
     xmlns:local="clr-namespace:Kzrnm.RectCapturer.Views"
+    xmlns:localbehavior="clr-namespace:Kzrnm.RectCapturer.Behaviors"
     xmlns:vm="clr-namespace:Kzrnm.RectCapturer.ViewModels"
     xmlns:dd="urn:gong-wpf-dragdrop"
     xmlns:ktk="urn:kzrnm-wpf/toolkit"
@@ -25,6 +26,8 @@
     Background="AliceBlue"
     mc:Ignorable="d">
     <b:Interaction.Behaviors>
+        <localbehavior:ConfigDialogBehavior />
+        <ws:CaptureTargetSelectionDialogBehavior />
         <ws:DialogBehavior />
     </b:Interaction.Behaviors>
     <b:Interaction.Triggers>

@@ -14,7 +14,6 @@
         Height="400"
         d:DataContext="{d:DesignInstance Type=local:FontDialogViewModel}"
         kw:IocBehavior.AutoViewModel="{x:Type local:FontDialogViewModel}" >
-
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -29,7 +28,7 @@
         </Grid.ColumnDefinitions>
         <TextBox Text="{Binding FontName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         <ListBox Grid.Row="1" Grid.Column="0"
-                x:Name="fontNameList" x:FieldModifier="private"
+                x:Name="fontNameList" x:FieldModifier="private" 
                 MinWidth="100"
                 IsSynchronizedWithCurrentItem="True"
                 HorizontalContentAlignment="Stretch"

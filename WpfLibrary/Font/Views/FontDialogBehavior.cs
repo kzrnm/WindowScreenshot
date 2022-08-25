@@ -4,11 +4,12 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace Kzrnm.Wpf.Font.Views;
-public class FontDialogBehavior : Behavior<Control>
+public class FontDialogBehavior : Behavior<Window>
 {
     protected override void OnAttached()
     {
         WeakReferenceMessenger.Default.Register<FontDialogBehavior, FontDialogMessage>(this, OnMessage);
+        AssociatedObject.Closed += (_, _) => Detach();
     }
 
     protected override void OnDetaching()
@@ -20,7 +21,7 @@ public class FontDialogBehavior : Behavior<Control>
     {
         var dialog = new FontDialogWindow(message.InitialValue)
         {
-            Owner = Window.GetWindow(AssociatedObject),
+            Owner = AssociatedObject,
         };
 
         message.Reply(dialog.ShowDialogWithResponse());
