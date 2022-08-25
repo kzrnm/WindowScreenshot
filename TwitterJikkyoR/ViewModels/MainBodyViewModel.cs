@@ -73,4 +73,10 @@ public partial class MainBodyViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanPostContent))]
     private async Task PostContent()
         => await ContentService.PostContentAsync().ConfigureAwait(false);
+
+    [RelayCommand]
+    private void SetInReplyTo()
+    {
+
+    }
 }

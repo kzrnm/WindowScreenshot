@@ -1,25 +1,11 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using Kzrnm.TwitterJikkyo.Views;
+﻿using Kzrnm.TwitterJikkyo.Views;
 using Kzrnm.WindowScreenshot.Models;
-using Microsoft.Xaml.Behaviors;
-using System.Windows;
-using System.Windows.Controls;
+using Kzrnm.Wpf.Behaviors;
 
 namespace Kzrnm.TwitterJikkyo.Behaviors;
-public class ConfigDialogBehavior : Behavior<Window>
+public class ConfigDialogBehavior : DialogBehaviorBase<ConfigDialogBehavior, ConfigDialogMessage>
 {
-    protected override void OnAttached()
-    {
-        WeakReferenceMessenger.Default.Register<ConfigDialogBehavior, ConfigDialogMessage>(this, OnMessage);
-        AssociatedObject.Closed += (_, _) => Detach();
-    }
-
-    protected override void OnDetaching()
-    {
-        WeakReferenceMessenger.Default.Unregister<ConfigDialogMessage>(this);
-    }
-
-    private void OnMessage(ConfigDialogBehavior recipient, ConfigDialogMessage message)
+    public override void Receive(ConfigDialogMessage message)
     {
         if (message.InitialValue is not { } tup)
         {
@@ -29,7 +15,7 @@ public class ConfigDialogBehavior : Behavior<Window>
         var (config, shortcuts) = tup;
         var dialog = new ConfigWindow(config, shortcuts)
         {
-            Owner = AssociatedObject,
+            Owner = GetWindow(),
         };
 
         message.Reply(dialog.ShowDialogWithResponse());

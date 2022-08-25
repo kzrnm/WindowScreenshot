@@ -9,6 +9,7 @@
         xmlns:kz="urn:kzrnm-wpf/controls"
         mc:Ignorable="d"
         ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
         Title="{x:Static properties:Resources.Font}"
         SizeToContent="Width"
         Height="400"

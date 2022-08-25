@@ -1,29 +1,15 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using Kzrnm.WindowScreenshot.Models;
+﻿using Kzrnm.WindowScreenshot.Models;
 using Kzrnm.WindowScreenshot.Views;
-using Microsoft.Xaml.Behaviors;
-using System.Windows;
-using System.Windows.Controls;
+using Kzrnm.Wpf.Behaviors;
 
 namespace Kzrnm.WindowScreenshot.Behaviors;
-public class CaptureTargetSelectionDialogBehavior : Behavior<Window>
+public class CaptureTargetSelectionDialogBehavior : DialogBehaviorBase<CaptureTargetSelectionDialogBehavior, CaptureTargetSelectionDialogMessage>
 {
-    protected override void OnAttached()
-    {
-        WeakReferenceMessenger.Default.Register<CaptureTargetSelectionDialogBehavior, CaptureTargetSelectionDialogMessage>(this, OnMessage);
-        AssociatedObject.Closed += (_, _) => Detach();
-    }
-
-    protected override void OnDetaching()
-    {
-        WeakReferenceMessenger.Default.Unregister<CaptureTargetSelectionDialogMessage>(this);
-    }
-
-    private void OnMessage(CaptureTargetSelectionDialogBehavior recipient, CaptureTargetSelectionDialogMessage message)
+    public override void Receive(CaptureTargetSelectionDialogMessage message)
     {
         var dialog = new CaptureTargetSelectionWindow(message.InitialValue)
         {
-            Owner = AssociatedObject,
+            Owner = GetWindow(),
         };
 
         message.Reply(dialog.ShowDialogWithResponse());

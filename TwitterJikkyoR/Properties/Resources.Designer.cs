@@ -178,6 +178,15 @@ namespace Kzrnm.TwitterJikkyo.Properties {
         }
         
         /// <summary>
+        ///   リプライ先を選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SetInReplyTo {
+            get {
+                return ResourceManager.GetString("SetInReplyTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ハッシュタグ ON/OFF に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ToggleHashtag {

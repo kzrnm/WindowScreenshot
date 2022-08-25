@@ -86,6 +86,14 @@
                     ToolTip="{x:Static properties:Resources.Config}"
                     Content="⚙" />
                 <Button
+                    MinWidth="24"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Focusable="False"
+                    Command="{Binding SetInReplyToCommand, Mode=OneTime}"
+                    ToolTip="{x:Static properties:Resources.SetInReplyTo}"
+                    Content="@" />
+                <Button
                     MinWidth="40"
                     Background="Transparent"
                     Command="{Binding CaptureScreenshotCommand, Mode=OneTime}"

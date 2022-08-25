@@ -1,27 +1,13 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Xaml.Behaviors;
-using System.Windows;
-using System.Windows.Controls;
+﻿using Kzrnm.Wpf.Behaviors;
 
 namespace Kzrnm.Wpf.Font.Views;
-public class FontDialogBehavior : Behavior<Window>
+public class FontDialogBehavior : DialogBehaviorBase<FontDialogBehavior, FontDialogMessage>
 {
-    protected override void OnAttached()
-    {
-        WeakReferenceMessenger.Default.Register<FontDialogBehavior, FontDialogMessage>(this, OnMessage);
-        AssociatedObject.Closed += (_, _) => Detach();
-    }
-
-    protected override void OnDetaching()
-    {
-        WeakReferenceMessenger.Default.Unregister<FontDialogMessage>(this);
-    }
-
-    private void OnMessage(FontDialogBehavior recipient, FontDialogMessage message)
+    public override void Receive(FontDialogMessage message)
     {
         var dialog = new FontDialogWindow(message.InitialValue)
         {
-            Owner = AssociatedObject,
+            Owner = GetWindow(),
         };
 
         message.Reply(dialog.ShowDialogWithResponse());
