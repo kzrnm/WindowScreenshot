@@ -9,45 +9,44 @@ namespace Kzrnm.WindowScreenshot.Image.DragDrop;
 public class ImageDropTargetTests
 {
     [UIFact]
-    public void NotMatch()
+    public async Task NotMatch()
     {
         var captureImageMock = new Mock<ICaptureImageService>();
-        var captureImageService = captureImageMock.Object;
-        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageDropTarget(imageProvider, false);
+        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default);
+        var dropTarget = new ImageDropTarget(imageProvider, captureImageMock.Object, false);
         var mock = new Mock<IDropInfo>();
         var elm = new ListView();
         mock.SetupGet(d => d.VisualTarget).Returns(elm);
 
         dropTarget.DragOver(mock.Object);
         mock.VerifySet(d => d.NotHandled = false, Times.Once());
-        dropTarget.Drop(mock.Object);
+        await dropTarget.DropImpl(mock.Object);
         mock.VerifySet(d => d.NotHandled = false, Times.Exactly(2));
     }
     [UIFact]
-    public void NotMatchAllowOtherDrop()
+    public async Task NotMatchAllowOtherDrop()
     {
         var captureImageMock = new Mock<ICaptureImageService>();
         var captureImageService = captureImageMock.Object;
-        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageDropTarget(imageProvider, true);
+        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default);
+        var dropTarget = new ImageDropTarget(imageProvider, captureImageMock.Object, true);
         var mock = new Mock<IDropInfo>();
         var elm = new ListView();
         mock.SetupGet(d => d.VisualTarget).Returns(elm);
 
         dropTarget.DragOver(mock.Object);
         mock.VerifySet(d => d.NotHandled = true, Times.Once());
-        dropTarget.Drop(mock.Object);
+        await dropTarget.DropImpl(mock.Object);
         mock.VerifySet(d => d.NotHandled = true, Times.Exactly(2));
     }
 
     [UIFact]
-    public void FileDrop()
+    public async Task FileDrop()
     {
         var captureImageMock = new Mock<ICaptureImageService>();
         var captureImageService = captureImageMock.Object;
-        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageDropTarget(imageProvider, true);
+        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default);
+        var dropTarget = new ImageDropTarget(imageProvider, captureImageMock.Object, true);
         var mock = new Mock<IDropInfo>();
         var elm = new ListView();
         mock.SetupGet(d => d.VisualTarget).Returns(elm);
@@ -56,16 +55,16 @@ public class ImageDropTargetTests
         captureImageMock.Setup(c => c.IsImageFile(It.IsAny<string>())).Returns(true);
 
         dropTarget.DragOver(mock.Object);
-        dropTarget.Drop(mock.Object);
+        await dropTarget.DropImpl(mock.Object);
         mock.VerifySet(d => d.NotHandled = It.IsAny<bool>(), Times.Never());
 
         mock.VerifySet(d => d.Effects = DragDropEffects.Copy);
         mock.VerifySet(d => d.DropTargetAdorner = It.IsAny<Type>(), Times.Never());
 
-        captureImageMock.Verify(c => c.GetImageFromFile(@"C:\Foo\bar1.jpg"));
-        captureImageMock.Verify(c => c.GetImageFromFile(@"C:\Foo\bar2.jpg"));
-        captureImageMock.Verify(c => c.GetImageFromFile(@"C:\Foo\bar10.jpg"));
-        captureImageMock.Verify(c => c.GetImageFromFile(@"C:\Foo\foo2.jpg"));
+        captureImageMock.Verify(c => c.GetImageFromFileAsync(@"C:\Foo\bar1.jpg"));
+        captureImageMock.Verify(c => c.GetImageFromFileAsync(@"C:\Foo\bar2.jpg"));
+        captureImageMock.Verify(c => c.GetImageFromFileAsync(@"C:\Foo\bar10.jpg"));
+        captureImageMock.Verify(c => c.GetImageFromFileAsync(@"C:\Foo\foo2.jpg"));
 
         static DataObject CreateData()
         {
@@ -82,12 +81,12 @@ public class ImageDropTargetTests
     }
 
     [UIFact]
-    public void TargetCollection()
+    public async Task TargetCollection()
     {
         var captureImageMock = new Mock<ICaptureImageService>();
         var captureImageService = captureImageMock.Object;
-        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageDropTarget(imageProvider, true);
+        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default);
+        var dropTarget = new ImageDropTarget(imageProvider, captureImageMock.Object, true);
         var mock = new Mock<IDropInfo>();
         var elm = new ListView();
         mock.SetupGet(d => d.VisualTarget).Returns(elm);
@@ -97,16 +96,16 @@ public class ImageDropTargetTests
         captureImageMock.Setup(c => c.IsImageFile(It.IsAny<string>())).Returns(true);
 
         dropTarget.DragOver(mock.Object);
-        dropTarget.Drop(mock.Object);
+        await dropTarget.DropImpl(mock.Object);
         mock.VerifySet(d => d.NotHandled = It.IsAny<bool>(), Times.Never());
 
         mock.VerifySet(d => d.Effects = DragDropEffects.Copy);
         mock.VerifySet(d => d.DropTargetAdorner = DropTargetAdorners.Insert, Times.Once());
 
-        captureImageMock.Verify(c => c.GetImageFromFile(@"C:\Foo\bar1.jpg"));
-        captureImageMock.Verify(c => c.GetImageFromFile(@"C:\Foo\bar2.jpg"));
-        captureImageMock.Verify(c => c.GetImageFromFile(@"C:\Foo\bar10.jpg"));
-        captureImageMock.Verify(c => c.GetImageFromFile(@"C:\Foo\foo2.jpg"));
+        captureImageMock.Verify(c => c.GetImageFromFileAsync(@"C:\Foo\bar1.jpg"));
+        captureImageMock.Verify(c => c.GetImageFromFileAsync(@"C:\Foo\bar2.jpg"));
+        captureImageMock.Verify(c => c.GetImageFromFileAsync(@"C:\Foo\bar10.jpg"));
+        captureImageMock.Verify(c => c.GetImageFromFileAsync(@"C:\Foo\foo2.jpg"));
 
         static DataObject CreateData()
         {
@@ -124,12 +123,12 @@ public class ImageDropTargetTests
 
 
     [UIFact]
-    public void AddImage()
+    public async Task AddImage()
     {
         var captureImageMock = new Mock<ICaptureImageService>();
         var captureImageService = captureImageMock.Object;
-        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageDropTarget(imageProvider, true);
+        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default);
+        var dropTarget = new ImageDropTarget(imageProvider, captureImageMock.Object, true);
         var mock = new Mock<IDropInfo>();
         var elm = new ListView();
         var img = TestUtil.DummyBitmapSource(5, 3);
@@ -140,7 +139,7 @@ public class ImageDropTargetTests
         captureImageMock.Setup(c => c.IsImageFile(It.IsAny<string>())).Returns(true);
 
         dropTarget.DragOver(mock.Object);
-        dropTarget.Drop(mock.Object);
+        await dropTarget.DropImpl(mock.Object);
         mock.VerifySet(d => d.NotHandled = It.IsAny<bool>(), Times.Never());
 
         mock.VerifySet(d => d.Effects = DragDropEffects.Copy);

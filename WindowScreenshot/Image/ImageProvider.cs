@@ -7,12 +7,11 @@ namespace Kzrnm.WindowScreenshot.Image;
 
 public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearRequestMessage>
 {
-    public ImageProvider(ICaptureImageService captureImageService) : this(WeakReferenceMessenger.Default, captureImageService, new SelectorObservableCollection<CaptureImage>()) { }
-    public ImageProvider(IMessenger messenger, ICaptureImageService captureImageService) : this(messenger, captureImageService, new SelectorObservableCollection<CaptureImage>()) { }
-    protected ImageProvider(IMessenger messenger, ICaptureImageService captureImageService, SelectorObservableCollection<CaptureImage> images)
+    public ImageProvider() : this(WeakReferenceMessenger.Default, new SelectorObservableCollection<CaptureImage>()) { }
+    public ImageProvider(IMessenger messenger) : this(messenger, new SelectorObservableCollection<CaptureImage>()) { }
+    protected ImageProvider(IMessenger messenger, SelectorObservableCollection<CaptureImage> images)
         : base(messenger)
     {
-        this.captureImageService = captureImageService;
         Images = images;
         IsActive = true;
         images.SelectedChanged += (_, e) => OnSelectedImageChanged(e.NewItem);
@@ -29,8 +28,6 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearR
 
     public virtual bool CanAddImage => true;
     public SelectorObservableCollection<CaptureImage> Images { get; }
-
-    private readonly ICaptureImageService captureImageService;
 
     void OnSelectedImageChanged(CaptureImage? value)
     {
@@ -58,37 +55,17 @@ public partial class ImageProvider : ObservableRecipient, IRecipient<ImageClearR
         }
     }
 
-    public void AddImage(BitmapSource bmp)
+    public void AddImage(CaptureImage image)
     {
         if (!CanAddImage) return;
-        var image = new CaptureImage(bmp);
         ApplyLastOption(image);
         Images.Add(image);
     }
-    public bool TryAddImageFromFile(string filePath)
-    {
-        if (!CanAddImage) return false;
-        var image = captureImageService.GetImageFromFile(filePath);
-        if (image == null) return false;
-        ApplyLastOption(image);
-        Images.Add(image);
-        return true;
-    }
-    public void InsertImage(int index, BitmapSource bmp)
+    public void InsertImage(int index, CaptureImage image)
     {
         if (!CanAddImage) return;
-        var image = new CaptureImage(bmp);
         ApplyLastOption(image);
         Images.Insert(index, image);
-    }
-    public bool TryInsertImageFromFile(int index, string filePath)
-    {
-        if (!CanAddImage) return false;
-        var image = captureImageService.GetImageFromFile(filePath);
-        if (image == null) return false;
-        ApplyLastOption(image);
-        Images.Insert(index, image);
-        return true;
     }
 
     private record ImageOption(

@@ -12,13 +12,13 @@ public class ImageSettingsViewModelTest
     public ImageSettingsViewModelTest()
     {
         Messenger = new();
-        ImageProvider = new ImageProvider(Messenger, new CaptureImageService());
+        ImageProvider = new ImageProvider(Messenger);
     }
 
     [Fact]
     public void Width()
     {
-        ImageProvider.AddImage(TestUtil.DummyBitmapSource(4, 4));
+        ImageProvider.AddImage(TestUtil.DummyCaptureImage(4, 4));
         var viewModel = new ImageSettingsViewModel(Messenger, ImageProvider);
         using (var ph = new PropertyChangedHistory(viewModel))
         {
@@ -33,7 +33,7 @@ public class ImageSettingsViewModelTest
         }
         using (var ph = new PropertyChangedHistory(viewModel))
         {
-            ImageProvider.AddImage(TestUtil.DummyBitmapSource(6, 6));
+            ImageProvider.AddImage(TestUtil.DummyCaptureImage(6, 6));
             ph.Should().Equal(new Dictionary<string, int>
             {
                 { "Width", 1 },
@@ -46,7 +46,7 @@ public class ImageSettingsViewModelTest
     [Fact]
     public void Height()
     {
-        ImageProvider.AddImage(TestUtil.DummyBitmapSource(4, 4));
+        ImageProvider.AddImage(TestUtil.DummyCaptureImage(4, 4));
         var viewModel = new ImageSettingsViewModel(Messenger, ImageProvider);
         using (var ph = new PropertyChangedHistory(viewModel))
         {
@@ -61,7 +61,7 @@ public class ImageSettingsViewModelTest
         }
         using (var ph = new PropertyChangedHistory(viewModel))
         {
-            ImageProvider.AddImage(TestUtil.DummyBitmapSource(6, 6));
+            ImageProvider.AddImage(TestUtil.DummyCaptureImage(6, 6));
             ph.Should().Equal(new Dictionary<string, int>
             {
                 { "Width", 1 },
@@ -74,7 +74,7 @@ public class ImageSettingsViewModelTest
     [Fact]
     public void WidthPercentage()
     {
-        ImageProvider.AddImage(TestUtil.DummyBitmapSource(4, 4));
+        ImageProvider.AddImage(TestUtil.DummyCaptureImage(4, 4));
         var viewModel = new ImageSettingsViewModel(Messenger, ImageProvider);
         using (var ph = new PropertyChangedHistory(viewModel))
         {
@@ -93,7 +93,7 @@ public class ImageSettingsViewModelTest
         }
         using (var ph = new PropertyChangedHistory(viewModel))
         {
-            ImageProvider.AddImage(TestUtil.DummyBitmapSource(6, 6));
+            ImageProvider.AddImage(TestUtil.DummyCaptureImage(6, 6));
             viewModel.WidthPercentage.Should().Be(180.0);
             viewModel.HeightPercentage.Should().Be(180.0);
             ph.Should().Equal(new Dictionary<string, int>
@@ -108,7 +108,7 @@ public class ImageSettingsViewModelTest
     [Fact]
     public void HeightPercentage()
     {
-        ImageProvider.AddImage(TestUtil.DummyBitmapSource(4, 4));
+        ImageProvider.AddImage(TestUtil.DummyCaptureImage(4, 4));
         var viewModel = new ImageSettingsViewModel(Messenger, ImageProvider);
         using (var ph = new PropertyChangedHistory(viewModel))
         {
@@ -127,7 +127,7 @@ public class ImageSettingsViewModelTest
         }
         using (var ph = new PropertyChangedHistory(viewModel))
         {
-            ImageProvider.AddImage(TestUtil.DummyBitmapSource(6, 6));
+            ImageProvider.AddImage(TestUtil.DummyCaptureImage(6, 6));
             viewModel.WidthPercentage.Should().Be(180.0);
             viewModel.HeightPercentage.Should().Be(180.0);
             ph.Should().Equal(new Dictionary<string, int>
@@ -142,7 +142,7 @@ public class ImageSettingsViewModelTest
     [Fact]
     public void ImageKindTest()
     {
-        ImageProvider.AddImage(TestUtil.DummyBitmapSource(4, 4));
+        ImageProvider.AddImage(TestUtil.DummyCaptureImage(4, 4));
         var viewModel = new ImageSettingsViewModel(Messenger, ImageProvider);
         using (var ph = new PropertyChangedHistory(viewModel))
         {
@@ -157,7 +157,7 @@ public class ImageSettingsViewModelTest
         }
         using (var ph = new PropertyChangedHistory(viewModel))
         {
-            ImageProvider.AddImage(TestUtil.DummyBitmapSource(4, 4));
+            ImageProvider.AddImage(TestUtil.DummyCaptureImage(4, 4));
             viewModel.ImageKind.Should().Be(ImageKind.Png);
             ph.Should().Equal(new Dictionary<string, int>
             {
@@ -169,7 +169,7 @@ public class ImageSettingsViewModelTest
     [Fact]
     public void IsSideCutMode()
     {
-        ImageProvider.AddImage(TestUtil.DummyBitmapSource(4, 4));
+        ImageProvider.AddImage(TestUtil.DummyCaptureImage(4, 4));
         var viewModel = new ImageSettingsViewModel(Messenger, ImageProvider);
         using (var ph = new PropertyChangedHistory(viewModel))
         {
@@ -184,7 +184,7 @@ public class ImageSettingsViewModelTest
         }
         using (var ph = new PropertyChangedHistory(viewModel))
         {
-            ImageProvider.AddImage(TestUtil.DummyBitmapSource(4, 4));
+            ImageProvider.AddImage(TestUtil.DummyCaptureImage(4, 4));
             viewModel.IsSideCutMode.Should().BeTrue();
             ph.Should().Equal(new Dictionary<string, int>
             {
@@ -208,7 +208,7 @@ public class ImageSettingsViewModelTest
 
         using (var ph = new PropertyChangedHistory(viewModel))
         {
-            ImageProvider.AddImage(TestUtil.DummyBitmapSource(4, 4));
+            ImageProvider.AddImage(TestUtil.DummyCaptureImage(4, 4));
             viewModel.HasImage.Should().BeTrue();
             viewModel.SelectedImage.Should().NotBeNull();
             viewModel.Width.Should().Be(4);
@@ -230,7 +230,7 @@ public class ImageSettingsViewModelTest
             });
         }
 
-        ImageProvider.AddImage(TestUtil.DummyBitmapSource(5, 5));
+        ImageProvider.AddImage(TestUtil.DummyCaptureImage(5, 5));
         viewModel.HasImage.Should().BeTrue();
         viewModel.SelectedImage.Should().NotBeNull();
         viewModel.Width = 9;

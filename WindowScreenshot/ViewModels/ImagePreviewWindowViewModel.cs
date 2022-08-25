@@ -54,7 +54,7 @@ public partial class ImagePreviewWindowViewModel : ObservableRecipient, IRecipie
     private void PasteImageFromClipboard()
     {
         if (ClipboardManager.GetImage() is { } image)
-            ImageProvider.AddImage(image);
+            ImageProvider.AddImage(new CaptureImage(image));
     }
 
     void IRecipient<SelectedImageChangedMessage>.Receive(SelectedImageChangedMessage message)

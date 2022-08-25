@@ -17,19 +17,18 @@ public class ImageListViewModelTest
     public ImageListViewModelTest()
     {
         Messenger = new();
-        ImageProvider = new ImageProvider(Messenger, new CaptureImageService());
+        ImageProvider = new ImageProvider(Messenger);
     }
 
     [Fact]
     public void RemoveSelectedImageCommand()
     {
         var clipboardMock = new Mock<IClipboardManager>();
-        var viewModel = new
-        ImageListViewModel(Messenger, clipboardMock.Object, ImageProvider);
+        var viewModel = new ImageListViewModel(Messenger, clipboardMock.Object, ImageProvider, new CaptureImageService());
 
         viewModel.RemoveSelectedImageCommand.CanExecute(null).Should().BeFalse();
 
-        ImageProvider.AddImage(TestUtil.DummyBitmapSource(10, 10));
+        ImageProvider.AddImage(TestUtil.DummyCaptureImage(10, 10));
         viewModel.RemoveSelectedImageCommand.CanExecute(null).Should().BeTrue();
         viewModel.RemoveSelectedImageCommand.Execute(null);
         ImageProvider.Images.SelectedItem.Should().BeNull();
@@ -41,8 +40,7 @@ public class ImageListViewModelTest
     public void InsertImageFromClipboardCommand()
     {
         var clipboardMock = new Mock<IClipboardManager>();
-        var viewModel = new
-        ImageListViewModel(Messenger, clipboardMock.Object, ImageProvider);
+        var viewModel = new ImageListViewModel(Messenger, clipboardMock.Object, ImageProvider, new CaptureImageService());
         viewModel.InsertImageFromClipboardCommand.CanExecute(null).Should().BeFalse();
 
         viewModel.InsertImageFromClipboardCommand.CanExecute(null).Should().BeFalse();
@@ -72,12 +70,11 @@ public class ImageListViewModelTest
     [Fact]
     public void CopyToClipboardCommand()
     {
-        ImageProvider.AddImage(TestUtil.DummyBitmapSource(10, 10));
+        ImageProvider.AddImage(TestUtil.DummyCaptureImage(10, 10));
         var img = ImageProvider.Images[0];
         img.ImageRatioSize.WidthPercentage = 200;
         var clipboardMock = new Mock<IClipboardManager>();
-        var viewModel = new
-        ImageListViewModel(Messenger, clipboardMock.Object, ImageProvider);
+        var viewModel = new ImageListViewModel(Messenger, clipboardMock.Object, ImageProvider, new CaptureImageService());
 
         BitmapSource? called = null;
         clipboardMock.Setup(c => c.SetImage(It.IsAny<BitmapSource>())).Callback<BitmapSource>(img => called = img);
@@ -92,9 +89,8 @@ public class ImageListViewModelTest
     public void DropTargetSameVisualSource()
     {
         var captureImageMock = new Mock<ICaptureImageService>();
-        var captureImageService = captureImageMock.Object;
-        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default, captureImageService);
-        var dropTarget = new ImageListViewModel.DropTarget(imageProvider);
+        var imageProvider = new ImageProvider(WeakReferenceMessenger.Default);
+        var dropTarget = new ImageListViewModel.DropTarget(imageProvider, captureImageMock.Object);
         var mock = new Mock<IDropInfo>();
 
         var elm = new ListView();

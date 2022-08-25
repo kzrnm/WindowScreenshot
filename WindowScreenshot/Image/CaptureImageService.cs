@@ -1,27 +1,25 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Windows.Media.Imaging;
+using System.Threading.Tasks;
 
 namespace Kzrnm.WindowScreenshot.Image;
 public interface ICaptureImageService
-{
-    CaptureImage? GetImageFromFile(string filePath);
-    bool IsImageFile(string fileName);
-    bool IsJpegFile(string fileName);
-}
-public class CaptureImageService : ICaptureImageService
 {
     /// <summary>
     /// ファイルから画像を読み込む
     /// 失敗したらnullを返す
     /// </summary>
     /// <param name="filePath">読み込むファイル</param>
-    /// <returns></returns>
-    public CaptureImage? GetImageFromFile(string filePath)
-        => ImageUtility.GetCaptureImageFromFile(filePath);
-    
+    Task<CaptureImage?> GetImageFromFileAsync(string filePath);
+    bool IsImageFile(string fileName);
+    bool IsJpegFile(string fileName);
+}
+public class CaptureImageService : ICaptureImageService
+{
+    public Task<CaptureImage?> GetImageFromFileAsync(string filePath)
+        => ImageUtility.GetCaptureImageFromFileAsync(filePath);
+
     public bool IsImageFile(string fileName)
     {
         var ext = Path.GetExtension(fileName);

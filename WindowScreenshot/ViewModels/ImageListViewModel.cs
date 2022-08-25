@@ -13,15 +13,20 @@ public partial class ImageListViewModel : ObservableRecipient, IRecipient<Select
 {
     private readonly IClipboardManager ClipboardManager;
     public ImageProvider ImageProvider { get; }
-    public ImageListViewModel(IClipboardManager clipboardManager, ImageProvider imageProvider)
-        : this(WeakReferenceMessenger.Default, clipboardManager, imageProvider)
+    public ImageListViewModel(IClipboardManager clipboardManager,
+        ImageProvider imageProvider,
+        ICaptureImageService captureImageService)
+        : this(WeakReferenceMessenger.Default, clipboardManager, imageProvider, captureImageService)
     { }
-    public ImageListViewModel(IMessenger messenger, IClipboardManager clipboardManager, ImageProvider imageProvider)
+    public ImageListViewModel(IMessenger messenger,
+        IClipboardManager clipboardManager,
+        ImageProvider imageProvider,
+        ICaptureImageService captureImageService)
         : base(messenger)
     {
         ImageProvider = imageProvider;
         ClipboardManager = clipboardManager;
-        DropHandler = new DropTarget(imageProvider);
+        DropHandler = new DropTarget(imageProvider, captureImageService);
         DragHandler = new();
         IsActive = true;
     }
@@ -43,7 +48,7 @@ public partial class ImageListViewModel : ObservableRecipient, IRecipient<Select
     private void InsertImageFromClipboard()
     {
         if (ClipboardManager.GetImage() is { } image)
-            ImageProvider.InsertImage(ImageProvider.Images.SelectedIndex + 1, image);
+            ImageProvider.InsertImage(ImageProvider.Images.SelectedIndex + 1, new CaptureImage(image));
     }
 
     [RelayCommand]
@@ -60,7 +65,7 @@ public partial class ImageListViewModel : ObservableRecipient, IRecipient<Select
 
     internal class DropTarget : ImageDropTarget
     {
-        public DropTarget(ImageProvider imageProvider) : base(imageProvider, false)
+        public DropTarget(ImageProvider imageProvider, ICaptureImageService captureImageService) : base(imageProvider, captureImageService, false)
         {
             ImageProvider = imageProvider;
         }

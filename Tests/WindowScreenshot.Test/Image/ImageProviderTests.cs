@@ -15,7 +15,7 @@ public class ImageProviderTests : IDisposable, IRecipient<SelectedImageChangedMe
     public ImageProviderTests()
     {
         Messenger = new();
-        ImageProvider = new ImageProvider(Messenger, new CaptureImageService());
+        ImageProvider = new ImageProvider(Messenger);
         Messenger.Register(this);
     }
 
@@ -29,11 +29,11 @@ public class ImageProviderTests : IDisposable, IRecipient<SelectedImageChangedMe
         ImageProvider.Images.SelectedItem.Should().BeNull();
         selectedImageChangedHistories.Should().HaveCount(0);
 
-        ImageProvider.AddImage(BitmapSource.Create(
+        ImageProvider.AddImage(new(BitmapSource.Create(
                 2, 2, 96, 96,
                 PixelFormats.Indexed1,
                 new BitmapPalette(new[] { Colors.Transparent }),
-                new byte[] { 0, 0, 0, 0 }, 1));
+                new byte[] { 0, 0, 0, 0 }, 1)));
 
         ImageProvider.Images.SelectedIndex.Should().Be(0);
         ImageProvider.Images.Should().ContainSingle();
@@ -41,12 +41,12 @@ public class ImageProviderTests : IDisposable, IRecipient<SelectedImageChangedMe
         selectedImageChangedHistories.Should().HaveCount(1);
 
         ImageProvider.AddImage(
-            BitmapSource.Create(
+            new(BitmapSource.Create(
                 4, 4, 96, 96,
                 PixelFormats.Indexed1,
                 new BitmapPalette(new[] { Colors.Transparent }),
                 new byte[] { 0, 0, 0, 0 }, 1)
-            );
+            ));
 
         ImageProvider.Images.SelectedIndex.Should().Be(1);
         ImageProvider.Images.Should().HaveCount(2);

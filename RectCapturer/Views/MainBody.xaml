@@ -14,6 +14,7 @@
     xmlns:local="clr-namespace:Kzrnm.RectCapturer.Views"
     xmlns:localbehavior="clr-namespace:Kzrnm.RectCapturer.Behaviors"
     xmlns:vm="clr-namespace:Kzrnm.RectCapturer.ViewModels"
+    KeyboardNavigation.TabNavigation ="Local"
     d:DataContext="{d:DesignInstance Type=vm:MainBodyViewModel}"
     ktk:IocBehavior.AutoViewModel="{x:Type vm:MainBodyViewModel}"
     mc:Ignorable="d"
@@ -38,7 +39,6 @@
             <ComboBox
                 Text="{Binding ContentService.DestinationFolder, UpdateSourceTrigger=PropertyChanged}"
                 ItemsSource="{Binding SaveDstDirectories}"
-                TabIndex="1"
                 SelectedIndex="0"
                 AllowDrop="True"
                 IsEditable="True" />
@@ -47,7 +47,6 @@
             <ComboBox
                 Text="{Binding ContentService.SaveFileName, UpdateSourceTrigger=PropertyChanged}"
                 ItemsSource="{Binding SaveFileNames}"
-                TabIndex="2"
                 SelectedIndex="0"
                 AllowDrop="True"
                 IsEditable="True" />

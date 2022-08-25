@@ -51,17 +51,17 @@ public class ImageUtility
     /// 失敗したらnullを返します
     /// </summary>
     /// <param name="filePath">読み込むファイル</param>
-    public static CaptureImage? GetCaptureImageFromFile(string filePath)
-        => GetImageFromFile(filePath) switch
+    public static async Task<CaptureImage?> GetCaptureImageFromFileAsync(string filePath)
+        => await GetImageFromFileAsync(filePath).ConfigureAwait(false) switch
         {
             null => null,
             var bmp => new(bmp, filePath),
         };
 
-    static BitmapSource? GetImageFromFile(string filePath)
+    static async Task<BitmapSource?> GetImageFromFileAsync(string filePath)
     {
-        using FileStream stream = File.OpenRead(filePath);
-        return GetImageFromStream(stream);
+        var bytes = await File.ReadAllBytesAsync(filePath).ConfigureAwait(false);
+        return GetImageFromBinary(bytes);
     }
 
     /// <summary>
@@ -79,12 +79,14 @@ public class ImageUtility
     {
         try
         {
+            using var ws = new WrappingStream(stream);
             var image = new BitmapImage();
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
-            image.StreamSource = stream;
+            image.StreamSource = ws;
             image.EndInit();
-            image.Freeze();
+            if (image.CanFreeze)
+                image.Freeze();
             return image;
         }
         catch (NotSupportedException e) when (e.InnerException is COMException)

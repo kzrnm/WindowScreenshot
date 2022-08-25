@@ -25,6 +25,8 @@ public static class TestUtil
         new BitmapPalette(new[] { Colors.Transparent }),
         bytes, stride);
     }
+    public static CaptureImage DummyCaptureImage(int width, int height, int? seed = null)
+        => new(DummyBitmapSource(width, height, seed));
 
     public static byte[]? ImageToByteArray(BitmapSource? bmp)
     {

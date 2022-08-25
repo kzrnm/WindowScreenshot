@@ -1,5 +1,7 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -7,16 +9,18 @@ namespace Kzrnm.WindowScreenshot.Image.DragDrop;
 
 public class ImageDropTarget : IDropTarget
 {
-    public record Factory(ImageProvider ImageProvider)
+    public record Factory(ICaptureImageService CaptureImageService, ImageProvider ImageProvider)
     {
-        public ImageDropTarget Build(bool allowOtherDrop) => new(ImageProvider, allowOtherDrop);
+        public ImageDropTarget Build(bool allowOtherDrop) => new(ImageProvider, CaptureImageService, allowOtherDrop);
     }
 
+    private ICaptureImageService CaptureImageService { get; }
     private ImageProvider ImageProvider { get; }
     public bool AllowOtherDrop { get; }
-    public ImageDropTarget(ImageProvider imageProvider, bool allowOtherDrop)
+    public ImageDropTarget(ImageProvider imageProvider, ICaptureImageService captureImageService, bool allowOtherDrop)
     {
         ImageProvider = imageProvider;
+        CaptureImageService = captureImageService;
         AllowOtherDrop = allowOtherDrop;
     }
     public virtual void DragOver(IDropInfo dropInfo)
@@ -40,7 +44,9 @@ public class ImageDropTarget : IDropTarget
         }
     }
 
-    public virtual void Drop(IDropInfo dropInfo)
+    public virtual async void Drop(IDropInfo dropInfo)
+        => await DropImpl(dropInfo).ConfigureAwait(false);
+    internal async ValueTask DropImpl(IDropInfo dropInfo)
     {
         if (dropInfo.Data is not DataObject data)
         {
@@ -55,12 +61,7 @@ public class ImageDropTarget : IDropTarget
         else if (data.GetDataPresent(DataFormats.FileDrop) && data.GetData(DataFormats.FileDrop, true) is string[] files)
         {
             Array.Sort(files, NaturalComparer.Default);
-            if (dropInfo.InsertPosition == RelativeInsertPosition.None)
-                foreach (var file in files)
-                    ImageProvider.TryAddImageFromFile(file);
-            else
-                foreach (var file in files)
-                    ImageProvider.TryInsertImageFromFile(dropInfo.UnfilteredInsertIndex, file);
+            await AddImagesFromFiles(dropInfo, files).ConfigureAwait(false);
         }
         else if (data.ContainsImage() && data.GetImage() is { } bitmap)
         {
@@ -78,11 +79,15 @@ public class ImageDropTarget : IDropTarget
             ImageProvider.Images.Insert(dropInfo.UnfilteredInsertIndex, image);
     }
 
-    private void AddImage(IDropInfo dropInfo, BitmapSource image)
+    private void AddImage(IDropInfo dropInfo, BitmapSource bmp)
+        => AddImage(dropInfo, new CaptureImage(bmp));
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Code", "CAC002:ConfigureAwaitChecker", Justification = "UI thread")]
+    private async Task AddImagesFromFiles(IDropInfo dropInfo, string[] files)
     {
-        if (dropInfo.InsertPosition == RelativeInsertPosition.None)
-            ImageProvider.AddImage(image);
-        else
-            ImageProvider.InsertImage(dropInfo.UnfilteredInsertIndex, image);
+        var images = await Task.WhenAll(files.Select(f => CaptureImageService.GetImageFromFileAsync(f))).ConfigureAwait(true);
+        foreach (var image in images)
+            if (image is not null)
+                AddImage(dropInfo, image);
     }
 }

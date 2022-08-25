@@ -23,7 +23,7 @@ public partial class DebugAreaViewModel : ObservableObject
         var bytes = new byte[stride * height];
         Random.Shared.NextBytes(bytes);
         var img = System.Windows.Media.Imaging.BitmapSource.Create(width, height, 96, 96, pf, null, bytes, stride);
-        GlobalService.ImageProvider.AddImage(img);
+        GlobalService.ImageProvider.AddImage(new(img));
     }
 
     [RelayCommand]

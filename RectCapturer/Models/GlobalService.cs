@@ -1,9 +1,7 @@
 ﻿using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Image.Capture;
 using Kzrnm.WindowScreenshot.Windows;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace Kzrnm.RectCapturer.Models;
@@ -24,7 +22,7 @@ public class GlobalService
     public void PasteImageFromClipboard()
     {
         if (ClipboardManager.GetImage() is { } image)
-            ImageProvider.AddImage(image);
+            ImageProvider.AddImage(new(image));
     }
     public void CaptureScreenshot()
     {
@@ -35,7 +33,7 @@ public class GlobalService
 
         if (image is not null)
         {
-            ImageProvider.AddImage(image);
+            ImageProvider.AddImage(new(image));
         }
     }
 }

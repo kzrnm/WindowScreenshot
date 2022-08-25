@@ -16,21 +16,21 @@ public class WindowCapturerViewModelTest
     public WindowCapturerViewModelTest()
     {
         Messenger = new();
-        ImageProvider = new ImageProvider(Messenger, new CaptureImageService());
+        ImageProvider = new ImageProvider(Messenger);
     }
 
     [Fact]
     public void ImageVisibility()
     {
         var clipboardMock = new Mock<IClipboardManager>();
-        var viewModel = new WindowCapturerViewModel(Messenger, new ImageDropTarget.Factory(ImageProvider), ImageProvider, clipboardMock.Object);
+        var viewModel = new WindowCapturerViewModel(Messenger, new ImageDropTarget.Factory(new CaptureImageService(), ImageProvider), ImageProvider, clipboardMock.Object);
         using (var ph = new PropertyChangedHistory(viewModel))
         {
             ph.Should().Equal(new Dictionary<string, int> { });
             viewModel.ImageVisibility.Should().Be(Visibility.Collapsed);
-            ImageProvider.AddImage(TestUtil.DummyBitmapSource(2, 2));
+            ImageProvider.AddImage(TestUtil.DummyCaptureImage(2, 2));
             viewModel.ImageVisibility.Should().Be(Visibility.Visible);
-            ImageProvider.AddImage(TestUtil.DummyBitmapSource(2, 2));
+            ImageProvider.AddImage(TestUtil.DummyCaptureImage(2, 2));
             viewModel.ImageVisibility.Should().Be(Visibility.Visible);
             ph.Should().Equal(new Dictionary<string, int>
             {
@@ -53,7 +53,7 @@ public class WindowCapturerViewModelTest
                 { "AlwaysImageArea", 1 },
                 { "ImageVisibility", 1 }
             });
-            ImageProvider.AddImage(TestUtil.DummyBitmapSource(2, 2));
+            ImageProvider.AddImage(TestUtil.DummyCaptureImage(2, 2));
             viewModel.ImageVisibility.Should().Be(Visibility.Visible);
             ph.Should().Equal(new Dictionary<string, int>
             {
