@@ -10,7 +10,7 @@
         xmlns:local="clr-namespace:Kzrnm.WindowScreenshot.Views"
         xmlns:viewmodels="clr-namespace:Kzrnm.WindowScreenshot.ViewModels"
         xmlns:wc="urn:kzrnm-wpf-window-screenshot/core"
-        xmlns:kw="urn:kzrnm-wpf/controls"
+        xmlns:kz="urn:kzrnm-wpf/controls"
         mc:Ignorable="d"
         Background="WhiteSmoke"
         Title="{x:Static properties:Resources.SelectCaptureProcess}"
@@ -118,7 +118,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid.Resources>
                         <Style TargetType="TextBox">
-                            <Setter Property="kw:TextBoxBehavior.SelectAllOnFocus" Value="True" />
+                            <Setter Property="kz:TextBoxBehavior.SelectAllOnFocus" Value="True" />
                         </Style>
                         <wc:InverseBooleanConverter x:Key="InverseBooleanConverter" />
                     </Grid.Resources>

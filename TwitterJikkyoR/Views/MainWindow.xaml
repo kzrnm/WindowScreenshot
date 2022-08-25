@@ -1,0 +1,62 @@
+﻿<Window x:Class="Kzrnm.TwitterJikkyo.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:Kzrnm.TwitterJikkyo.Properties"
+    xmlns:wsproperties="urn:kzrnm-wpf-window-screenshot/properties"
+    xmlns:localbehavior="clr-namespace:Kzrnm.TwitterJikkyo.Behaviors"
+    xmlns:local="clr-namespace:Kzrnm.TwitterJikkyo.Views"
+    xmlns:vm="clr-namespace:Kzrnm.TwitterJikkyo.ViewModels"
+    xmlns:dd="urn:gong-wpf-dragdrop"
+    xmlns:ktk="urn:kzrnm-wpf/toolkit"
+    xmlns:ws="urn:kzrnm-wpf-window-screenshot"
+    FocusManager.FocusedElement="{Binding ElementName=MainBody}"
+    d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}"
+    ktk:IocBehavior.AutoViewModel="{x:Type vm:MainWindowViewModel}"
+    Title="{Binding Title, Mode=OneWay}"
+    Width="600"
+    Height="200"
+    MinHeight="120"
+    dd:DragDrop.DropEventType="Bubbled"
+    dd:DragDrop.DropHandler="{Binding DropHandler}"
+    dd:DragDrop.IsDropTarget="True"
+    d:DesignHeight="250"
+    d:DesignWidth="600"
+    Background="AliceBlue"
+    mc:Ignorable="d">
+    <b:Interaction.Behaviors>
+        <localbehavior:ConfigDialogBehavior />
+        <ws:CaptureTargetSelectionDialogBehavior />
+        <ws:DialogBehavior />
+    </b:Interaction.Behaviors>
+    <b:Interaction.Triggers>
+        <b:KeyTrigger Key="Esc">
+            <b:InvokeCommandAction Command="{Binding ClearImageCommand, Mode=OneTime}" />
+        </b:KeyTrigger>
+        <b:EventTrigger EventName="PreviewKeyDown">
+            <b:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding PreviewKeyDownCommand, Mode=OneTime}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <Window.ContextMenu>
+        <ContextMenu>
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="Opened">
+                    <b:CallMethodAction MethodName="UpdateMenuCommandState" TargetObject="{Binding}" />
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
+            <MenuItem Click="MovePreviewWindowHereClick" IsEnabled="{Binding PreviewWindowShown}" Header="{x:Static properties:Resources.MovePreviewWindowHere}" />
+            <Separator />
+            <MenuItem Command="{Binding PasteImageFromClipboardCommand, Mode=OneTime}" Header="{x:Static wsproperties:Resources.Paste}" />
+        </ContextMenu>
+    </Window.ContextMenu>
+    <ws:WindowCapturer
+        Name="WindowCapturer"
+        AlwaysImageArea="False"
+        HorizontalScrollBarVisibility="Disabled"
+        ImageWidth="65"
+        ListHeight="65">
+        <local:MainBody x:Name="MainBody" Background="WhiteSmoke" />
+    </ws:WindowCapturer>
+</Window>

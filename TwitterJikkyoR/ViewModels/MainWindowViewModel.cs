@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Kzrnm.RectCapturer.Models;
-using Kzrnm.RectCapturer.Properties;
+using Kzrnm.TwitterJikkyo.Models;
+using Kzrnm.TwitterJikkyo.Properties;
 using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Image.DragDrop;
 using Kzrnm.WindowScreenshot.Models;
@@ -10,7 +10,7 @@ using Kzrnm.Wpf.Input;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Kzrnm.RectCapturer.ViewModels;
+namespace Kzrnm.TwitterJikkyo.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
@@ -18,7 +18,7 @@ public partial class MainWindowViewModel : ObservableObject
     {
         GlobalService = globalService;
         ContentService = contentService;
-        ConfigMaster = globalService.ConfigMaster;
+        ConfigMaster = (ConfigMaster)globalService.ConfigMaster;
         ImageProvider = globalService.ImageProvider;
         DropHandler = imageDropTargetFactory.Build(true);
         ClipboardManager = globalService.ClipboardManager;
@@ -77,6 +77,11 @@ public partial class MainWindowViewModel : ObservableObject
         if (shortcuts.Post == input && ContentService.CanPost)
         {
             await ContentService.PostContentAsync().ConfigureAwait(false);
+            e.Handled = true;
+        }
+        if (shortcuts.ToggleHashtag == input && GlobalService.Hashtags.Count > 0)
+        {
+            GlobalService.Hashtags.SelectedIndex = GlobalService.Hashtags.SelectedIndex < 0 ? 0 : -1;
             e.Handled = true;
         }
     }
