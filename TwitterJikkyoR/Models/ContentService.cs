@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using Kzrnm.WindowScreenshot.Image;
+using Kzrnm.WindowScreenshot.Models;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -49,6 +51,7 @@ public partial class ContentService : ObservableObject
     {
         UpdateCanPost();
     }
+    
     [ObservableProperty]
     private string _Text = "";
     [SuppressMessage("Style", "IDE0060: Remove unused parameter")]
@@ -56,6 +59,9 @@ public partial class ContentService : ObservableObject
     {
         UpdateCanPost();
     }
+    
+    [ObservableProperty]
+    private string _InReplyToText = "";
 
     private void UpdateCanPost()
     {
@@ -68,5 +74,13 @@ public partial class ContentService : ObservableObject
     {
         await Task.Yield();
         System.Diagnostics.Debug.WriteLine("ツイートする Text:{0} Hashtag:{1}", Text, Hashtag);
+    }
+
+
+
+    public void TryInputInReplyTo()
+    {
+        if (WeakReferenceMessenger.Default.Send(new InReplyToDialogMessage(InReplyToText)).Response is { } res)
+            InReplyToText = res;
     }
 }

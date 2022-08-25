@@ -11,10 +11,12 @@ namespace Kzrnm.TwitterJikkyo.Configs;
 /// <param name="Post">投稿ボタン</param>
 /// <param name="CaptureScreenshot">スクリーンショットを撮る</param>
 /// <param name="ToggleHashtag">ハッシュタグ ON/OFF</param>
+/// <param name="InputInReplyTo">リプライ先を入力</param>
 public record Shortcuts(
     ShortcutKey? Post = null,
     ShortcutKey? CaptureScreenshot = null,
     ShortcutKey? ToggleHashtag = null,
+    ShortcutKey? InputInReplyTo = null,
     ShortcutKey? ActivatePreviousUser = null,
     ShortcutKey? ActivateNextUser = null,
     ShortcutKey? ActivatePreviousImageUser = null,
@@ -33,6 +35,10 @@ public record Shortcuts(
     /// <inheritdoc cref="Shortcuts" path="/param[@name='ToggleHashtag']"/>
     /// </summary>
     public ShortcutKey? ToggleHashtag { get; init; } = ToggleHashtag ?? new(Control, T);
+    /// <summary>
+    /// <inheritdoc cref="Shortcuts" path="/param[@name='InputInReplyTo']"/>
+    /// </summary>
+    public ShortcutKey? InputInReplyTo { get; init; } = InputInReplyTo ?? new(Control, R);    
 
     /// <summary>
     /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivatePreviousUser']"/>

@@ -122,9 +122,9 @@ public class ConfigWindowViewModelTest
 
         viewModel.Font = new("Yu Gothic", 12);
         viewModel.IsUpdated.Should().BeTrue();
-        viewModel.Font.Should().Be(new Font("Meiryo", 16));
+        viewModel.Font.Should().Be(new Font("Yu Gothic", 12));
         viewModel.ToResult().Should().Be((
-            new(Font: new Font("Meiryo", 16)),
+            new(Font: new Font("Yu Gothic", 12)),
             new()
         ));
     }

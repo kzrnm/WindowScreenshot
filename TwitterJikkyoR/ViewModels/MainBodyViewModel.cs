@@ -75,8 +75,8 @@ public partial class MainBodyViewModel : ObservableObject
         => await ContentService.PostContentAsync().ConfigureAwait(false);
 
     [RelayCommand]
-    private void SetInReplyTo()
+    private void InputInReplyTo()
     {
-
+        ContentService.TryInputInReplyTo();
     }
 }

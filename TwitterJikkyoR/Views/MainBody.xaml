@@ -22,7 +22,7 @@
     dd:DragDrop.DropHandler="{Binding DropHandler}"
     dd:DragDrop.IsDropTarget="True"
     d:Background="LightSalmon"
-    d:DesignHeight="200"
+    d:DesignHeight="100"
     d:DesignWidth="400">
     <Grid FocusManager.FocusedElement="{Binding ElementName=TweetTextBox}">
         <Grid.RowDefinitions>
@@ -90,9 +90,20 @@
                     Background="Transparent"
                     BorderBrush="Transparent"
                     Focusable="False"
-                    Command="{Binding SetInReplyToCommand, Mode=OneTime}"
-                    ToolTip="{x:Static properties:Resources.SetInReplyTo}"
-                    Content="@" />
+                    Command="{Binding InputInReplyToCommand, Mode=OneTime}"
+                    ToolTip="{x:Static properties:Resources.InputInReplyTo}"
+                    Content="@">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Foreground" Value="Crimson" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ContentService.InReplyToText, TargetNullValue=''}" Value="" >
+                                    <Setter Property="Foreground" Value="Black" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button
                     MinWidth="40"
                     Background="Transparent"

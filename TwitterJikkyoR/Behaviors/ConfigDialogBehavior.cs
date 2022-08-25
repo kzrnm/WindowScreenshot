@@ -1,6 +1,7 @@
 ﻿using Kzrnm.TwitterJikkyo.Views;
 using Kzrnm.WindowScreenshot.Models;
 using Kzrnm.Wpf.Behaviors;
+using System.Windows;
 
 namespace Kzrnm.TwitterJikkyo.Behaviors;
 public class ConfigDialogBehavior : DialogBehaviorBase<ConfigDialogBehavior, ConfigDialogMessage>
@@ -16,6 +17,7 @@ public class ConfigDialogBehavior : DialogBehaviorBase<ConfigDialogBehavior, Con
         var dialog = new ConfigWindow(config, shortcuts)
         {
             Owner = GetWindow(),
+            WindowStartupLocation = WindowStartupLocation.CenterOwner,
         };
 
         message.Reply(dialog.ShowDialogWithResponse());

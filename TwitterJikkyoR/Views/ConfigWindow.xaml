@@ -20,7 +20,7 @@
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
         MinWidth="300" MinHeight="200"
-        d:DesignHeight="400" d:DesignWidth="400">
+        d:DesignHeight="600" d:DesignWidth="400">
     <b:Interaction.Triggers>
         <b:KeyTrigger Key="Esc">
             <b:CallMethodAction MethodName="Close" />
@@ -62,6 +62,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <CheckBox Grid.ColumnSpan="11111" Margin="5 0"
                       IsChecked="{Binding Topmost, Mode=TwoWay}"
@@ -76,17 +77,20 @@
                     <TextBlock Grid.Row="3" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ToggleHashtag}" />
                     <wc:KeySelector Grid.Row="3" Grid.Column="2" ShortcutKey="{Binding ToggleHashtag, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="4" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivatePreviousUser}" />
-                    <wc:KeySelector Grid.Row="4" Grid.Column="2" ShortcutKey="{Binding ActivatePreviousUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="4" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.InputInReplyTo}" />
+                    <wc:KeySelector Grid.Row="4" Grid.Column="2" ShortcutKey="{Binding InputInReplyTo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="5" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivateNextUser}" />
-                    <wc:KeySelector Grid.Row="5" Grid.Column="2" ShortcutKey="{Binding ActivateNextUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="5" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivatePreviousUser}" />
+                    <wc:KeySelector Grid.Row="5" Grid.Column="2" ShortcutKey="{Binding ActivatePreviousUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="6" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivatePreviousImageUser}" />
-                    <wc:KeySelector Grid.Row="6" Grid.Column="2" ShortcutKey="{Binding ActivatePreviousImageUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="6" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivateNextUser}" />
+                    <wc:KeySelector Grid.Row="6" Grid.Column="2" ShortcutKey="{Binding ActivateNextUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="7" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivateNextImageUser}" />
-                    <wc:KeySelector Grid.Row="7" Grid.Column="2" ShortcutKey="{Binding ActivateNextImageUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="7" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivatePreviousImageUser}" />
+                    <wc:KeySelector Grid.Row="7" Grid.Column="2" ShortcutKey="{Binding ActivatePreviousImageUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                    <TextBlock Grid.Row="8" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivateNextImageUser}" />
+                    <wc:KeySelector Grid.Row="8" Grid.Column="2" ShortcutKey="{Binding ActivateNextImageUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
                 <StackPanel
                     Grid.Row="1"

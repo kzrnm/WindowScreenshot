@@ -156,10 +156,13 @@
   <data name="Screenshot" xml:space="preserve">
     <value>スクリーンショット</value>
   </data>
-  <data name="SetInReplyTo" xml:space="preserve">
-    <value>リプライ先を選択</value>
-  </data>
   <data name="ToggleHashtag" xml:space="preserve">
     <value>ハッシュタグ ON/OFF</value>
+  </data>
+  <data name="InputInReplyTo" xml:space="preserve">
+    <value>リプライ先を指定</value>
+  </data>
+  <data name="InputInReplyToMessage" xml:space="preserve">
+    <value>リプライ先のURLまたはIDを入力してください</value>
   </data>
 </root>

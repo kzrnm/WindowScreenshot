@@ -86,6 +86,11 @@ public partial class MainWindowViewModel : ObservableObject
             GlobalService.Hashtags.SelectedIndex = GlobalService.Hashtags.SelectedIndex < 0 ? 0 : -1;
             e.Handled = true;
         }
+        if (shortcuts.InputInReplyTo == input)
+        {
+            ContentService.TryInputInReplyTo();
+            e.Handled = true;
+        }
         if (shortcuts.ActivatePreviousUser == input)
         {
             await AccountService.ActivatePreviousUserAsync().ConfigureAwait(false);

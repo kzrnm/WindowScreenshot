@@ -25,6 +25,7 @@ public partial class ConfigWindowViewModel : ObservableObject
         ShortcutPost = shortcuts.Post ?? default;
         ShortcutCaptureScreenshot = shortcuts.CaptureScreenshot ?? default;
         ToggleHashtag = shortcuts.ToggleHashtag ?? default;
+        InputInReplyTo = shortcuts.InputInReplyTo ?? default;
         ActivatePreviousUser = shortcuts.ActivatePreviousUser ?? default;
         ActivateNextUser = shortcuts.ActivateNextUser ?? default;
         ActivatePreviousImageUser = shortcuts.ActivatePreviousImageUser ?? default;
@@ -50,6 +51,11 @@ public partial class ConfigWindowViewModel : ObservableObject
     [ObservableProperty]
     private ShortcutKey _ToggleHashtag;
     [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnToggleHashtagChanged(ShortcutKey value) => IsUpdated = true;
+
+    [ObservableProperty]
+    private ShortcutKey _InputInReplyTo;
+    [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnInputInReplyToChanged(ShortcutKey value) => IsUpdated = true;
+
     [ObservableProperty]
     private ShortcutKey _ActivatePreviousUser;
     [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnActivatePreviousUserChanged(ShortcutKey value) => IsUpdated = true;
@@ -81,6 +87,7 @@ public partial class ConfigWindowViewModel : ObservableObject
             CaptureScreenshot = ShortcutCaptureScreenshot,
             Post = ShortcutPost,
             ToggleHashtag = ToggleHashtag,
+            InputInReplyTo = InputInReplyTo,
 
             ActivatePreviousUser = ActivatePreviousUser,
             ActivateNextUser = ActivateNextUser,

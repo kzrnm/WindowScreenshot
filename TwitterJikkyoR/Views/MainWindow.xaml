@@ -27,6 +27,7 @@
     Background="AliceBlue"
     mc:Ignorable="d">
     <b:Interaction.Behaviors>
+        <localbehavior:InputInReplyToBehavior />
         <localbehavior:ConfigDialogBehavior />
         <ws:CaptureTargetSelectionDialogBehavior />
         <ws:DialogBehavior />

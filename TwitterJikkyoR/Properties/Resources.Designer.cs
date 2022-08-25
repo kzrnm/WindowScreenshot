@@ -115,6 +115,24 @@ namespace Kzrnm.TwitterJikkyo.Properties {
         }
         
         /// <summary>
+        ///   リプライ先を指定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InputInReplyTo {
+            get {
+                return ResourceManager.GetString("InputInReplyTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   リプライ先のURLまたはIDを入力してください に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InputInReplyToMessage {
+            get {
+                return ResourceManager.GetString("InputInReplyToMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   常に最前面に表示する に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string IsTopmostSetting {
@@ -174,15 +192,6 @@ namespace Kzrnm.TwitterJikkyo.Properties {
         public static string Screenshot {
             get {
                 return ResourceManager.GetString("Screenshot", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   リプライ先を選択 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string SetInReplyTo {
-            get {
-                return ResourceManager.GetString("SetInReplyTo", resourceCulture);
             }
         }
         
