@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Kzrnm.RectCapturer.Models;
+using Kzrnm.WindowScreenshot.Models;
 using System;
 
 namespace Kzrnm.RectCapturer.ViewModels;

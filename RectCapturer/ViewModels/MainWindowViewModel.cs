@@ -4,6 +4,7 @@ using Kzrnm.RectCapturer.Models;
 using Kzrnm.RectCapturer.Properties;
 using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Image.DragDrop;
+using Kzrnm.WindowScreenshot.Models;
 using Kzrnm.WindowScreenshot.Windows;
 using Kzrnm.Wpf.Input;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ public partial class MainWindowViewModel : ObservableObject
     }
 
     public bool PreviewWindowShown => HasPreviewWindow && ImageProvider.Images.SelectedItem != null;
-    private bool CanAddImmageFromClipboard() => GlobalService.CanPasteImageFromClipboard;
+    private bool CanAddImmageFromClipboard() => GlobalService.CanPasteImageFromClipboard();
     [RelayCommand(CanExecute = nameof(CanAddImmageFromClipboard))]
     private void PasteImageFromClipboard()
         => GlobalService.PasteImageFromClipboard();
@@ -63,7 +64,7 @@ public partial class MainWindowViewModel : ObservableObject
     {
         var shortcuts = ConfigMaster.Shortcuts.Value;
         var input = new ShortcutKey(Keyboard.Modifiers, e.Key);
-        if (GlobalService.CanPasteImageFromClipboard && new ShortcutKey(ModifierKeys.Control, Key.V) == input)
+        if (GlobalService.CanPasteImageFromClipboard() && new ShortcutKey(ModifierKeys.Control, Key.V) == input)
         {
             PasteImageFromClipboard();
             e.Handled = true;
