@@ -198,7 +198,7 @@ public class KeySelector : Control
     {
         base.OnApplyTemplate();
 
-        if(keyComboBox != null)
+        if (keyComboBox != null)
         {
             keyComboBox.KeyDown -= OnKeyComboBoxKeyDown;
         }

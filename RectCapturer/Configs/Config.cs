@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Text.Json.Serialization;
 using System.Windows;
+using Kzrnm.Wpf;
 
 namespace Kzrnm.RectCapturer.Configs;
 

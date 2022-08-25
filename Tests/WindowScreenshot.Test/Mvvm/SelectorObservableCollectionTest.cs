@@ -88,7 +88,7 @@ public class SelectorObservableCollectionTests
         collection.SelectedIndex.Should().Be(2);
         collection.SelectedItem.Should().Be("baz");
         collection.Should().Equal("foo", "bar", "baz");
-        
+
         selectedChangedHistory.Should().ContainSingle().Which.Should().BeEquivalentTo(new SelectedItemChangedEventArgs(3, 2, "buzz", "baz"));
 
         collection.SelectedIndex = 1;
@@ -98,7 +98,7 @@ public class SelectorObservableCollectionTests
         collection.SelectedIndex.Should().Be(0);
         collection.SelectedItem.Should().Be("bar");
         collection.Should().Equal("bar", "baz");
-        
+
         selectedChangedHistory.Should().ContainSingle().Which.Should().BeEquivalentTo(new SelectedItemChangedEventArgs(1, 0, "bar", "bar"));
 
         selectedChangedHistory.Clear();
@@ -107,7 +107,7 @@ public class SelectorObservableCollectionTests
         collection.SelectedIndex.Should().Be(0);
         collection.SelectedItem.Should().Be("baz");
         collection.Should().Equal("baz");
-        
+
         selectedChangedHistory.Should().ContainSingle().Which.Should().BeEquivalentTo(new SelectedItemChangedEventArgs(0, 0, "bar", "baz"));
 
         selectedChangedHistory.Clear();
@@ -116,7 +116,7 @@ public class SelectorObservableCollectionTests
         collection.SelectedIndex.Should().Be(-1);
         collection.SelectedItem.Should().Be(null);
         collection.Should().BeEmpty();
-        
+
         selectedChangedHistory.Should().ContainSingle().Which.Should().BeEquivalentTo(new SelectedItemChangedEventArgs(0, -1, "baz", null));
     }
 
@@ -154,7 +154,7 @@ public class SelectorObservableCollectionTests
         collection.SelectedIndex.Should().Be(-1);
         collection.SelectedItem.Should().Be(null);
         collection.Should().BeEmpty();
-        
+
         selectedChangedHistory.Should().ContainSingle().Which.Should().BeEquivalentTo(new SelectedItemChangedEventArgs(0, -1, "foo", null));
     }
 
@@ -186,7 +186,7 @@ public class SelectorObservableCollectionTests
         collection.SelectedIndex.Should().Be(3);
         collection.SelectedItem.Should().Be("fizz");
         collection.Should().Equal("foo", "baz", "bar", "fizz", "buzz");
-        
+
         selectedChangedHistory.Should().ContainSingle().Which.Should().BeEquivalentTo(new SelectedItemChangedEventArgs(2, 3, "fizz", "fizz"));
     }
 
