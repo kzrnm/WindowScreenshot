@@ -47,6 +47,11 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
+        <TextBlock Grid.Row="1"
+                   Text="{Binding ContentService.RemainingTextLength}"
+                   Foreground="SlateGray"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Right" />
         <Grid Grid.Row="2" MinHeight="26">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

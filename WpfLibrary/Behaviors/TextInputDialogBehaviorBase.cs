@@ -13,6 +13,7 @@ public abstract class TextInputDialogBehaviorBase<TSelf, TMessage> : DialogBehav
         var dialog = new TextInputDialogWindow()
         {
             Owner = GetWindow(),
+            ShowInTaskbar = false,
             WindowStartupLocation = WindowStartupLocation.CenterOwner,
         };
 

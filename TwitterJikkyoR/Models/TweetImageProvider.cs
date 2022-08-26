@@ -4,5 +4,5 @@ namespace Kzrnm.TwitterJikkyo.Models;
 
 public class TweetImageProvider : ImageProvider
 {
-    public override bool CanAddImage => Images.Count <= 4;
+    public override bool CanAddImage => Images.Count < 4;
 }

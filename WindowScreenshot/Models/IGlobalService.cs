@@ -19,11 +19,15 @@ public static class GlobalServiceExtension
     public static bool CanPasteImageFromClipboard(this IGlobalService service) => service.ImageProvider.CanAddImage && service.ClipboardManager.ContainsImage();
     public static void PasteImageFromClipboard(this IGlobalService service)
     {
+        if (!service.ImageProvider.CanAddImage)
+            return;
         if (service.ClipboardManager.GetImage() is { } image)
             service.ImageProvider.AddImage(new(image));
     }
     public static void CaptureScreenshot(this IGlobalService service)
     {
+        if (!service.ImageProvider.CanAddImage)
+            return;
         var image = service.GetCaptureTargetWindows()
             .Select(service.CaptureBy)
             .OfType<BitmapSource>()

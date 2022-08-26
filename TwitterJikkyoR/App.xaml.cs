@@ -29,7 +29,7 @@ public partial class App : Application
 
         Ioc.Default.ConfigureServices(
             new ServiceCollection()
-            .InitializeWindowScreenshot()
+            .InitializeWindowScreenshot(imageProvider: new TweetImageProvider())
             .AddSingleton(secrets)
             .AddSingleton(new AesCrypt(secrets.AesKey, secrets.AesIv))
             .AddSingleton(ConfigMaster.LoadConfigsAsync(ConfigurationManager.AppSettings).Result)

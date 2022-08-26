@@ -124,6 +124,25 @@ namespace Kzrnm.TwitterJikkyo.Properties {
         }
         
         /// <summary>
+        ///   送信失敗 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FailedToPost {
+            get {
+                return ResourceManager.GetString("FailedToPost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   投稿に失敗しました
+        ///再試行しますか？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FailedToPostMessage {
+            get {
+                return ResourceManager.GetString("FailedToPostMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   画像投稿アカウント に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ImagePostingAccount {
@@ -174,6 +193,15 @@ namespace Kzrnm.TwitterJikkyo.Properties {
         public static string MovePreviewWindowHere {
             get {
                 return ResourceManager.GetString("MovePreviewWindowHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ログインしていません に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NotLoggedIn {
+            get {
+                return ResourceManager.GetString("NotLoggedIn", resourceCulture);
             }
         }
         

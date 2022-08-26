@@ -177,4 +177,14 @@
   <data name="PinCode" xml:space="preserve">
     <value>PIN コード</value>
   </data>
+  <data name="FailedToPost" xml:space="preserve">
+    <value>送信失敗</value>
+  </data>
+  <data name="FailedToPostMessage" xml:space="preserve">
+    <value>投稿に失敗しました
+再試行しますか？</value>
+  </data>
+  <data name="NotLoggedIn" xml:space="preserve">
+    <value>ログインしていません</value>
+  </data>
 </root>

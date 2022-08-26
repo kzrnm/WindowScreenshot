@@ -33,6 +33,17 @@ public partial class MainWindowViewModel : ObservableObject
                     break;
             }
         };
+
+        AccountService.PropertyChanged += (sender, e) =>
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(AccountService.PostingAccount):
+                case nameof(AccountService.ImagePostingAccount):
+                    OnPropertyChanged(nameof(Title));
+                    break;
+            }
+        };
     }
     public GlobalService GlobalService { get; }
     public ContentService ContentService { get; }
@@ -41,7 +52,15 @@ public partial class MainWindowViewModel : ObservableObject
     public ImageDropTarget DropHandler { get; }
     public IClipboardManager ClipboardManager { get; }
     public AccountService AccountService { get; }
-    public string Title { get; } = Resources.MainWindowTitle;
+    public string Title => (AccountService.PostingAccount, AccountService.ImagePostingAccount) switch
+    {
+        ({ } p, { } ip)
+        => p.UserId == ip.UserId
+            ? $"{Resources.MainWindowTitle} @{p.ScreenName}"
+            : $"{Resources.MainWindowTitle} @{p.ScreenName} 🖼{ip.ScreenName}",
+        ({ } p, _) => $"{Resources.MainWindowTitle} @{p.ScreenName} 🖼null",
+        _ => Resources.MainWindowTitle,
+    };
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(PreviewWindowShown))]
