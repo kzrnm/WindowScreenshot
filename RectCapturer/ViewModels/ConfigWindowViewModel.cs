@@ -18,14 +18,6 @@ public partial class ConfigWindowViewModel : ObservableObject
     }
     public Config Config { get; }
     public Shortcuts Shortcuts { get; }
-    [MemberNotNull(nameof(_Font))]
-    private void Load(Config config, Shortcuts shortcuts)
-    {
-        Topmost = config.Topmost;
-        ShortcutPost = shortcuts.Post ?? default;
-        ShortcutCaptureScreenshot = shortcuts.CaptureScreenshot ?? default;
-        _Font = config.Font;
-    }
 
     [ObservableProperty]
     private bool _IsUpdated;
@@ -46,6 +38,15 @@ public partial class ConfigWindowViewModel : ObservableObject
     private Font _Font;
     [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnFontChanged(Font value) => IsUpdated = true;
 
+
+    [MemberNotNull(nameof(_Font))]
+    private void Load(Config config, Shortcuts shortcuts)
+    {
+        Topmost = config.Topmost;
+        ShortcutPost = shortcuts.Post ?? default;
+        ShortcutCaptureScreenshot = shortcuts.CaptureScreenshot ?? default;
+        _Font = config.Font;
+    }
 
     public (Config Config, Shortcuts Shortcuts) ToResult()
     {

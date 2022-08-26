@@ -4,6 +4,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using Kzrnm.TwitterJikkyo.Configs;
 using Kzrnm.Wpf.Font;
 using Kzrnm.Wpf.Input;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Kzrnm.TwitterJikkyo.ViewModels;
@@ -18,20 +20,6 @@ public partial class ConfigWindowViewModel : ObservableObject
     }
     public Config Config { get; }
     public Shortcuts Shortcuts { get; }
-    [MemberNotNull(nameof(_Font))]
-    private void Load(Config config, Shortcuts shortcuts)
-    {
-        Topmost = config.Topmost;
-        ShortcutPost = shortcuts.Post ?? default;
-        ShortcutCaptureScreenshot = shortcuts.CaptureScreenshot ?? default;
-        ToggleHashtag = shortcuts.ToggleHashtag ?? default;
-        InputInReplyTo = shortcuts.InputInReplyTo ?? default;
-        ActivatePreviousUser = shortcuts.ActivatePreviousUser ?? default;
-        ActivateNextUser = shortcuts.ActivateNextUser ?? default;
-        ActivatePreviousImageUser = shortcuts.ActivatePreviousImageUser ?? default;
-        ActivateNextImageUser = shortcuts.ActivateNextImageUser ?? default;
-        _Font = config.Font;
-    }
 
     [ObservableProperty]
     private bool _IsUpdated;
@@ -69,18 +57,44 @@ public partial class ConfigWindowViewModel : ObservableObject
     private ShortcutKey _ActivateNextImageUser;
     [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnActivateNextImageUserChanged(ShortcutKey value) => IsUpdated = true;
 
-
     [ObservableProperty]
     private Font _Font;
     [SuppressMessage("Style", "IDE0060: Remove unused parameter")] partial void OnFontChanged(Font value) => IsUpdated = true;
 
 
+    public ObservableCollection<Account> Accounts { get; } = new();
+
+    [ObservableProperty]
+    private int _AccountForPostIndex;
+    [ObservableProperty]
+    private int _AccountForPostImageIndex;
+
+
+    [MemberNotNull(nameof(_Font))]
+    private void Load(Config config, Shortcuts shortcuts)
+    {
+        Topmost = config.Topmost;
+        ShortcutPost = shortcuts.Post ?? default;
+        ShortcutCaptureScreenshot = shortcuts.CaptureScreenshot ?? default;
+        ToggleHashtag = shortcuts.ToggleHashtag ?? default;
+        InputInReplyTo = shortcuts.InputInReplyTo ?? default;
+        ActivatePreviousUser = shortcuts.ActivatePreviousUser ?? default;
+        ActivateNextUser = shortcuts.ActivateNextUser ?? default;
+        ActivatePreviousImageUser = shortcuts.ActivatePreviousImageUser ?? default;
+        ActivateNextImageUser = shortcuts.ActivateNextImageUser ?? default;
+
+        Accounts.Clear();
+        foreach (var a in config.Accounts.AsSpan())
+            Accounts.Add(a);
+        _Font = config.Font;
+    }
     public (Config Config, Shortcuts Shortcuts) ToResult()
     {
         var config = Config with
         {
             Topmost = Topmost,
             Font = Font,
+            Accounts = Accounts.ToImmutableArray(),
         };
         var shortcuts = Shortcuts with
         {
@@ -111,5 +125,30 @@ public partial class ConfigWindowViewModel : ObservableObject
     public void RestoreDefaultConfig()
     {
         Load(new(), new());
+    }
+
+
+    [RelayCommand]
+    private void AddAccount()
+    {
+    }
+    [RelayCommand]
+    private void RemoveAccount()
+    {
+        var index = AccountForPostIndex;
+        var imageAccountIndex = AccountForPostImageIndex;
+        var imageAccountIndexDiff = imageAccountIndex - index;
+        if ((uint)index < (uint)Accounts.Count)
+        {
+            Accounts.RemoveAt(index);
+            if ((uint)index >= (uint)Accounts.Count)
+                index = Accounts.Count - 1;
+            AccountForPostIndex = index;
+
+            if (imageAccountIndexDiff > 0)
+                AccountForPostImageIndex = imageAccountIndex;
+            else if (imageAccountIndexDiff == 0)
+                AccountForPostImageIndex = index;
+        }
     }
 }

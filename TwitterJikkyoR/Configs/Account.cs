@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Kzrnm.TwitterJikkyo.Configs;
 
-namespace Kzrnm.TwitterJikkyo.Configs;
-
-public record Account;
+public record Account(long Id = 0, string ScreenName = "", string TokenCrypt = "", string TokenSecretCrypt = "")
+{
+    public Account() : this(ScreenName: "") { }
+}

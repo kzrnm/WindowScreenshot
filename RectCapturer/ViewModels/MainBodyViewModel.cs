@@ -46,13 +46,14 @@ public partial class MainBodyViewModel : ObservableObject
         }
     }
     [RelayCommand]
-    private void OpenConfigDialog()
+    private async Task OpenConfigDialog()
     {
         var result = WeakReferenceMessenger.Default.Send(new ConfigDialogMessage(ConfigMaster.Config.Value, ConfigMaster.Shortcuts.Value));
         if (result.Response is var (config, shortcuts) && config is not null && shortcuts is not null)
         {
             ConfigMaster.Config.Value = config;
             ConfigMaster.Shortcuts.Value = shortcuts;
+            await ConfigMaster.SaveAsync().ConfigureAwait(false);
         }
     }
     [RelayCommand]

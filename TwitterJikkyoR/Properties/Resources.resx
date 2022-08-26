@@ -165,4 +165,10 @@
   <data name="InputInReplyToMessage" xml:space="preserve">
     <value>リプライ先のURLまたはIDを入力してください</value>
   </data>
+  <data name="AccountForPost" xml:space="preserve">
+    <value>投稿アカウント</value>
+  </data>
+  <data name="AccountForPostImage" xml:space="preserve">
+    <value>画像投稿アカウント</value>
+  </data>
 </root>

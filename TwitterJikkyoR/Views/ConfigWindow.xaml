@@ -30,6 +30,12 @@
         <wc:FontDialogBehavior />
     </b:Interaction.Behaviors>
     <Grid Margin="10">
+        <Grid.Resources>
+            <Style TargetType="TextBlock" x:Key="SettingLabel">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
@@ -37,15 +43,53 @@
         </Grid.RowDefinitions>
         <ScrollViewer>
             <StackPanel>
+                <CheckBox Margin="5 0"
+                      IsChecked="{Binding Topmost, Mode=TwoWay}"
+                      Content="{x:Static properties:Resources.IsTopmostSetting}" />
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="IsEnabled" Value="{Binding HasItems, RelativeSource={RelativeSource Self}}" />
+                            <Setter Property="ItemsSource" Value="{Binding Accounts}" />
+                            <Setter Property="DisplayMemberPath" Value="ScreenName" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.AccountForPost}" />
+                    <ComboBox Grid.Row="0" Grid.Column="2"
+                              SelectedIndex="{Binding AccountForPostIndex, FallbackValue=0, Mode=TwoWay}" />
+
+                    <TextBlock Grid.Row="1" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.AccountForPostImage}" />
+                    <ComboBox Grid.Row="1" Grid.Column="2"
+                              SelectedIndex="{Binding AccountForPostImageIndex, FallbackValue=0, Mode=TwoWay}" />
+
+                    <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal" Margin="3">
+                        <StackPanel.Resources>
+                            <Style TargetType="Button">
+                                <Setter Property="Width" Value="20" />
+                                <Setter Property="Height" Value="20" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button Command="{Binding AddAccountCommand}" Content="+" />
+                        <Separator Background="Transparent" Width="2" />
+                        <Button Command="{Binding RemoveAccountCommand}" Content="-" />
+                    </StackPanel>
+                </Grid>
+                <Separator Background="Transparent" Height="10" />
                 <Grid>
                     <Grid.Resources>
                         <Style TargetType="wc:KeySelector">
                             <Setter Property="Margin" Value="0 5" />
-                        </Style>
-                        <Style TargetType="TextBlock" x:Key="SettingLabel">
-                            <Setter Property="Grid.Column" Value="0" />
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                            <Setter Property="HorizontalAlignment" Value="Center" />
                         </Style>
                     </Grid.Resources>
                     <Grid.ColumnDefinitions>
@@ -64,10 +108,6 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <CheckBox Grid.ColumnSpan="11111" Margin="5 0"
-                      IsChecked="{Binding Topmost, Mode=TwoWay}"
-                      Content="{x:Static properties:Resources.IsTopmostSetting}" />
-
                     <TextBlock Grid.Row="1" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.Screenshot}" />
                     <wc:KeySelector Grid.Row="1" Grid.Column="2" ShortcutKey="{Binding ShortcutCaptureScreenshot}"/>
 

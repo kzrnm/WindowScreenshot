@@ -61,6 +61,24 @@ namespace Kzrnm.TwitterJikkyo.Properties {
         }
         
         /// <summary>
+        ///   投稿アカウント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string AccountForPost {
+            get {
+                return ResourceManager.GetString("AccountForPost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   画像投稿アカウント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string AccountForPostImage {
+            get {
+                return ResourceManager.GetString("AccountForPostImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   次の画像ユーザーを選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ActivateNextImageUser {
