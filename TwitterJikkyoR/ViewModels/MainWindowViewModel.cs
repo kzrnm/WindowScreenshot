@@ -56,9 +56,9 @@ public partial class MainWindowViewModel : ObservableObject
     {
         ({ } p, { } ip)
         => p.UserId == ip.UserId
-            ? $"{Resources.MainWindowTitle} @{p.ScreenName}"
-            : $"{Resources.MainWindowTitle} @{p.ScreenName} 🖼{ip.ScreenName}",
-        ({ } p, _) => $"{Resources.MainWindowTitle} @{p.ScreenName} 🖼null",
+            ? $"@{p.ScreenName} {Resources.MainWindowTitle}"
+            : $"@{p.ScreenName} 🖼{ip.ScreenName} {Resources.MainWindowTitle}",
+        ({ } p, _) => $"@{p.ScreenName} 🖼null {Resources.MainWindowTitle}",
         _ => Resources.MainWindowTitle,
     };
 
