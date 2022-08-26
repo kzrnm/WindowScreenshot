@@ -1,7 +1,7 @@
 ﻿using Kzrnm.TwitterJikkyo.Configs;
 using Kzrnm.Wpf.Configs;
 using System;
-using System.Configuration;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 
 namespace Kzrnm.TwitterJikkyo;
@@ -21,12 +21,12 @@ public partial class ConfigMaster
     public ConfigWrapper<Shortcuts> Shortcuts { get; }
     public ConfigWrapper<Hashtags> Hashtags { get; }
 
-    public static async Task<ConfigMaster> LoadConfigsAsync()
+    public static async Task<ConfigMaster> LoadConfigsAsync(NameValueCollection appSettings)
     {
-        var config = ConfigWrapper<Config>.LoadAsync(ConfigurationManager.AppSettings["Config"] ?? throw new NullReferenceException("AppSettings:Config")).ConfigureAwait(false);
-        var shortcuts = ConfigWrapper<Shortcuts>.LoadAsync(ConfigurationManager.AppSettings["Shortcuts"] ?? throw new NullReferenceException("AppSettings:Shortcuts")).ConfigureAwait(false);
-        var captureWindows = ConfigWrapper<CaptureWindowCollection>.LoadAsync(ConfigurationManager.AppSettings["CaptureWindowCollection"] ?? throw new NullReferenceException("AppSettings:CaptureWindowCollection")).ConfigureAwait(false);
-        var hashtags = ConfigWrapper<Hashtags>.LoadAsync(ConfigurationManager.AppSettings["Hashtags"] ?? throw new NullReferenceException("AppSettings:Hashtags")).ConfigureAwait(false);
+        var config = ConfigWrapper<Config>.LoadAsync(appSettings["Config"] ?? throw new NullReferenceException("AppSettings:Config")).ConfigureAwait(false);
+        var shortcuts = ConfigWrapper<Shortcuts>.LoadAsync(appSettings["Shortcuts"] ?? throw new NullReferenceException("AppSettings:Shortcuts")).ConfigureAwait(false);
+        var captureWindows = ConfigWrapper<CaptureWindowCollection>.LoadAsync(appSettings["CaptureWindowCollection"] ?? throw new NullReferenceException("AppSettings:CaptureWindowCollection")).ConfigureAwait(false);
+        var hashtags = ConfigWrapper<Hashtags>.LoadAsync(appSettings["Hashtags"] ?? throw new NullReferenceException("AppSettings:Hashtags")).ConfigureAwait(false);
         return new(await config, await captureWindows, await shortcuts, await hashtags);
     }
 

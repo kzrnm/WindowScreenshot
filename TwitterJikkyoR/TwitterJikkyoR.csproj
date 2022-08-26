@@ -13,6 +13,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="CoreTweet" Version="1.0.0.483" />
     <ProjectReference Include="..\WindowScreenshot\WindowScreenshot.csproj" />
   </ItemGroup>
 
@@ -29,5 +30,11 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TwitterJikkyo.Settings.Secrets.json" Condition="exists('TwitterJikkyo.Settings.Secrets.json')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

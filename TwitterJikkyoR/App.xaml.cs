@@ -1,9 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Kzrnm.TwitterJikkyo.Configs;
+using Kzrnm.TwitterJikkyo.Logic;
 using Kzrnm.TwitterJikkyo.Models;
+using Kzrnm.TwitterJikkyo.Twitter;
 using Kzrnm.TwitterJikkyo.ViewModels;
 using Kzrnm.WindowScreenshot;
+using Kzrnm.Wpf.Configs;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -20,10 +25,14 @@ public partial class App : Application
     public static string ExePath => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new InvalidOperationException();
     public App()
     {
+        var secrets = ConfigWrapper<Secrets>.LoadAsync(ConfigurationManager.AppSettings["Secrets"] ?? throw new NullReferenceException("AppSettings:Secrets")).Result.Value;
+
         Ioc.Default.ConfigureServices(
             new ServiceCollection()
             .InitializeWindowScreenshot()
-            .AddSingleton(ConfigMaster.LoadConfigsAsync().Result)
+            .AddSingleton(new AesCrypt(secrets.AesKey, secrets.AesIv))
+            .AddSingleton(ConfigMaster.LoadConfigsAsync(ConfigurationManager.AppSettings).Result)
+            .AddSingleton(new TwitterService(secrets.TwitterApiToken, secrets.TwitterApiSecret))
             .AddSingleton<GlobalService>()
             .AddSingleton<ContentService>()
             .AddSingleton<AccountService>()

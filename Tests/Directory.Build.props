@@ -19,4 +19,7 @@
     <PackageReference Include="Xunit.StaFact" Version="1.1.11" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Compile Include="$(MSBuildThisFileDirectory)Usings.cs" />
+	</ItemGroup>
 </Project>
