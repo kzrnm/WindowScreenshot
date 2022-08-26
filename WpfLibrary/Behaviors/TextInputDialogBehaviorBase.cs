@@ -8,7 +8,7 @@ public abstract class TextInputDialogBehaviorBase<TSelf, TMessage> : DialogBehav
     where TSelf : TextInputDialogBehaviorBase<TSelf, TMessage>
     where TMessage : TextInputDialogMessage
 {
-    public override void Receive(TMessage message)
+    public virtual TextInputDialogWindow Initialize(TMessage message)
     {
         var dialog = new TextInputDialogWindow()
         {
@@ -31,7 +31,11 @@ public abstract class TextInputDialogBehaviorBase<TSelf, TMessage> : DialogBehav
             dialog.MinWidth = minWidth;
         if (message.MinHeight is { } minHeight)
             dialog.MinHeight = minHeight;
-
+        return dialog;
+    }
+    public override void Receive(TMessage message)
+    {
+        var dialog = Initialize(message);
         message.Reply(dialog.ShowDialogWithResponse());
     }
 }

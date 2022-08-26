@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using Kzrnm.TwitterJikkyo.Models.Message;
 using Kzrnm.WindowScreenshot.Image;
-using Kzrnm.WindowScreenshot.Models;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;

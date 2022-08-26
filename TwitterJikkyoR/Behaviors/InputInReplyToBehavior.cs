@@ -1,4 +1,4 @@
-﻿using Kzrnm.WindowScreenshot.Models;
+﻿using Kzrnm.TwitterJikkyo.Models.Message;
 using Kzrnm.Wpf.Behaviors;
 
 namespace Kzrnm.TwitterJikkyo.Behaviors;

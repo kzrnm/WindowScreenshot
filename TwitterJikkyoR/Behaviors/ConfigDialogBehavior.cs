@@ -1,5 +1,5 @@
-﻿using Kzrnm.TwitterJikkyo.Views;
-using Kzrnm.WindowScreenshot.Models;
+﻿using Kzrnm.TwitterJikkyo.Models.Message;
+using Kzrnm.TwitterJikkyo.Views;
 using Kzrnm.Wpf.Behaviors;
 using System.Windows;
 

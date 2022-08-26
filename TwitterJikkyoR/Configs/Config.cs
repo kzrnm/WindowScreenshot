@@ -18,8 +18,10 @@ namespace Kzrnm.TwitterJikkyo.Configs;
 public record Config(
     WindowPosition? WindowPosition = null,
     bool Topmost = false,
+    long DefaultAccountId = 0,
+    long DefaultImageAccountId = 0,
     Font? Font = null,
-    ImmutableArray<Account> Accounts = default
+    ImmutableArray<TwitterAccount> Accounts = default
 )
 {
     /// <summary>
@@ -34,7 +36,7 @@ public record Config(
     public Font Font { get; init; } = Font ?? new();
 
     [JsonPropertyOrder(100)]
-    public ImmutableArray<Account> Accounts { get; init; } = Accounts.GetOrEmpty();
+    public ImmutableArray<TwitterAccount> Accounts { get; init; } = Accounts.GetOrEmpty();
 
     public Config() : this(WindowPosition: null) { }
 }

@@ -17,10 +17,10 @@ public record Shortcuts(
     ShortcutKey? CaptureScreenshot = null,
     ShortcutKey? ToggleHashtag = null,
     ShortcutKey? InputInReplyTo = null,
-    ShortcutKey? ActivatePreviousUser = null,
-    ShortcutKey? ActivateNextUser = null,
-    ShortcutKey? ActivatePreviousImageUser = null,
-    ShortcutKey? ActivateNextImageUser = null
+    ShortcutKey? ActivatePreviousAccount = null,
+    ShortcutKey? ActivateNextAccount = null,
+    ShortcutKey? ActivatePreviousImageAccount = null,
+    ShortcutKey? ActivateNextImageAccount = null
 )
 {
     /// <summary>
@@ -41,24 +41,24 @@ public record Shortcuts(
     public ShortcutKey? InputInReplyTo { get; init; } = InputInReplyTo ?? new(Control, R);    
 
     /// <summary>
-    /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivatePreviousUser']"/>
+    /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivatePreviousAccount']"/>
     /// </summary>
-    public ShortcutKey? ActivatePreviousUser { get; init; } = ActivatePreviousUser ?? new(Control | Shift, U);
+    public ShortcutKey? ActivatePreviousAccount { get; init; } = ActivatePreviousAccount ?? new(Control | Shift, U);
 
     /// <summary>
-    /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivateNextUser']"/>
+    /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivateNextAccount']"/>
     /// </summary>
-    public ShortcutKey? ActivateNextUser { get; init; } = ActivateNextUser ?? new(Control, U);
+    public ShortcutKey? ActivateNextAccount { get; init; } = ActivateNextAccount ?? new(Control, U);
 
     /// <summary>
-    /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivatePreviousImageUser']"/>
+    /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivatePreviousImageAccount']"/>
     /// </summary>
-    public ShortcutKey? ActivatePreviousImageUser { get; init; } = ActivatePreviousImageUser ?? new(Control | Shift, I);
+    public ShortcutKey? ActivatePreviousImageAccount { get; init; } = ActivatePreviousImageAccount ?? new(Control | Shift, I);
 
     /// <summary>
-    /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivateNextImageUser']"/>
+    /// <inheritdoc cref="Shortcuts" path="/param[@name='ActivateNextImageAccount']"/>
     /// </summary>
-    public ShortcutKey? ActivateNextImageUser { get; init; } = ActivateNextImageUser ?? new(Control, I);
+    public ShortcutKey? ActivateNextImageAccount { get; init; } = ActivateNextImageAccount ?? new(Control, I);
 
     public Shortcuts() : this(CaptureScreenshot: default) { }
 }

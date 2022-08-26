@@ -30,9 +30,10 @@ public partial class App : Application
         Ioc.Default.ConfigureServices(
             new ServiceCollection()
             .InitializeWindowScreenshot()
+            .AddSingleton(secrets)
             .AddSingleton(new AesCrypt(secrets.AesKey, secrets.AesIv))
             .AddSingleton(ConfigMaster.LoadConfigsAsync(ConfigurationManager.AppSettings).Result)
-            .AddSingleton(new TwitterService(secrets.TwitterApiToken, secrets.TwitterApiSecret))
+            .AddSingleton<TwitterService>()
             .AddSingleton<GlobalService>()
             .AddSingleton<ContentService>()
             .AddSingleton<AccountService>()

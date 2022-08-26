@@ -61,56 +61,47 @@ namespace Kzrnm.TwitterJikkyo.Properties {
         }
         
         /// <summary>
-        ///   投稿アカウント に類似しているローカライズされた文字列を検索します。
+        ///   次のアカウントを選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string AccountForPost {
+        public static string ActivateNextAccount {
             get {
-                return ResourceManager.GetString("AccountForPost", resourceCulture);
+                return ResourceManager.GetString("ActivateNextAccount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   画像投稿アカウント に類似しているローカライズされた文字列を検索します。
+        ///   次の画像アカウントを選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string AccountForPostImage {
+        public static string ActivateNextImageAccount {
             get {
-                return ResourceManager.GetString("AccountForPostImage", resourceCulture);
+                return ResourceManager.GetString("ActivateNextImageAccount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   次の画像ユーザーを選択 に類似しているローカライズされた文字列を検索します。
+        ///   前のアカウントを選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string ActivateNextImageUser {
+        public static string ActivatePreviousAccount {
             get {
-                return ResourceManager.GetString("ActivateNextImageUser", resourceCulture);
+                return ResourceManager.GetString("ActivatePreviousAccount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   次のユーザーを選択 に類似しているローカライズされた文字列を検索します。
+        ///   前の画像アカウントを選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string ActivateNextUser {
+        public static string ActivatePreviousImageAccount {
             get {
-                return ResourceManager.GetString("ActivateNextUser", resourceCulture);
+                return ResourceManager.GetString("ActivatePreviousImageAccount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   前の画像ユーザーを選択 に類似しているローカライズされた文字列を検索します。
+        ///   認証 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string ActivatePreviousImageUser {
+        public static string Authentication {
             get {
-                return ResourceManager.GetString("ActivatePreviousImageUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   前のユーザーを選択 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string ActivatePreviousUser {
-            get {
-                return ResourceManager.GetString("ActivatePreviousUser", resourceCulture);
+                return ResourceManager.GetString("Authentication", resourceCulture);
             }
         }
         
@@ -129,6 +120,15 @@ namespace Kzrnm.TwitterJikkyo.Properties {
         public static string Config {
             get {
                 return ResourceManager.GetString("Config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   画像投稿アカウント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ImagePostingAccount {
+            get {
+                return ResourceManager.GetString("ImagePostingAccount", resourceCulture);
             }
         }
         
@@ -178,11 +178,29 @@ namespace Kzrnm.TwitterJikkyo.Properties {
         }
         
         /// <summary>
+        ///   PIN コード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string PinCode {
+            get {
+                return ResourceManager.GetString("PinCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Post に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string PostContent {
             get {
                 return ResourceManager.GetString("PostContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   投稿アカウント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string PostingAccount {
+            get {
+                return ResourceManager.GetString("PostingAccount", resourceCulture);
             }
         }
         

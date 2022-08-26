@@ -117,17 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActivateNextImageUser" xml:space="preserve">
-    <value>次の画像ユーザーを選択</value>
+  <data name="ActivateNextImageAccount" xml:space="preserve">
+    <value>次の画像アカウントを選択</value>
   </data>
-  <data name="ActivateNextUser" xml:space="preserve">
-    <value>次のユーザーを選択</value>
+  <data name="ActivateNextAccount" xml:space="preserve">
+    <value>次のアカウントを選択</value>
   </data>
-  <data name="ActivatePreviousImageUser" xml:space="preserve">
-    <value>前の画像ユーザーを選択</value>
+  <data name="ActivatePreviousImageAccount" xml:space="preserve">
+    <value>前の画像アカウントを選択</value>
   </data>
-  <data name="ActivatePreviousUser" xml:space="preserve">
-    <value>前のユーザーを選択</value>
+  <data name="ActivatePreviousAccount" xml:space="preserve">
+    <value>前のアカウントを選択</value>
   </data>
   <data name="CaptureScreenshot" xml:space="preserve">
     <value>キャプチャする</value>
@@ -165,10 +165,16 @@
   <data name="InputInReplyToMessage" xml:space="preserve">
     <value>リプライ先のURLまたはIDを入力してください</value>
   </data>
-  <data name="AccountForPost" xml:space="preserve">
+  <data name="PostingAccount" xml:space="preserve">
     <value>投稿アカウント</value>
   </data>
-  <data name="AccountForPostImage" xml:space="preserve">
+  <data name="ImagePostingAccount" xml:space="preserve">
     <value>画像投稿アカウント</value>
+  </data>
+  <data name="Authentication" xml:space="preserve">
+    <value>認証</value>
+  </data>
+  <data name="PinCode" xml:space="preserve">
+    <value>PIN コード</value>
   </data>
 </root>

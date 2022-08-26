@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Kzrnm.TwitterJikkyo.Configs;
 using Kzrnm.TwitterJikkyo.Models;
+using Kzrnm.TwitterJikkyo.Models.Message;
 using Kzrnm.WindowScreenshot;
 using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Image.DragDrop;

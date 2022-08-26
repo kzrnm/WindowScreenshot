@@ -10,6 +10,7 @@
         xmlns:wc="urn:kzrnm-wpf-window-screenshot/core"
         xmlns:ktk="urn:kzrnm-wpf/toolkit"
         xmlns:local="clr-namespace:Kzrnm.TwitterJikkyo.Views"
+        xmlns:localbehavior="clr-namespace:Kzrnm.TwitterJikkyo.Behaviors"
         xmlns:vm="clr-namespace:Kzrnm.TwitterJikkyo.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:ConfigWindowViewModel}"
@@ -27,6 +28,7 @@
         </b:KeyTrigger>
     </b:Interaction.Triggers>
     <b:Interaction.Behaviors>
+        <localbehavior:TwitetrAuthDialogBehaviour />
         <wc:FontDialogBehavior />
     </b:Interaction.Behaviors>
     <Grid Margin="10">
@@ -65,13 +67,13 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.AccountForPost}" />
+                    <TextBlock Grid.Row="0" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.PostingAccount}" />
                     <ComboBox Grid.Row="0" Grid.Column="2"
-                              SelectedIndex="{Binding AccountForPostIndex, FallbackValue=0, Mode=TwoWay}" />
+                              SelectedIndex="{Binding PostingAccountIndex, FallbackValue=0, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="1" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.AccountForPostImage}" />
+                    <TextBlock Grid.Row="1" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ImagePostingAccount}" />
                     <ComboBox Grid.Row="1" Grid.Column="2"
-                              SelectedIndex="{Binding AccountForPostImageIndex, FallbackValue=0, Mode=TwoWay}" />
+                              SelectedIndex="{Binding ImagePostingAccountIndex, FallbackValue=0, Mode=TwoWay}" />
 
                     <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal" Margin="3">
                         <StackPanel.Resources>
@@ -120,17 +122,17 @@
                     <TextBlock Grid.Row="4" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.InputInReplyTo}" />
                     <wc:KeySelector Grid.Row="4" Grid.Column="2" ShortcutKey="{Binding InputInReplyTo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="5" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivatePreviousUser}" />
-                    <wc:KeySelector Grid.Row="5" Grid.Column="2" ShortcutKey="{Binding ActivatePreviousUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="5" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivatePreviousAccount}" />
+                    <wc:KeySelector Grid.Row="5" Grid.Column="2" ShortcutKey="{Binding ActivatePreviousAccount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="6" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivateNextUser}" />
-                    <wc:KeySelector Grid.Row="6" Grid.Column="2" ShortcutKey="{Binding ActivateNextUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="6" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivateNextAccount}" />
+                    <wc:KeySelector Grid.Row="6" Grid.Column="2" ShortcutKey="{Binding ActivateNextAccount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="7" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivatePreviousImageUser}" />
-                    <wc:KeySelector Grid.Row="7" Grid.Column="2" ShortcutKey="{Binding ActivatePreviousImageUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="7" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivatePreviousImageAccount}" />
+                    <wc:KeySelector Grid.Row="7" Grid.Column="2" ShortcutKey="{Binding ActivatePreviousImageAccount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="8" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivateNextImageUser}" />
-                    <wc:KeySelector Grid.Row="8" Grid.Column="2" ShortcutKey="{Binding ActivateNextImageUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="8" Style="{StaticResource SettingLabel}" Text="{x:Static properties:Resources.ActivateNextImageAccount}" />
+                    <wc:KeySelector Grid.Row="8" Grid.Column="2" ShortcutKey="{Binding ActivateNextImageAccount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
                 <StackPanel
                     Grid.Row="1"

@@ -91,24 +91,24 @@ public partial class MainWindowViewModel : ObservableObject
             ContentService.TryInputInReplyTo();
             e.Handled = true;
         }
-        if (shortcuts.ActivatePreviousUser == input)
+        if (shortcuts.ActivatePreviousAccount == input)
         {
-            await AccountService.ActivatePreviousUserAsync().ConfigureAwait(false);
+            await AccountService.ActivatePreviousAccountAsync().ConfigureAwait(false);
             e.Handled = true;
         }
-        if (shortcuts.ActivateNextUser == input)
+        if (shortcuts.ActivateNextAccount == input)
         {
-            await AccountService.ActivateNextUserAsync().ConfigureAwait(false);
+            await AccountService.ActivateNextAccountAsync().ConfigureAwait(false);
             e.Handled = true;
         }
-        if (shortcuts.ActivatePreviousImageUser == input)
+        if (shortcuts.ActivatePreviousImageAccount == input)
         {
-            await AccountService.ActivatePreviousImageUserAsync().ConfigureAwait(false);
+            await AccountService.ActivatePreviousImageAccountAsync().ConfigureAwait(false);
             e.Handled = true;
         }
-        if (shortcuts.ActivateNextImageUser == input)
+        if (shortcuts.ActivateNextImageAccount == input)
         {
-            await AccountService.ActivateNextImageUserAsync().ConfigureAwait(false);
+            await AccountService.ActivateNextImageAccountAsync().ConfigureAwait(false);
             e.Handled = true;
         }
     }
