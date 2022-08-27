@@ -182,7 +182,7 @@
   </data>
   <data name="FailedToPostMessage" xml:space="preserve">
     <value>投稿に失敗しました
-再試行しますか？</value>
+元に戻ししますか？</value>
   </data>
   <data name="NotLoggedIn" xml:space="preserve">
     <value>ログインしていません</value>

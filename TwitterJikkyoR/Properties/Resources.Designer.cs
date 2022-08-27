@@ -134,7 +134,7 @@ namespace Kzrnm.TwitterJikkyo.Properties {
         
         /// <summary>
         ///   投稿に失敗しました
-        ///再試行しますか？ に類似しているローカライズされた文字列を検索します。
+        ///元に戻ししますか？ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string FailedToPostMessage {
             get {
