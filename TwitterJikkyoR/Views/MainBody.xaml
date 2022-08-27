@@ -49,9 +49,19 @@
         </TextBox>
         <TextBlock Grid.Row="1"
                    Text="{Binding ContentService.RemainingTextLength}"
+                   d:Text="280"
                    Foreground="SlateGray"
                    VerticalAlignment="Bottom"
-                   HorizontalAlignment="Right" />
+                   HorizontalAlignment="Right">
+            <b:Interaction.Triggers>
+                <b:DataTrigger Binding="{Binding ContentService.RemainingTextLength}" Comparison="LessThan" Value="0">
+                    <b:ChangePropertyAction PropertyName="Foreground" Value="MediumVioletRed" />
+                </b:DataTrigger>
+                <b:DataTrigger Binding="{Binding ContentService.RemainingTextLength}" Comparison="GreaterThanOrEqual" Value="0">
+                    <b:ChangePropertyAction PropertyName="Foreground" Value="SlateGray" />
+                </b:DataTrigger>
+            </b:Interaction.Triggers>
+        </TextBlock>
         <Grid Grid.Row="2" MinHeight="26">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

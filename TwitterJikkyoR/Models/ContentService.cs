@@ -55,7 +55,6 @@ public partial class ContentService : ObservableObject
     }
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(RemainingTextLength))]
     private string _Hashtag = "";
     [SuppressMessage("Style", "IDE0060: Remove unused parameter")]
     partial void OnHashtagChanged(string value)
@@ -64,7 +63,6 @@ public partial class ContentService : ObservableObject
     }
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(RemainingTextLength))]
     private string _Text = "";
     [SuppressMessage("Style", "IDE0060: Remove unused parameter")]
     partial void OnTextChanged(string value)
@@ -77,10 +75,13 @@ public partial class ContentService : ObservableObject
 
     private void UpdateCanPost()
     {
-        CanPost = (Text.Length > 0 || ImageProvider.Images.Count > 0);
+        RemainingTextLength = TweetTextStringInfo.GetRemainingTweetTextLength(TweetText);
+        CanPost = RemainingTextLength >= 0 && (Text.Length > 0 || ImageProvider.Images.Count > 0);
     }
 
-    public int RemainingTextLength => TweetTextStringInfo.GetRemainingTweetTextLength(TweetText);
+    [ObservableProperty]
+    private int _RemainingTextLength;
+
     public string TweetText => (Text, Hashtag) switch
     {
         (var text, "") => text,

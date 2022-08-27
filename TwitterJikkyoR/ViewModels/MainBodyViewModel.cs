@@ -47,6 +47,9 @@ public partial class MainBodyViewModel : ObservableObject
     public ConfigMaster ConfigMaster { get; }
     public SelectorObservableCollection<string> Hashtags { get; }
 
+    [ObservableProperty]
+    private int _RemainingTextLength;
+
     [RelayCommand]
     private void OpenSelectCaptureWindowDialog()
     {
