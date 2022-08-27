@@ -41,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TwitterJikkyo.Settings.Secrets.json" Condition="exists('TwitterJikkyo.Settings.Secrets.json')">
+    <None Update="app.secrets.json" Condition="exists('app.secrets.json')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
