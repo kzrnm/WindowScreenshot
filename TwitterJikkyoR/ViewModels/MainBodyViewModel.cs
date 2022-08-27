@@ -23,8 +23,7 @@ public partial class MainBodyViewModel : ObservableObject
         ConfigMaster = globalService.ConfigMaster;
         DropHandler = imageDropTargetFactory.Build(true);
 
-        var hashtags = ConfigMaster.Hashtags.Value;
-        Hashtags = hashtags.PresetHashtags;
+        Hashtags = ConfigMaster.Hashtags.Value;
         Hashtags.SelectedIndex = -1;
         Hashtags.CollectionChanged += OnHashtagsCollectionChanged;
 
@@ -33,10 +32,6 @@ public partial class MainBodyViewModel : ObservableObject
 
     private async void OnHashtagsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        if (sender is not SelectorObservableCollection<string> hashtags)
-            return;
-        while (hashtags.Count > ConfigMaster.Hashtags.Value.MaxTagNum)
-            hashtags.RemoveAt(hashtags.Count - 1);
         await ConfigMaster.Hashtags.SaveAsync().ConfigureAwait(false);
     }
 

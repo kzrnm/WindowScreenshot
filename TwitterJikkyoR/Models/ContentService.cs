@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CoreTweet;
+using Kzrnm.TwitterJikkyo.Configs;
 using Kzrnm.TwitterJikkyo.Models.Message;
 using Kzrnm.TwitterJikkyo.Properties;
 using Kzrnm.TwitterJikkyo.Twitter;
@@ -19,8 +20,9 @@ namespace Kzrnm.TwitterJikkyo.Models;
 
 public partial class ContentService : ObservableObject
 {
-    public ContentService(AccountService accountService, ImageProvider imageProvider)
+    public ContentService(AccountService accountService, ImageProvider imageProvider, ConfigMaster configMaster)
     {
+        Hashtags = configMaster.Hashtags.Value;
         AccountService = accountService;
         ImageProvider = imageProvider;
         UpdateCanPost();
@@ -40,6 +42,7 @@ public partial class ContentService : ObservableObject
     public event EventHandler<bool>? CanPostChanged;
     public AccountService AccountService { get; }
     public ImageProvider ImageProvider { get; }
+    public HashtagCollection Hashtags { get; }
 
     private bool _CanPost;
     public bool CanPost
@@ -112,11 +115,9 @@ public partial class ContentService : ObservableObject
         _ = TryParseTweetId(InReplyToText, out var inReplyToId);
         var tweetText = TweetText;
         var text = Text;
-        var hashtag = Hashtag;
         var inReplyToText = InReplyToText;
         var images = ImageProvider.Images.ToArray();
         Text = "";
-        Hashtag = "";
         InReplyToText = "";
         ImageProvider.Images.Clear();
 
@@ -125,6 +126,7 @@ public partial class ContentService : ObservableObject
 #pragma warning disable CAC002 // ConfigureAwaitChecker
             var response = await PostContentAsync(tokens, tweetText, inReplyToId, images).ConfigureAwait(true);
 #pragma warning restore CAC002 // ConfigureAwaitChecker
+            Hashtags.AddUnique(Hashtag);
             return response;
         }
         catch (TwitterException)
@@ -139,7 +141,6 @@ public partial class ContentService : ObservableObject
             {
                 // Restore
                 Text = text;
-                Hashtag = hashtag;
                 InReplyToText = inReplyToText;
                 foreach (var img in images)
                     ImageProvider.Images.Add(img);
@@ -148,7 +149,7 @@ public partial class ContentService : ObservableObject
         return null;
     }
 
-    private async Task<StatusResponse> PostContentAsync(Tokens tokens, string text, long inReplyToId, CaptureImage[] images)
+    private static async Task<StatusResponse> PostContentAsync(Tokens tokens, string text, long inReplyToId, CaptureImage[] images)
     {
         IEnumerable<long>? mediaIds = null;
         if (images.Length > 0)
@@ -179,7 +180,7 @@ public partial class ContentService : ObservableObject
         var m = inReplyToRegex.Match(idOrUrl);
         return m.Success && long.TryParse(m.Groups[1].Value, out tweetId);
     }
-    static Regex inReplyToRegex = new(@"twitter.com/[^/]+/status/(\d+)", RegexOptions.Compiled);
+    static readonly Regex inReplyToRegex = new(@"twitter.com/[^/]+/status/(\d+)", RegexOptions.Compiled);
 
     public void TryInputInReplyTo()
     {

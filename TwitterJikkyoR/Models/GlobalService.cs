@@ -15,7 +15,7 @@ public class GlobalService : IGlobalService
         ObserveWindowProcess = observeWindowProcess;
         ClipboardManager = clipboardManager;
         AccountService = accountService;
-        Hashtags = ConfigMaster.Hashtags.Value.PresetHashtags;
+        Hashtags = ConfigMaster.Hashtags.Value;
     }
     public ConfigMaster ConfigMaster { get; }
     public ImageProvider ImageProvider { get; }

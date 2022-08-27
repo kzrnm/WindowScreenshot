@@ -8,7 +8,7 @@ namespace Kzrnm.TwitterJikkyo;
 
 public partial class ConfigMaster
 {
-    public ConfigMaster(ConfigWrapper<Config> config, ConfigWrapper<CaptureWindowCollection> captureWindows, ConfigWrapper<Shortcuts> shortcuts, ConfigWrapper<Hashtags> hashtags)
+    public ConfigMaster(ConfigWrapper<Config> config, ConfigWrapper<CaptureWindowCollection> captureWindows, ConfigWrapper<Shortcuts> shortcuts, ConfigWrapper<HashtagCollection> hashtags)
     {
         Config = config;
         CaptureTargetWindows = captureWindows;
@@ -19,14 +19,14 @@ public partial class ConfigMaster
     public ConfigWrapper<Config> Config { get; }
     public ConfigWrapper<CaptureWindowCollection> CaptureTargetWindows { get; }
     public ConfigWrapper<Shortcuts> Shortcuts { get; }
-    public ConfigWrapper<Hashtags> Hashtags { get; }
+    public ConfigWrapper<HashtagCollection> Hashtags { get; }
 
     public static async Task<ConfigMaster> LoadConfigsAsync(NameValueCollection appSettings)
     {
         var config = ConfigWrapper<Config>.LoadAsync(appSettings["Config"] ?? throw new NullReferenceException("AppSettings:Config")).ConfigureAwait(false);
         var shortcuts = ConfigWrapper<Shortcuts>.LoadAsync(appSettings["Shortcuts"] ?? throw new NullReferenceException("AppSettings:Shortcuts")).ConfigureAwait(false);
         var captureWindows = ConfigWrapper<CaptureWindowCollection>.LoadAsync(appSettings["CaptureWindowCollection"] ?? throw new NullReferenceException("AppSettings:CaptureWindowCollection")).ConfigureAwait(false);
-        var hashtags = ConfigWrapper<Hashtags>.LoadAsync(appSettings["Hashtags"] ?? throw new NullReferenceException("AppSettings:Hashtags")).ConfigureAwait(false);
+        var hashtags = ConfigWrapper<HashtagCollection>.LoadAsync(appSettings["Hashtags"] ?? throw new NullReferenceException("AppSettings:Hashtags")).ConfigureAwait(false);
         return new(await config, await captureWindows, await shortcuts, await hashtags);
     }
 
