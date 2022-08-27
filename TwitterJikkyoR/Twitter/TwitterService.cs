@@ -11,7 +11,7 @@ public class TwitterService
     public TwitterService(Secrets secrets, ConfigMaster configMaster, AesCrypt aesCrypt)
     {
         ApiKey = secrets.TwitterApiKey;
-        ApiSecret = secrets.TwitterApiSecret;
+        ApiSecret = aesCrypt.Decrypt(secrets.TwitterApiSecretCrypt);
         ConfigMaster = configMaster;
         AesCrypt = aesCrypt;
 

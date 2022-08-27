@@ -1,5 +1,5 @@
 ﻿namespace Kzrnm.TwitterJikkyo.Configs;
-public record Secrets(byte[] AesKey = null!, byte[] AesIv = null!, string TwitterApiKey = "", string TwitterApiSecret = "")
+public record Secrets(byte[] AesKey = null!, byte[] AesIv = null!, string TwitterApiKey = "", byte[] TwitterApiSecretCrypt = null!)
 {
-    public Secrets() : this(TwitterApiSecret: "") { }
+    public Secrets() : this(TwitterApiKey: "") { }
 }
