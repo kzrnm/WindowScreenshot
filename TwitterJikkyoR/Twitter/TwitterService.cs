@@ -45,7 +45,13 @@ public class TwitterService
     }
     private void UpdateTokens(Tokens tokens, bool force = false)
     {
-        if (!force && tokensDictionary.TryGetValue(tokens.UserId, out var st) && st.VerifyCredentialsTask.IsCompletedSuccessfully)
+        if (!force && tokensDictionary.TryGetValue(tokens.UserId, out var st)
+#if NETFRAMEWORK
+            && st.VerifyCredentialsTask.IsCompleted
+#else
+            && st.VerifyCredentialsTask.IsCompletedSuccessfully
+#endif
+        )
             return;
 
         tokensDictionary[tokens.UserId] = new(tokens);

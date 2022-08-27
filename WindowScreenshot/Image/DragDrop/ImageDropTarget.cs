@@ -90,4 +90,13 @@ public class ImageDropTarget : IDropTarget
             if (image is not null)
                 AddImage(dropInfo, image);
     }
+
+#if NETFRAMEWORK
+    public void DragEnter(IDropInfo dropInfo)
+    {
+    }
+    public void DragLeave(IDropInfo dropInfo)
+    {
+    }
+#endif
 }

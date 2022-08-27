@@ -11,9 +11,6 @@ public class AesCryptTest
             aesCrypt.Decrypt(cipher).Should().Be("文字列");
         }
         {
-            var bytes = new byte[150];
-            Random.Shared.NextBytes(bytes);
-            Random.Shared.NextBytes(bytes);
             var aesCrypt = new AesCrypt(
                 new byte[32] { 40, 218, 78, 74, 111, 175, 191, 67, 191, 32, 250, 56, 0, 154, 199, 47, 214, 215, 75, 73, 180, 182, 80, 90, 49, 53, 164, 181, 236, 33, 220, 102, },
                 new byte[16] { 186, 24, 170, 51, 245, 145, 103, 127, 51, 178, 203, 98, 87, 200, 35, 91 }

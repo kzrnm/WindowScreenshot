@@ -57,8 +57,13 @@ public static class DataObjectExtension
             {
                 // メタデータを正しく読めないので無理やり修正する
                 // https://github.com/kzrnm/WindowScreenshot/issues/1
+#if NETFRAMEWORK
+                var buffer = new byte[15];
+                dib.Read(buffer, 0, 15);
+#else
                 Span<byte> buffer = stackalloc byte[15];
                 dib.Read(buffer);
+#endif
                 if (buffer[14] < 32)
                     return new FormatConvertedBitmap(source, PixelFormats.Bgr32, null, 0);
             }

@@ -46,7 +46,7 @@ public class ShortcutKeyConverterTest
         var modifierKeysConverter = TypeDescriptor.GetConverter(typeof(ModifierKeys));
 
 
-        foreach (var key in Enum.GetValues<Key>())
+        foreach (Key key in Enum.GetValues(typeof(Key)))
             if (key is not Key.None)
             {
                 Test(

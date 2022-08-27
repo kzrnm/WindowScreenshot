@@ -24,11 +24,10 @@ public class CaptureImageService : ICaptureImageService
     {
         var ext = Path.GetExtension(fileName);
         if (ext.Length <= 1) return false;
-        ext = ext[1..];
-        return ext.Equals("jpeg", StringComparison.OrdinalIgnoreCase)
-            || ext.Equals("jpg", StringComparison.OrdinalIgnoreCase)
-            || ext.Equals("png", StringComparison.OrdinalIgnoreCase)
-            || ext.Equals("bmp", StringComparison.OrdinalIgnoreCase);
+        return ext.Equals(".jpeg", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".jpg", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".png", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".bmp", StringComparison.OrdinalIgnoreCase);
     }
     public static readonly Regex jpegPattern
         = new(@"\.jpe?g", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
@@ -36,9 +35,8 @@ public class CaptureImageService : ICaptureImageService
     {
         var ext = Path.GetExtension(fileName);
         if (ext.Length <= 1) return false;
-        ext = ext[1..];
         return
-            ext.Equals("jpg", StringComparison.OrdinalIgnoreCase)
-            || ext.Equals("jpeg", StringComparison.OrdinalIgnoreCase);
+            ext.Equals(".jpg", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".jpeg", StringComparison.OrdinalIgnoreCase);
     }
 }

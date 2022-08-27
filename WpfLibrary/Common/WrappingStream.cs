@@ -13,7 +13,6 @@ public class WrappingStream : Stream
         ArgumentNullException.ThrowIfNull(baseStream);
         this.baseStream = baseStream;
     }
-
     public override bool CanRead => true;
     public override bool CanSeek => baseStream?.CanSeek ?? false;
     public override bool CanWrite => false;
@@ -75,6 +74,7 @@ public class WrappingStream : Stream
         }
         base.Dispose(disposing);
     }
+#if !NETFRAMEWORK
     public override int Read(Span<byte> buffer)
     {
         ThrowIfDisposed();
@@ -90,4 +90,5 @@ public class WrappingStream : Stream
         ThrowIfDisposed();
         return baseStream.ReadAsync(buffer, cancellationToken);
     }
+#endif
 }

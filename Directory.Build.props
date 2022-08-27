@@ -6,7 +6,8 @@
     <PackageProjectUrl>https://github.com/kzrnm/WindowScreenshot</PackageProjectUrl>
     <RepositoryUrl>https://github.com/kzrnm/WindowScreenshot</RepositoryUrl>
 
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <TargetFrameworks>net6.0-windows;net48</TargetFrameworks>
 
     <Version>0.0.1</Version>
     <AssemblyVersion>0.0.1.100</AssemblyVersion>

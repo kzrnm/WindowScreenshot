@@ -17,6 +17,10 @@
     <ProjectReference Include="..\WindowScreenshot\WindowScreenshot.csproj" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(TargetFramework)=='net48'">
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.0" />
+  </ItemGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="TwitterJikkyo.Test" />
   </ItemGroup>

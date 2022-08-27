@@ -36,26 +36,37 @@ public record struct ShortcutKey(ModifierKeys Modifiers, Key Key)
         }
     }
 
-    public override string ToString() => new(CreateText('+', stackalloc char[80]));
+    public override string ToString() => CreateTextString('+', stackalloc char[80]);
+
+    private unsafe string CreateTextString(char sep, Span<char> buffer = default)
+    {
+        var span = CreateText(sep, buffer);
+#if NETFRAMEWORK
+        fixed (char* p = span)
+            return new(p, 0, span.Length);
+#else
+        return new(span);
+#endif
+    }
+
     private ReadOnlySpan<char> CreateText(char sep, Span<char> buffer = default)
     {
         var modifiersText = modifierKeysConverter.ConvertToInvariantString(Modifiers) ?? "";
         var keyText = keyConverter.ConvertToInvariantString(Key) ?? "";
-
         if (modifiersText.Length + keyText.Length + 1 == buffer.Length)
             buffer = new char[modifiersText.Length + keyText.Length + 1];
 
         int bufIndex = 0;
         if (modifiersText.Length > 0)
         {
-            modifiersText.CopyTo(buffer);
+            modifiersText.AsSpan().CopyTo(buffer);
             bufIndex += modifiersText.Length;
             buffer[bufIndex++] = sep;
         }
 
         if (keyText.Length > 0)
         {
-            keyText.CopyTo(buffer[bufIndex..]);
+            keyText.AsSpan().CopyTo(buffer[bufIndex..]);
             bufIndex += keyText.Length;
         }
         return buffer[..bufIndex];

@@ -60,7 +60,12 @@ public class ImageUtility
 
     static async Task<BitmapSource?> GetImageFromFileAsync(string filePath)
     {
+#if NETFRAMEWORK
+        await Task.Yield();
+        var bytes = File.ReadAllBytes(filePath);
+#else
         var bytes = await File.ReadAllBytesAsync(filePath).ConfigureAwait(false);
+#endif
         return GetImageFromBinary(bytes);
     }
 

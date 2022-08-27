@@ -14,6 +14,7 @@ public class WrappingStreamTest
         buffer.Should().Equal(0, 10, 11, 12, 0, 0);
         ws.baseStream.Should().BeNull();
     }
+#if !NETFRAMEWORK
     [Fact]
     public void ReadSpan()
     {
@@ -40,4 +41,5 @@ public class WrappingStreamTest
         buffer.Should().Equal(0, 10, 11, 12, 0, 0);
         ws.baseStream.Should().BeNull();
     }
+#endif
 }

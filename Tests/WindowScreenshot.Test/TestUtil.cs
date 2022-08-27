@@ -8,13 +8,9 @@ using static TestUtil;
 
 public static class TestUtil
 {
-    public static BitmapSource DummyBitmapSource(int width, int height, int? seed = null)
+    public static BitmapSource DummyBitmapSource(int width, int height, int seed = 0)
     {
-        var rnd = seed switch
-        {
-            int s => new Random(s),
-            _ => Random.Shared,
-        };
+        var rnd = new Random(seed);
         var pixelFormat = PixelFormats.Bgra32;
         var stride = (width * pixelFormat.BitsPerPixel + 7) / 8;
         var bytes = new byte[stride * width];
@@ -25,7 +21,7 @@ public static class TestUtil
         new BitmapPalette(new[] { Colors.Transparent }),
         bytes, stride);
     }
-    public static CaptureImage DummyCaptureImage(int width, int height, int? seed = null)
+    public static CaptureImage DummyCaptureImage(int width, int height, int seed = 0)
         => new(DummyBitmapSource(width, height, seed));
 
     public static byte[]? ImageToByteArray(BitmapSource? bmp)
@@ -51,6 +47,9 @@ public class BitmapSourceEqualityComparer : EqualityComparer<BitmapSource>
 
     public override int GetHashCode([DisallowNull] BitmapSource obj)
     {
-        return HashCode.Combine(obj.PixelHeight, obj.PixelWidth);
+        int hashCode = -62166687;
+        hashCode = hashCode * -1521134295 + obj.PixelHeight.GetHashCode();
+        hashCode = hashCode * -1521134295 + obj.PixelWidth.GetHashCode();
+        return hashCode;
     }
 }

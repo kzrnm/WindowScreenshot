@@ -71,6 +71,18 @@ public partial class ConfigWrapper<T> : ObservableObject where T : new()
 
         File.Move(tmpPath, path, true);
     }
+#if NETFRAMEWORK
+    private static class File
+    {
+        public static void Move(string sourceFileName, string destFileName, bool force)
+        {
+            if (force)
+                new FileInfo(destFileName).Delete();
+            System.IO.File.Move(sourceFileName, destFileName);
+        }
+    }
+#endif
+
     public async Task SaveAsync(Stream stream, CancellationToken cancellationToken)
     {
         await JsonSerializer.SerializeAsync(

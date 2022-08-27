@@ -20,7 +20,7 @@ internal static class NativeMethods
         fixed (char* pText = text)
         {
             int length = PInvoke.GetWindowText(hWnd, pText, text.Length);
-            return new string(text[..length]);
+            return new string(pText, 0, length);
         }
     }
 

@@ -104,7 +104,7 @@ public partial class ContentService : ObservableObject
         }
 
         var indecis = dst.EnumerateFiles($"{fileName}_*")
-            .Select(f => ParseFileNameNumber(f, fileName))
+            .Select(f => ParseFileNameNumber(f, fileName.AsSpan()))
             .OfType<int>()
             .ToArray();
         var num = indecis.DefaultIfEmpty(0).Max() + 1;
