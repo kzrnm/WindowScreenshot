@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:dd="urn:gong-wpf-dragdrop"
-    xmlns:kz="urn:kzrnm-wpf/controls"
     xmlns:ktk="urn:kzrnm-wpf/toolkit"
     xmlns:wc="urn:kzrnm-wpf-window-screenshot/core"
     xmlns:ws="urn:kzrnm-wpf-window-screenshot"
@@ -80,7 +79,6 @@
                     SelectedIndex="{Binding Hashtags.SelectedIndex}"
                     FontFamily="{Binding ConfigMaster.Config.Value.Font.FontName}"
                     FontSize="{Binding ConfigMaster.Config.Value.Font.FontSize}"
-                    kz:ComboBoxBehavior.IsFirstEmpty="True" 
                     IsEditable="True" />
             </Grid>
             <StackPanel Orientation="Horizontal" Grid.Column="1">
