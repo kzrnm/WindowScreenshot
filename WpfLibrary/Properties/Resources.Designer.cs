@@ -113,5 +113,15 @@ namespace Kzrnm.Wpf.Properties {
                 return ResourceManager.GetString("Sample", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   不明なエラーが発生しました。
+        ///ログフォルダを開きますか？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string UnhandledExceptionMessage {
+            get {
+                return ResourceManager.GetString("UnhandledExceptionMessage", resourceCulture);
+            }
+        }
     }
 }

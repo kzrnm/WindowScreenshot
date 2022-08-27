@@ -135,4 +135,8 @@
   <data name="Sample" xml:space="preserve">
     <value>サンプル</value>
   </data>
+  <data name="UnhandledExceptionMessage" xml:space="preserve">
+    <value>不明なエラーが発生しました。
+ログフォルダを開きますか？</value>
+  </data>
 </root>

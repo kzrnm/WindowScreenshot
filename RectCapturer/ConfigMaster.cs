@@ -1,7 +1,7 @@
 ﻿using Kzrnm.RectCapturer.Configs;
 using Kzrnm.Wpf.Configs;
 using System;
-using System.Configuration;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 
 namespace Kzrnm.RectCapturer;
@@ -19,11 +19,11 @@ public partial class ConfigMaster
     public ConfigWrapper<CaptureWindowCollection> CaptureTargetWindows { get; }
     public ConfigWrapper<Shortcuts> Shortcuts { get; }
 
-    public static async Task<ConfigMaster> LoadConfigsAsync()
+    public static async Task<ConfigMaster> LoadConfigsAsync(NameValueCollection appSettings)
     {
-        var config = ConfigWrapper<Config>.LoadAsync(ConfigurationManager.AppSettings["Config"] ?? throw new NullReferenceException("AppSettings:Config")).ConfigureAwait(false);
-        var shortcuts = ConfigWrapper<Shortcuts>.LoadAsync(ConfigurationManager.AppSettings["Shortcuts"] ?? throw new NullReferenceException("AppSettings:Shortcuts")).ConfigureAwait(false);
-        var captureWindows = ConfigWrapper<CaptureWindowCollection>.LoadAsync(ConfigurationManager.AppSettings["CaptureWindowCollection"] ?? throw new NullReferenceException("AppSettings:CaptureWindowCollection")).ConfigureAwait(false);
+        var config = ConfigWrapper<Config>.LoadAsync(appSettings["Config"] ?? throw new NullReferenceException("AppSettings:Config")).ConfigureAwait(false);
+        var shortcuts = ConfigWrapper<Shortcuts>.LoadAsync(appSettings["Shortcuts"] ?? throw new NullReferenceException("AppSettings:Shortcuts")).ConfigureAwait(false);
+        var captureWindows = ConfigWrapper<CaptureWindowCollection>.LoadAsync(appSettings["CaptureWindowCollection"] ?? throw new NullReferenceException("AppSettings:CaptureWindowCollection")).ConfigureAwait(false);
 
         return new(await config, await captureWindows, await shortcuts);
     }
