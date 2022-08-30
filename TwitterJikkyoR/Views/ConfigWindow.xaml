@@ -14,7 +14,7 @@
         xmlns:vm="clr-namespace:Kzrnm.TwitterJikkyo.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:ConfigWindowViewModel}"
-        ktk:IocBehavior.AutoViewModel="{x:Type vm:ConfigWindowViewModel}"
+        ktk:Ioc.AutoViewModel="{x:Type vm:ConfigWindowViewModel}"
         Title="{x:Static properties:Resources.Config}"
         Background="WhiteSmoke"
         SizeToContent="WidthAndHeight"

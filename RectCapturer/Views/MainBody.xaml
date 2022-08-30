@@ -15,7 +15,7 @@
     xmlns:vm="clr-namespace:Kzrnm.RectCapturer.ViewModels"
     KeyboardNavigation.TabNavigation ="Local"
     d:DataContext="{d:DesignInstance Type=vm:MainBodyViewModel}"
-    ktk:IocBehavior.AutoViewModel="{x:Type vm:MainBodyViewModel}"
+    ktk:Ioc.AutoViewModel="{x:Type vm:MainBodyViewModel}"
     mc:Ignorable="d"
     dd:DragDrop.DropEventType="Tunneled"
     dd:DragDrop.DropHandler="{Binding DropHandler}"

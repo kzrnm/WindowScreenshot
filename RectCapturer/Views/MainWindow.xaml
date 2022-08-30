@@ -13,7 +13,7 @@
     xmlns:ktk="urn:kzrnm-wpf/toolkit"
     xmlns:ws="urn:kzrnm-wpf-window-screenshot"
     d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}"
-    ktk:IocBehavior.AutoViewModel="{x:Type vm:MainWindowViewModel}"
+    ktk:Ioc.AutoViewModel="{x:Type vm:MainWindowViewModel}"
     Title="{Binding Title, Mode=OneWay}"
     Width="600"
     Height="200"

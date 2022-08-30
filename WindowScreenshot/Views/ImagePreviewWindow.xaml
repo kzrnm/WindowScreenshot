@@ -16,7 +16,7 @@
     dd:DragDrop.DropEventType="Bubbled"
     dd:DragDrop.DropHandler="{Binding DropHandler}"
     dd:DragDrop.IsDropTarget="True"
-    ktk:IocBehavior.AutoViewModel="{x:Type viewmodels:ImagePreviewWindowViewModel}"
+    ktk:Ioc.AutoViewModel="{x:Type viewmodels:ImagePreviewWindowViewModel}"
     AllowDrop="True"
     ResizeMode="NoResize"
     ShowActivated="False"

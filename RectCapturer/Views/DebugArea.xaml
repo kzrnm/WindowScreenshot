@@ -13,7 +13,7 @@
     xmlns:local="clr-namespace:Kzrnm.RectCapturer.Views"
     xmlns:vm="clr-namespace:Kzrnm.RectCapturer.ViewModels"
     d:DataContext="{d:DesignInstance Type=vm:DebugAreaViewModel}"
-    ktk:IocBehavior.AutoViewModel="{x:Type vm:DebugAreaViewModel}"
+    ktk:Ioc.AutoViewModel="{x:Type vm:DebugAreaViewModel}"
     mc:Ignorable="d" 
     d:Background="LightYellow"
     d:DesignHeight="200"

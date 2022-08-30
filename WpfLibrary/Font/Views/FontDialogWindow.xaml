@@ -14,7 +14,7 @@
         SizeToContent="Width"
         Height="400"
         d:DataContext="{d:DesignInstance Type=local:FontDialogViewModel}"
-        kw:IocBehavior.AutoViewModel="{x:Type local:FontDialogViewModel}" >
+        kw:Ioc.AutoViewModel="{x:Type local:FontDialogViewModel}" >
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
