@@ -97,7 +97,7 @@ public partial class ContentService : ObservableObject
         return AccountService.PostingAccount;
     }
 
-    public async Task<StatusResponse?> PostContentAsync()
+    public async Task<Status?> PostContentAsync()
     {
         var tokens = SelectTokens();
 
@@ -149,7 +149,7 @@ public partial class ContentService : ObservableObject
         return null;
     }
 
-    private static async Task<StatusResponse> PostContentAsync(Tokens tokens, string text, long inReplyToId, CaptureImage[] images)
+    private static async Task<Status> PostContentAsync(Tokens tokens, string text, long inReplyToId, CaptureImage[] images)
     {
         IEnumerable<long>? mediaIds = null;
         if (images.Length > 0)
