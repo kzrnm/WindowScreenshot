@@ -4,20 +4,25 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Kzrnm.TwitterJikkyo.Twitter;
-public class TwitterAuthorizeSession
+public interface ITwitterAuthorizeSession
+{
+    Uri AuthorizeUri { get; }
+    Task<Tokens> AuthorizeAsync(string pin, CancellationToken cancellationToken = default);
+}
+public class TwitterAuthorizeSession : ITwitterAuthorizeSession
 {
     private readonly OAuth.OAuthSession session;
     public Uri AuthorizeUri => session.AuthorizeUri;
-    private TwitterTokenService TwitterService { get; }
-    protected internal TwitterAuthorizeSession(TwitterTokenService twitterService)
+    private TwitterTokenService TwitterTokenService { get; }
+    protected internal TwitterAuthorizeSession(TwitterTokenService twitterTokenService)
     {
-        TwitterService = twitterService;
-        session = OAuth.Authorize(twitterService.ApiKey, twitterService.ApiSecret);
+        TwitterTokenService = twitterTokenService;
+        session = OAuth.Authorize(twitterTokenService.ApiKey, twitterTokenService.ApiSecret);
     }
     public async Task<Tokens> AuthorizeAsync(string pin, CancellationToken cancellationToken = default)
     {
         var tokens = await session.GetTokensAsync(pin, cancellationToken).ConfigureAwait(false);
-        TwitterService.AddTokens(tokens);
+        TwitterTokenService.AddTokens(tokens);
         return tokens;
     }
 }

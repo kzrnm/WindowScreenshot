@@ -9,16 +9,16 @@ namespace Kzrnm.TwitterJikkyo.Models;
 
 public partial class AccountService : ObservableObject
 {
-    public AccountService(ConfigMaster configMaster, TwitterTokenService twitterService)
+    public AccountService(ConfigMaster configMaster, ITwitterTokenService twitterTokenService)
     {
         ConfigMaster = configMaster;
-        TwitterService = twitterService;
+        TwitterTokenService = twitterTokenService;
 
         LoadConfig(ConfigMaster.Config.Value);
         ConfigMaster.Config.ConfigUpdated += (_, e) => LoadConfig(e);
     }
     public ConfigMaster ConfigMaster { get; }
-    public TwitterTokenService TwitterService { get; }
+    public ITwitterTokenService TwitterTokenService { get; }
     private bool CanChangeUser => ConfigMaster.Config.Value.Accounts.Length > 1;
 
     private int _PostingAccountIndex;
@@ -46,9 +46,9 @@ public partial class AccountService : ObservableObject
         var accounts = ConfigMaster.Config.Value.Accounts;
 
         if (accounts[_PostingAccountIndex].Id != PostingAccount?.UserId)
-            PostingAccount = await TwitterService.GetTokensAsync(accounts[_PostingAccountIndex].Id).ConfigureAwait(false);
+            PostingAccount = await TwitterTokenService.GetTokensAsync(accounts[_PostingAccountIndex].Id).ConfigureAwait(false);
         if (accounts[_ImagePostingAccountIndex].Id != ImagePostingAccount?.UserId)
-            ImagePostingAccount = await TwitterService.GetTokensAsync(accounts[_ImagePostingAccountIndex].Id).ConfigureAwait(false);
+            ImagePostingAccount = await TwitterTokenService.GetTokensAsync(accounts[_ImagePostingAccountIndex].Id).ConfigureAwait(false);
     }
     private static void UpdateIndex<T>(ReadOnlySpan<T> span, ref int index)
     {

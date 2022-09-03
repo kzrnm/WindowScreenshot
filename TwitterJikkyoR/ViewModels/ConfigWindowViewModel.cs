@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Kzrnm.TwitterJikkyo.Configs;
+using Kzrnm.TwitterJikkyo.Logic;
 using Kzrnm.TwitterJikkyo.Models.Message;
 using Kzrnm.TwitterJikkyo.Twitter;
 using Kzrnm.Wpf.Font;
@@ -15,15 +16,22 @@ using System.Threading.Tasks;
 namespace Kzrnm.TwitterJikkyo.ViewModels;
 public partial class ConfigWindowViewModel : ObservableObject
 {
-    public ConfigWindowViewModel(TwitterTokenService twitterService, Config config, Shortcuts shortcuts)
+    public record Factory(ITwitterTokenService TwitterTokenService, AesCrypt AesCrypt)
     {
-        TwitterService = twitterService;
+        public ConfigWindowViewModel Build(Config config, Shortcuts shortcuts)
+            => new(TwitterTokenService, AesCrypt, config, shortcuts);
+    }
+    public ConfigWindowViewModel(ITwitterTokenService twitterTokenService, AesCrypt aesCrypt, Config config, Shortcuts shortcuts)
+    {
+        TwitterTokenService = twitterTokenService;
+        AesCrypt = aesCrypt;
         Config = config;
         Shortcuts = shortcuts;
         Load(config, shortcuts);
         IsUpdated = false;
     }
-    public TwitterTokenService TwitterService { get; }
+    public ITwitterTokenService TwitterTokenService { get; }
+    public AesCrypt AesCrypt { get; }
     public Config Config { get; }
     public Shortcuts Shortcuts { get; }
 
@@ -155,7 +163,7 @@ public partial class ConfigWindowViewModel : ObservableObject
     [RelayCommand]
     private async Task AddAccount()
     {
-        var auth = TwitterService.AuthorizeSession();
+        var auth = TwitterTokenService.AuthorizeSession();
         var result = WeakReferenceMessenger.Default.Send(new TwitetrAuthDialogMessage(auth.AuthorizeUri.ToString()));
         if (result.Response is { } pin)
         {
@@ -168,11 +176,11 @@ public partial class ConfigWindowViewModel : ObservableObject
                 if (Accounts[i].Id == tokens.UserId)
                 {
                     PostingAccountIndex = i;
-                    Accounts[i] = TwitterService.TokenToAccount(tokens);
+                    Accounts[i] = tokens.ToTwitterAccount(AesCrypt);
                     return;
                 }
             }
-            Accounts.Add(TwitterService.TokenToAccount(tokens));
+            Accounts.Add(tokens.ToTwitterAccount(AesCrypt));
             PostingAccountIndex = Accounts.Count - 1;
         }
     }

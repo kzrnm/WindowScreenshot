@@ -8,7 +8,6 @@ using Kzrnm.TwitterJikkyo.Twitter;
 using Kzrnm.WindowScreenshot.Image;
 using Kzrnm.WindowScreenshot.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -20,10 +19,11 @@ namespace Kzrnm.TwitterJikkyo.Models;
 
 public partial class ContentService : ObservableObject
 {
-    public ContentService(AccountService accountService, ImageProvider imageProvider, ConfigMaster configMaster)
+    public ContentService(AccountService accountService, ITwitterApiService twitterApiService, ImageProvider imageProvider, ConfigMaster configMaster)
     {
         Hashtags = configMaster.Hashtags.Value;
         AccountService = accountService;
+        TwitterApiService = twitterApiService;
         ImageProvider = imageProvider;
         UpdateCanPost();
         ((INotifyPropertyChanged)ImageProvider.Images).PropertyChanged += OnImageProviderPropertyChanged;
@@ -41,6 +41,7 @@ public partial class ContentService : ObservableObject
 
     public event EventHandler<bool>? CanPostChanged;
     public AccountService AccountService { get; }
+    public ITwitterApiService TwitterApiService { get; }
     public ImageProvider ImageProvider { get; }
     public HashtagCollection Hashtags { get; }
 
@@ -124,7 +125,7 @@ public partial class ContentService : ObservableObject
         try
         {
 #pragma warning disable CAC002 // ConfigureAwaitChecker
-            var response = await PostContentAsync(tokens, tweetText, inReplyToId, images).ConfigureAwait(true);
+            var response = await TwitterApiService.PostContentAsync(tokens, tweetText, inReplyToId, images).ConfigureAwait(true);
 #pragma warning restore CAC002 // ConfigureAwaitChecker
             Hashtags.AddUnique(Hashtag);
             return response;
@@ -147,25 +148,6 @@ public partial class ContentService : ObservableObject
             }
         }
         return null;
-    }
-
-    private static async Task<Status> PostContentAsync(Tokens tokens, string text, long inReplyToId, CaptureImage[] images)
-    {
-        IEnumerable<long>? mediaIds = null;
-        if (images.Length > 0)
-        {
-            var imgUploadTasks = images
-                .Select(img => img.ToStream())
-                .Select(s => tokens.Media.UploadAsync(s));
-            mediaIds = (await Task.WhenAll(imgUploadTasks).ConfigureAwait(false)).Select(t => t.MediaId);
-        }
-
-        return await tokens.Statuses.UpdateAsync(
-            status: text,
-            in_reply_to_status_id: inReplyToId,
-            auto_populate_reply_metadata: true,
-            media_ids: mediaIds
-        ).ConfigureAwait(false);
     }
 
     internal static bool TryParseTweetId(string idOrUrl, out long tweetId)
