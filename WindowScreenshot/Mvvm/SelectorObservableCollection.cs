@@ -64,6 +64,9 @@ public class SelectorObservableCollection<T> : ObservableCollection<T>
 
     protected override void MoveItem(int oldIndex, int newIndex)
     {
+        if (oldIndex == newIndex)
+            return;
+
         base.MoveItem(oldIndex, newIndex);
         if (oldIndex == SelectedIndex)
         {
