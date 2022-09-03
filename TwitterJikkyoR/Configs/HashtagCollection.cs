@@ -26,8 +26,18 @@ public class HashtagCollection : SelectorObservableCollection<string>
         private record HashtagCollectionJson(int MaxTagNum, SelectorObservableCollection<string>? Hashtags);
     }
     public HashtagCollection() : this(100) { }
-    public HashtagCollection(int maxTagNum) : base() { MaxTagNum = maxTagNum; }
-    public HashtagCollection(IEnumerable<string> collection, int maxTagNum = 100) : base(collection) { MaxTagNum = maxTagNum; }
+    public HashtagCollection(int maxTagNum) : base()
+    {
+        if (maxTagNum <= 0)
+            throw new ArgumentOutOfRangeException(nameof(maxTagNum), nameof(maxTagNum) + " must be positive number");
+        MaxTagNum = maxTagNum;
+    }
+    public HashtagCollection(IEnumerable<string> collection, int maxTagNum = 100) : base(collection)
+    {
+        if (maxTagNum <= 0)
+            throw new ArgumentOutOfRangeException(nameof(maxTagNum), nameof(maxTagNum) + " must be positive number");
+        MaxTagNum = maxTagNum;
+    }
 
     public int MaxTagNum { get; }
 
@@ -48,5 +58,12 @@ public class HashtagCollection : SelectorObservableCollection<string>
                 MoveItem(index, 0);
                 return false;
         }
+    }
+
+    protected override void InsertItem(int index, string item)
+    {
+        base.InsertItem(index, item);
+        while (Count > MaxTagNum)
+            RemoveAt(Count - 1);
     }
 }

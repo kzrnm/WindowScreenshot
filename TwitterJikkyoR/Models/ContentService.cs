@@ -127,7 +127,13 @@ public partial class ContentService : ObservableObject
 #pragma warning disable CAC002 // ConfigureAwaitChecker
             var response = await TwitterApiService.PostContentAsync(tokens, tweetText, inReplyToId, images).ConfigureAwait(true);
 #pragma warning restore CAC002 // ConfigureAwaitChecker
-            Hashtags.AddUnique(Hashtag);
+            if (string.IsNullOrEmpty(Hashtag))
+            {
+                if (string.Join(" #", response.Entities.HashTags.Select(h => h.Text)) is { Length: > 0 } responseHashtag)
+                    Hashtags.AddUnique(responseHashtag);
+            }
+            else
+                Hashtags.AddUnique(Hashtag);
             return response;
         }
         catch (TwitterException)
