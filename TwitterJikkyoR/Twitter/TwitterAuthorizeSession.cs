@@ -8,8 +8,8 @@ public class TwitterAuthorizeSession
 {
     private readonly OAuth.OAuthSession session;
     public Uri AuthorizeUri => session.AuthorizeUri;
-    private TwitterService TwitterService { get; }
-    protected internal TwitterAuthorizeSession(TwitterService twitterService)
+    private TwitterTokenService TwitterService { get; }
+    protected internal TwitterAuthorizeSession(TwitterTokenService twitterService)
     {
         TwitterService = twitterService;
         session = OAuth.Authorize(twitterService.ApiKey, twitterService.ApiSecret);

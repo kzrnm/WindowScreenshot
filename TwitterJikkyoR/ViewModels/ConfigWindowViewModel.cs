@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Kzrnm.TwitterJikkyo.ViewModels;
 public partial class ConfigWindowViewModel : ObservableObject
 {
-    public ConfigWindowViewModel(TwitterService twitterService, Config config, Shortcuts shortcuts)
+    public ConfigWindowViewModel(TwitterTokenService twitterService, Config config, Shortcuts shortcuts)
     {
         TwitterService = twitterService;
         Config = config;
@@ -23,7 +23,7 @@ public partial class ConfigWindowViewModel : ObservableObject
         Load(config, shortcuts);
         IsUpdated = false;
     }
-    public TwitterService TwitterService { get; }
+    public TwitterTokenService TwitterService { get; }
     public Config Config { get; }
     public Shortcuts Shortcuts { get; }
 

@@ -16,7 +16,7 @@ public partial class ConfigWindow : Window
     public ConfigWindow(Config config, Shortcuts shortcuts)
     {
         InitializeComponent();
-        var twitterService = Ioc.Default.GetRequiredServiceIfIsNotInDesignMode<Twitter.TwitterService>(this);
+        var twitterService = Ioc.Default.GetRequiredServiceIfIsNotInDesignMode<Twitter.TwitterTokenService>(this);
         DataContext = new ConfigWindowViewModel(twitterService, config, shortcuts);
     }
 

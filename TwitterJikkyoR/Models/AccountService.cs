@@ -9,7 +9,7 @@ namespace Kzrnm.TwitterJikkyo.Models;
 
 public partial class AccountService : ObservableObject
 {
-    public AccountService(ConfigMaster configMaster, TwitterService twitterService)
+    public AccountService(ConfigMaster configMaster, TwitterTokenService twitterService)
     {
         ConfigMaster = configMaster;
         TwitterService = twitterService;
@@ -18,7 +18,7 @@ public partial class AccountService : ObservableObject
         ConfigMaster.Config.ConfigUpdated += (_, e) => LoadConfig(e);
     }
     public ConfigMaster ConfigMaster { get; }
-    public TwitterService TwitterService { get; }
+    public TwitterTokenService TwitterService { get; }
     private bool CanChangeUser => ConfigMaster.Config.Value.Accounts.Length > 1;
 
     private int _PostingAccountIndex;

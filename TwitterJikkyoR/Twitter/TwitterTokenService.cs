@@ -6,13 +6,12 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 
 namespace Kzrnm.TwitterJikkyo.Twitter;
-public class TwitterService
+public class TwitterTokenService
 {
-    public TwitterService(Secrets secrets, ConfigMaster configMaster, AesCrypt aesCrypt)
+    public TwitterTokenService(Secrets secrets, ConfigMaster configMaster, AesCrypt aesCrypt)
     {
         ApiKey = secrets.TwitterApiKey;
         ApiSecret = aesCrypt.Decrypt(secrets.TwitterApiSecretCrypt);
-        ConfigMaster = configMaster;
         AesCrypt = aesCrypt;
 
         Load(configMaster.Config.Value.Accounts);
@@ -36,7 +35,6 @@ public class TwitterService
     public string ApiKey { get; }
     public string ApiSecret { get; }
     public AesCrypt AesCrypt { get; }
-    public ConfigMaster ConfigMaster { get; }
     public TwitterAuthorizeSession AuthorizeSession() => new(this);
 
     public void AddTokens(Tokens tokens)

@@ -44,7 +44,7 @@ public partial class App : Application
             .AddSingleton(secrets)
             .AddSingleton(new AesCrypt(secrets.AesKey, secrets.AesIv))
             .AddSingleton(configMaster)
-            .AddSingleton<TwitterService>()
+            .AddSingleton<TwitterTokenService>()
             .AddSingleton<GlobalService>()
             .AddSingleton<ContentService>()
             .AddSingleton<AccountService>()
