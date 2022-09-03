@@ -115,7 +115,7 @@ public partial class ContentService : ObservableObject
             var outputPath = Path.Combine(dst.FullName, $"{fileName}_{num++:000}.{image.ImageKind.GetExtension()}");
             tasks.Add(WriteImageAsync(image, outputPath));
         }
-        await Task.WhenAll(tasks).ConfigureAwait(false);
+        await Task.WhenAll(tasks).ConfigureAwait(true);
         ImageProvider.Images.Clear();
 
         static async Task WriteImageAsync(CaptureImage image, string outputPath)
