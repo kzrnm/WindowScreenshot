@@ -14,6 +14,7 @@ using System.Configuration;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Kzrnm.TwitterJikkyo;
 
@@ -25,7 +26,7 @@ public partial class App : Application
     public static string ExePath => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new InvalidOperationException();
     public App()
     {
-        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        DispatcherUnhandledException += OnDispatcherUnhandledException;
     }
 
     protected override async void OnStartup(StartupEventArgs e)
@@ -58,7 +59,7 @@ public partial class App : Application
         base.OnStartup(e);
     }
 
-    private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+    private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
 #if DEBUG
         AppUtility.OnUnhandledException_Debug(sender, e);

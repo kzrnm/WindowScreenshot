@@ -5,9 +5,9 @@ using Kzrnm.RectCapturer.Views;
 using Kzrnm.WindowScreenshot;
 using Kzrnm.Wpf.Utility;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Configuration;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Kzrnm.RectCapturer;
 
@@ -18,7 +18,7 @@ public partial class App : Application
 {
     public App()
     {
-        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        DispatcherUnhandledException += OnDispatcherUnhandledException;
     }
 
     protected override async void OnStartup(StartupEventArgs e)
@@ -44,7 +44,7 @@ public partial class App : Application
         base.OnStartup(e);
     }
 
-    private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+    private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
 #if DEBUG
         AppUtility.OnUnhandledException_Debug(sender, e);
