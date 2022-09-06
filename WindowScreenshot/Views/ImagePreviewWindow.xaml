@@ -25,7 +25,6 @@
     Topmost="True"
     Visibility="{Binding Visibility, Mode=OneWay, FallbackValue=Hidden}"
     d:Visibility="Visible"
-    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <b:Interaction.Triggers>
         <b:KeyTrigger Key="Esc">

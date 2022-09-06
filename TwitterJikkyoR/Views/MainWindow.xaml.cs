@@ -32,9 +32,26 @@ public partial class MainWindow : Window
         base.OnClosed(e);
         if (ConfigMaster is { } configMaster)
         {
-            configMaster.Config.Value = configMaster.Config.Value with { WindowPosition = WindowPosition.Load(this) };
+            var newConfig = configMaster.Config.Value with
+            {
+                WindowPosition = WindowPosition.Load(this),
+                ImagePreviewWindowPosition = WindowCapturer.ImagePreviewWindow switch
+                {
+                    { } ipw => WindowStartPosition.Load(ipw),
+                    _ => null,
+                },
+            };
+
+            configMaster.Config.Value = newConfig;
             await configMaster.SaveAsync().ConfigureAwait(false);
         }
+    }
+
+    protected override void OnContentRendered(EventArgs e)
+    {
+        base.OnContentRendered(e);
+        if (WindowCapturer.ImagePreviewWindow is { } ipw)
+            ConfigMaster?.Config.Value.ImagePreviewWindowPosition?.ApplyTo(ipw);
     }
 
     private void MovePreviewWindowHereClick(object sender, RoutedEventArgs e)

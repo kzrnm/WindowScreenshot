@@ -11,12 +11,14 @@ namespace Kzrnm.RectCapturer.Configs;
 /// 基本の設定
 /// </summary>
 /// <param name="WindowPosition">MainWindow の位置</param>
+/// <param name="ImagePreviewWindowPosition">ImagePreviewWindow の位置</param>
 /// <param name="Topmost">MainWindow を常に最前面に表示するか</param>
 /// <param name="Font">フォント</param>
 /// <param name="SaveDstDirectories">保存先のデフォルトディレクトリ</param>
 /// <param name="SaveFileNames">保存するファイル名</param>
 public record Config(
     WindowPosition? WindowPosition = null,
+    WindowStartPosition? ImagePreviewWindowPosition = null,
     bool Topmost = false,
     Font? Font = null,
     ImmutableArray<string> SaveDstDirectories = default,
@@ -27,7 +29,7 @@ public record Config(
     /// <inheritdoc cref="Config" path="/param[@name='WindowPosition']"/>
     /// </summary>
     [JsonPropertyOrder(int.MinValue)]
-    public WindowPosition WindowPosition { get; init; } = WindowPosition ?? new(double.NaN, double.NaN, double.NaN, double.NaN);
+    public WindowPosition WindowPosition { get; init; } = WindowPosition ?? new();
     /// <summary>
     /// <inheritdoc cref="Config" path="/param[@name='Font']"/>
     /// </summary>
@@ -44,7 +46,7 @@ public record Config(
 }
 
 [JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)]
-public record WindowPosition(double Top, double Left, double Height, double Width)
+public record WindowPosition(double Top = double.NaN, double Left = double.NaN, double Height = double.NaN, double Width = double.NaN)
 {
     public void ApplyTo(Window window)
     {
@@ -55,4 +57,17 @@ public record WindowPosition(double Top, double Left, double Height, double Widt
     }
 
     public static WindowPosition Load(Window window) => new(window.Top, window.Left, window.Height, window.Width);
+}
+
+
+[JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)]
+public record WindowStartPosition(double Top = double.NaN, double Left = double.NaN)
+{
+    public void ApplyTo(Window window)
+    {
+        if (!double.IsNaN(Top)) window.Top = Top;
+        if (!double.IsNaN(Left)) window.Left = Left;
+    }
+
+    public static WindowStartPosition Load(Window window) => new(window.Top, window.Left);
 }
