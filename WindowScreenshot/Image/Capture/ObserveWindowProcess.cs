@@ -46,8 +46,18 @@ public class ObserveWindowProcess : IObserveWindowProcess, IDisposable
         if (idObject == OBJID_WINDOW && idChild == 0 && GetWindowTextLength(hwnd) > 0)
         {
             _ = GetWindowThreadProcessId(hwnd, out var processId);
-            using var process = Process.GetProcessById((int)processId);
-            if (process.MainWindowTitle.Length > 0)
+            bool needUpdate;
+            try
+            {
+                using var process = Process.GetProcessById((int)processId);
+                needUpdate = process.MainWindowTitle.Length > 0;
+            }
+            catch (Exception)
+            {
+                needUpdate = true;
+            }
+
+            if (needUpdate)
             {
                 await UpdateWindowsAsync().ConfigureAwait(false);
             }
